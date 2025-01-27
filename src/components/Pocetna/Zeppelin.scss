@@ -1,0 +1,77 @@
+.banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  z-index: 5;
+  justify-content: start;
+  align-items: start;
+  margin-top: 0;
+  overflow: visible;
+}
+
+.zeppelin {
+  width: auto;
+  position: absolute;
+  height: 70px;
+  top: -20px;
+  right: 99%;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.banner-text {
+  padding: 2rem 4rem;
+  background-color: #002440;
+  color: white;
+  font-size: 2rem;
+  height: 300px;
+  width: 500px;
+  text-align: center;
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .zeppelin {
+    height: 60px;
+  }
+  .banner-text {
+    padding: 1.5rem 3rem;
+    font-size: 1.8rem;
+    height: 250px;
+    width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .zeppelin {
+    height: 40px;
+  }
+  .banner-text {
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    height: 200px;
+    width: 300px;
+  }
+}
+
+@media (max-width: 500px) {
+  .zeppelin {
+    height: 40px;
+  }
+  .banner-text {
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    height: 150px;
+    width: 200px;
+  }
+}

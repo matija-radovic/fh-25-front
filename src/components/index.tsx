@@ -6,3 +6,6 @@ export { Section }
 
 import ExampleComponent from "./Example/Example";
 export { ExampleComponent }
+
+import Pocetna from "./Pocetna/Pocetna";
+export { Pocetna }

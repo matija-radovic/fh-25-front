@@ -1,0 +1,143 @@
+.pocetna-wrapper {
+  margin: 0;
+  width: 100%;
+  height: 130dvh; /* Koristi visinu ekrana, a ne '100dvh' */
+  background-color: #24BDDE;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+body, html {
+  overflow-x: hidden;
+}
+
+.prvi_red,
+.drugi_red,
+.treci_red {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  height: 120%;
+}
+
+.prvi_red {
+  z-index: 3;
+}
+.drugi_red {
+  z-index: 2;
+}
+.treci_red {
+  z-index: 1;
+  top: 25px;
+}
+
+.prvi_red .slika1,
+.prvi_red .slika2,
+.drugi_red .slika1,
+.drugi_red .slika2,
+.treci_red .slika1,
+.treci_red .slika2 {
+  width: 50%; /* Postavljanje širine slika */
+}
+
+.slika1,
+.slika2 {
+  height: auto;
+  position: absolute;
+  transition: transform 0.3s ease-out;
+}
+
+.slika1 {
+  left: 0;
+}
+
+.slika2 {
+  right: 0;
+}
+
+.voda {
+  position: absolute;
+  top: 119%;
+  z-index: 5;
+  display: flex;
+  width: 100%;
+  height: 1090px;
+  background-color: #002440;
+  transition: transform 0.3s ease-out;
+}
+
+/* Rešavanje problema skrolanja */
+@media (max-width: 1024px) {
+  .prvi_red .slika1,
+  .prvi_red .slika2,
+  .drugi_red .slika1,
+  .drugi_red .slika2,
+  .treci_red .slika1,
+  .treci_red .slika2 {
+    width: 80%;
+  }
+
+  .slika1 {
+    transform: translateX(calc(-30vw));
+  }
+
+  .slika2 {
+    transform: translateX(calc(30vw));
+  }
+  .prvi_red,
+  .drugi_red,
+  .treci_red {
+    height: 70%;
+  }
+  .voda {
+    top: 69%;
+  }
+}
+
+@media (max-width: 768px) {
+  .prvi_red .slika1,
+  .prvi_red .slika2,
+  .drugi_red .slika1,
+  .drugi_red .slika2,
+  .treci_red .slika1,
+  .treci_red .slika2 {
+    width: 80%;
+  }
+
+  .slika1 {
+    transform: translateX(calc(-30vw));
+  }
+
+  .slika2 {
+    transform: translateX(calc(30vw));
+  }
+}
+
+@media (max-width: 500px) {
+  .prvi_red .slika1,
+  .prvi_red .slika2,
+  .drugi_red .slika1,
+  .drugi_red .slika2,
+  .treci_red .slika1,
+  .treci_red .slika2 {
+    width: 85%;
+  }
+
+  .slika1 {
+    transform: translateX(calc(-35vw));
+  }
+
+  .slika2 {
+    transform: translateX(calc(35vw));
+  }
+  .prvi_red,
+  .drugi_red,
+  .treci_red {
+    height: 70%;
+  }
+  .voda {
+    top: 69%;
+  }
+}

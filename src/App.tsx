@@ -1,6 +1,6 @@
 import './App.scss'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import { Layout } from './components'
+import { Layout, Pocetna } from './components'
 import Main from './pages/main'
 import Test from './pages/test'
 
@@ -11,6 +11,7 @@ const router = createBrowserRouter(
       <Route index element={<Main />} />
       {
         //*
+        
         <Route path='/test' element={<Test />} />
         //*/
       }
