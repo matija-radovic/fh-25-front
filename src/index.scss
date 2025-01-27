@@ -1,0 +1,90 @@
+@use './utils/css/colors';
+@use './utils/css/mediaqueries';
+
+@font-face {
+  font-family: 'Orbitron';
+  src: url('/font/Orbitron/Orbitron-VariableFont_wght.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/font/Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  font-family: 'Montserrat', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+
+  color-scheme: light dark; // TODO: videti sa dizajnom, meni je lepša "only-light" tema
+  color: colors.$bela;
+  background-color: colors.$tamno-plava;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media #{mediaqueries.$phone} {
+    font-size: 1rem;
+  }
+  @media #{mediaqueries.$s-phone} {
+    font-size: 0.9rem;
+  }
+}
+
+:root {
+  --max-container-size: 1441px;
+  --container-spacing: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: var(--max-container-size);
+  margin: 0 max(var(--container-spacing), (100% - var(--max-container-size)) / 2);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.orbitron {
+  font-family: 'Orbitron';
+}
+
+.montserrat {
+  font-family: 'Montserrat', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2.1rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}

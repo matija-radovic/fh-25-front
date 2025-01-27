@@ -1,0 +1,6 @@
+//  split backgrounds
+@mixin gradient-background($color1, $color2) {
+    background-image:
+        linear-gradient(to right, $color1, $color1),
+        linear-gradient(to right, $color2, $color2);
+}

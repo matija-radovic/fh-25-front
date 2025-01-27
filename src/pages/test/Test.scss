@@ -1,0 +1,25 @@
+// Mini tutorial -> before each style delete "/*" or add one "/" before it ("//*") to apply the given style
+
+/* 
+// Center the TEST element
+#root {
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+//*/
+
+/*
+// Scroll into TEST element
+#root {
+    height: 230dvh;
+    padding-top: 110dvh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+//*/
+
+// Add yours if needed

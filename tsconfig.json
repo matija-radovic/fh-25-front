@@ -1,0 +1,17 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    //"skipLibCheck": true,
+    //"allowSyntheticDefaultImports": true, // Default-no aktiviran od strane "esModuleInterop"
+    //"resolveJsonModule": true,
+  },
+}

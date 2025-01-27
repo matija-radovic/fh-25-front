@@ -1,0 +1,17 @@
+$xs-phone: 'only screen and (max-width: 340px)';
+$s-phone: 'only screen and (max-width: 380px)';
+$m-phone: 'only screen and (max-width: 600px)';
+$l-phone: 'only screen and (min-width: 601px) (max-width: 768px)';
+$phone: 'only screen and (max-width: 768px)';
+$except-phone: 'only screen and (min-width: 769px)';
+$tablet-only: 'only screen and (min-width: 769px) and (max-width: 1024px)';
+$tablet: 'only screen and (max-width: 1024px)';
+$s-tablet: 'only screen and (max-width: 860px)';
+$xs-desktop: 'only screen and (max-width: 1200px)';
+$s-desktop: 'only screen and (max-width: 1366px)';
+$s-desktop-only: 'only screen and (min-width: 1025px) and (max-width: 1200px)';
+$desktop: 'only screen and (min-width: 1201px)';
+$m-desktop: 'only screen and (min-width: 1201px) and (max-width: 1400px)';
+$l-desktop: 'only screen and (min-width: 1401px)';
+$xl-desktop: 'only screen and (max-width: 1500px)';
+$ie-specific: 'screen and (min-width:0\0) and (min-resolution: +72dpi)';

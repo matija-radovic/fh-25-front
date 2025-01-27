@@ -1,0 +1,2 @@
+echo "Run-uje se lint pre nego što nešto bude objavaljeno na github"
+npm run lint
