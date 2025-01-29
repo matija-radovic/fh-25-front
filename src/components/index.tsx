@@ -1,8 +1,11 @@
 import Layout from "./-layout/Layout";
-export { Layout }
+export { Layout };
 
 import Section from "./-shared/Section/Section";
-export { Section }
+export { Section };
 
 import ExampleComponent from "./Example/Example";
-export { ExampleComponent }
+export { ExampleComponent };
+
+import OrgTeam from "./OrgTeam/OrgTeam";
+export { OrgTeam };
