@@ -39,15 +39,17 @@
 .voda-slicica {
   position: absolute;
   width: 100%;
+  height: auto;
   top: 50px;
   fill: #{colors.$svetlo-plava};
-  filter: drop-shadow(15px 15px rgb(0, 35, 18));
+  filter: drop-shadow(15px 15px rgb(0, 23, 12));
 }
 .wave-path {
   width: 100%;
   position: absolute;
   left: -5px;
   top: 10px;
+  z-index: 4;
 }
 .wave-path path {
   stroke: colors.$svetlo-plava;
@@ -116,7 +118,7 @@
   z-index: 5;
   display: flex;
   width: 100%;
-  height: 400px;
+  height: 550px;
   background-color: colors.$tamno-plava;
   transition: transform 0.3s ease-out;
 }
@@ -212,7 +214,7 @@
     scale: 2;
   }
   .wave-path path{
-    stroke-width: 5px;
+    stroke-width: 2px;
   }
   .voda-slicica {
     top: 7rem;

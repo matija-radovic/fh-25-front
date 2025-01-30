@@ -33,9 +33,9 @@ const Pocetna: React.FC = () => {
 // Ovo je useEffect koji se koristi za animaciju talasa vode
   useEffect(() => {
     setWidth(svgRef.current ? svgRef.current.clientWidth : window.innerWidth);
-    const waveLength = width * 1.5;
-    const amplitude = 7;
-    const segments = 50;
+    const waveLength = width * 0.3;
+    const amplitude = 25;
+    const segments = 100;
     const speed = 0.015;
     let offset = 0;
     const animate = () => {
