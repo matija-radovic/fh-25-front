@@ -9,9 +9,9 @@ import OrgTeam from "../../components/OrgTeam/OrgTeam";
 const orgTeams = [
   {
     coordinatorImage: "images/kordilog.jpg",
-    coordinatorFirstName: "Aleksandra",
-    coordinatorLastName: "Đorđević",
-    coordinatorRole: "Koordinator logistike",
+    coordinatorFirstName: "Filip",
+    coordinatorLastName: "Lazarević",
+    coordinatorRole: "Koordinator takmičenja",
     teamImage: "images/LOGISTIKA.jpg",
     teamName: "Tim za logistiku",
   },

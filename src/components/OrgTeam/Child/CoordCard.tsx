@@ -21,22 +21,28 @@ const CoordCard: React.FC<CoordCardProps> = ({ coordinator }) => {
   } = coordinator;
 
   return (
-    <div className="left-card">
-      <div className="left">
-        <div className="background"></div>
-        <span className="vertical-text">{coordinatorFirstName}</span>
-        <div className="center">
-          <img src={coordinatorImage} alt="Coordinator" />
-          <div className="name">
-            <h2>{coordinatorFirstName}</h2>
-            <h2>{coordinatorLastName}</h2>
+    <div className="coord-card">
+      <div className="coord-card-wrapper">
+        <div className="left">
+          <div className="left-upper">
+            <span className="vertical-text">{coordinatorFirstName}</span>
+          </div>
+          <div className="center">
+            <img src={coordinatorImage} alt="Coordinator" />
+          </div>
+
+          <div className="left-lower">
+            <div className="name">
+              <h1>{coordinatorFirstName}</h1>
+              <h1>{coordinatorLastName}</h1>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="right">
-        <img className="star-image" src={Star} alt="Star" />
-        <p className="role">{coordinatorRole}</p>
-        <img className="FHLogo-image" src={FHLogo} alt="FH Logo" />
+        <div className="right">
+          <img className="star-image" src={Star} alt="Star" />
+          <p className="role">{coordinatorRole}</p>
+          <img className="FHLogo-image" src={FHLogo} alt="FH Logo" />
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,100 @@
+.coord-card {
+  font-family: "Orbitron", serif;
+  display: flex;
+  flex-direction: row;
+  height: 415px;
+  width: 270px;
+  border-radius: 20px;
+  .coord-card-wrapper {
+    width: 100%;
+    display: flex;
+    .left {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .left-upper {
+        position: relative;
+
+        height: 70%;
+        background-color: #24bdde;
+        border-radius: 20px 0 0 0;
+
+        .vertical-text {
+          position: absolute;
+          transform: rotate(90deg);
+          transform-origin: left top;
+          font-size: 64px;
+          font-weight: bold;
+          color: #75d6e8;
+          z-index: 2;
+          top: 5%; /* Centriranje */
+          left: 40px; /* Blago pomeranje desno */
+          white-space: nowrap; /* Sprečava prelamanje teksta */
+          transform: rotate(90deg) translate(0, -50%); /* Dodatno fino podešavanje */
+        }
+      }
+
+      .left-lower {
+        height: 30%;
+        border-left: 1px solid #8cddea;
+        border-bottom: 1px solid #8cddea;
+        border-radius: 0 0px 0px 20px;
+        padding: 0 10px 10px 10px;
+
+        .name {
+          text-align: left;
+          padding: 5px;
+          h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #8cddea;
+            font-weight: 900;
+          }
+          border-bottom: 1px solid #8cddea;
+        }
+      }
+
+      .center {
+        position: absolute;
+        z-index: 2;
+        img {
+          width: 250px;
+          height: 360px;
+          display: none;
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-wrap: nowrap;
+      padding-top: 22px;
+      padding-bottom: 22px;
+
+      border-radius: 0 20px 20px 0;
+      align-items: center;
+      height: 100%;
+      width: 40px;
+      background: linear-gradient(to bottom, #23bddf, #831d8f);
+
+      .star-image {
+        width: 21px;
+        height: 21px;
+      }
+      .FHLogo-imag {
+        width: 35px;
+        height: 35px;
+      }
+      .role {
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        transform: rotate(90deg);
+        font-weight: bold;
+      }
+    }
+  }
+}
