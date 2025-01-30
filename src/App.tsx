@@ -1,6 +1,6 @@
 import './App.scss'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import { Layout, Pocetna } from './components'
+import { Layout } from './components'
 import Main from './pages/main'
 import Test from './pages/test'
 

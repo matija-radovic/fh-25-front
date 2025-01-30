@@ -1,13 +1,13 @@
+@use "../../utils/css/colors";
+@use "../../utils/css/mediaqueries";
+
 .pocetna-wrapper {
   margin: 0;
   width: 100%;
   height: 130dvh; /* Koristi visinu ekrana, a ne '100dvh' */
-  background-color: #24BDDE;
+  background-color: colors.$svetlo-plava;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
-}
-body, html {
   overflow-x: hidden;
 }
 
@@ -19,9 +19,39 @@ body, html {
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
-  height: 120%;
+  height: 130%;
+  overflow-x: hidden;
 }
 
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 36, 64, 1),
+    rgba(2, 44, 72, 0.99),
+    rgba(7, 65, 94, 0.9),
+    rgba(15, 99, 129, 0.4),
+    rgba(26, 146, 178, 0.1),
+    rgba(36, 189, 222, 0)
+  );
+}
+.voda-slicica {
+  position: absolute;
+  width: 100%;
+  top: 50px;
+  fill: #{colors.$svetlo-plava};
+  filter: drop-shadow(15px 15px rgb(0, 35, 18));
+}
+.wave-path {
+  width: 100%;
+  position: absolute;
+  left: -5px;
+  top: 10px;
+}
+.wave-path path {
+  stroke: colors.$svetlo-plava;
+}
 .prvi_red {
   z-index: 3;
 }
@@ -41,7 +71,30 @@ body, html {
 .treci_red .slika2 {
   width: 50%; /* Postavljanje širine slika */
 }
+.countdown {
+  z-index: 10;
+  padding: 0.35rem;
+  height: max-content;
+  width: 40rem;
+  margin: 1rem auto 0 auto;
+  text-align: center;
+  border-radius: 100px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 36, 64, 0.57) 0%,
+    rgba(36, 189, 222, 0.57) 100%
+  );
+}
+.countdown {
+  background-color: colors.$tamno-plava;
+}
 
+.countdown h1 {
+  font-size: 5rem;
+  font-weight: 600;
+  -webkit-text-stroke: 0.5px colors.$svetlo-plava;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+}
 .slika1,
 .slika2 {
   height: auto;
@@ -56,20 +109,29 @@ body, html {
 .slika2 {
   right: 0;
 }
-
 .voda {
   position: absolute;
-  top: 119%;
+  overflow: hidden;
+  top: 129%;
   z-index: 5;
   display: flex;
   width: 100%;
-  height: 1090px;
-  background-color: #002440;
+  height: 400px;
+  background-color: colors.$tamno-plava;
   transition: transform 0.3s ease-out;
 }
 
-/* Rešavanje problema skrolanja */
-@media (max-width: 1024px) {
+@media #{mediaqueries.$tablet} {
+  .wave-path {
+    top: 10px;
+    scale: 1.5;
+  }
+  .countdown {
+    width: 34rem;
+  }
+  .countdown h1 {
+    font-size: 4rem;
+  }
   .prvi_red .slika1,
   .prvi_red .slika2,
   .drugi_red .slika1,
@@ -78,7 +140,10 @@ body, html {
   .treci_red .slika2 {
     width: 80%;
   }
-
+  .voda-slicica {
+    top: 6rem;
+    scale: 1.5;
+  }
   .slika1 {
     transform: translateX(calc(-30vw));
   }
@@ -89,14 +154,29 @@ body, html {
   .prvi_red,
   .drugi_red,
   .treci_red {
-    height: 70%;
+    height: 100%;
   }
   .voda {
-    top: 69%;
+    top: 99%;
   }
 }
 
-@media (max-width: 768px) {
+@media #{mediaqueries.$phone} {
+  .wave-path {
+    top: 15px;
+  }
+  .pocetna-wrapper{
+    height: 80dvh;
+  }
+  .voda-slicica {
+    top: 100px;
+  }
+  .countdown {
+    width: 34rem;
+  }
+  .countdown h1 {
+    font-size: 4rem;
+  }
   .prvi_red .slika1,
   .prvi_red .slika2,
   .drugi_red .slika1,
@@ -105,7 +185,14 @@ body, html {
   .treci_red .slika2 {
     width: 80%;
   }
-
+  .prvi_red,
+  .drugi_red,
+  .treci_red {
+    height: 80%;
+  }
+  .voda {
+    top: 79%;
+  }
   .slika1 {
     transform: translateX(calc(-30vw));
   }
@@ -116,6 +203,24 @@ body, html {
 }
 
 @media (max-width: 500px) {
+  .countdown {
+    width: 20rem;
+  }
+  
+  .wave-path {
+    top: 15px;
+    scale: 2;
+  }
+  .wave-path path{
+    stroke-width: 5px;
+  }
+  .voda-slicica {
+    top: 7rem;
+    scale: 2;
+  }
+  .countdown h1 {
+    font-size: 2.5rem;
+  }
   .prvi_red .slika1,
   .prvi_red .slika2,
   .drugi_red .slika1,
@@ -135,9 +240,12 @@ body, html {
   .prvi_red,
   .drugi_red,
   .treci_red {
-    height: 70%;
+    height: 50%;
+  }
+  .pocetna-wrapper{
+    height: 50dvh;
   }
   .voda {
-    top: 69%;
+    top: 49%;
   }
 }
