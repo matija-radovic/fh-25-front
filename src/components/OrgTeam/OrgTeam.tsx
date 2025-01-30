@@ -62,8 +62,8 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
           </div>
         </div>
         <div className="slider-controls">
-          <button onClick={goToPrevious}>&lt;</button>
-          <button onClick={goToNext}>&gt;</button>
+          <button className="slider-left-arrow" onClick={goToPrevious}></button>
+          <button className="slider-right-arrow" onClick={goToNext}></button>
         </div>
       </div>
     </Section>

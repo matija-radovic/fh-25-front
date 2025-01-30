@@ -1,0 +1,35 @@
+.team-card {
+  max-width: 605px;
+  max-height: 415px;
+  border: 7px solid #24bdde;
+  border-radius: 30px;
+  background-color: #24bdde;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    max-width: 605px;
+    max-height: 415px;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+
+  .team-name {
+    position: absolute;
+    color: #002440;
+    font-size: 22px;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .trapezoid {
+    position: absolute;
+    bottom: -5px;
+    height: 40px;
+    width: 530px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

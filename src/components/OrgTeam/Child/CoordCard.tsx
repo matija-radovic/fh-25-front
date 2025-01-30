@@ -2,6 +2,7 @@ import React from "react";
 import "./CoordCard.scss";
 import FHLogo from "../../../assets/OrgTeam/fhlogo.svg";
 import Star from "../../../assets/OrgTeam/star.svg";
+import Clouds from "../../../assets/OrgTeam/Clouds.svg";
 
 interface CoordCardProps {
   coordinator: {
@@ -26,6 +27,7 @@ const CoordCard: React.FC<CoordCardProps> = ({ coordinator }) => {
         <div className="left">
           <div className="left-upper">
             <span className="vertical-text">{coordinatorFirstName}</span>
+            <img className="clouds" src={Clouds} alt="Clouds" />
           </div>
           <div className="center">
             <img src={coordinatorImage} alt="Coordinator" />
