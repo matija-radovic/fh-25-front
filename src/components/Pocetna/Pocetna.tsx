@@ -56,12 +56,9 @@ const Pocetna: React.FC = () => {
 
       const topPoints = [];
 
-      let firstY = 50; // Y koordinata levog početka sinusoide
-
       for (let x = 0; x <= width; x += 10) {
       const yTop =
         Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
-      if (x === 0) firstY = yTop + amplitude; // Čuvamo početni Y za Zeppelin
 
       topPoints.push(`${x}px ${yTop + amplitude}px`);
       }
