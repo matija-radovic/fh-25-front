@@ -34,7 +34,7 @@ const Pocetna: React.FC = () => {
   useEffect(() => {
     setWidth(svgRef.current ? svgRef.current.clientWidth : window.innerWidth);
     const waveLength = width * 0.3;
-    const amplitude = 25;
+    const amplitude = 10;
     const segments = 100;
     const speed = 0.015;
     let offset = 0;
