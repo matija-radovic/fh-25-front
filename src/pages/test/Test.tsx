@@ -8,7 +8,7 @@ import OrgTeam from "../../components/OrgTeam/OrgTeam";
 
 const orgTeams = [
   {
-    coordinatorImage: "images/kordilog.jpg",
+    coordinatorImage: "images/osoba1.png",
     coordinatorFirstName: "Filip",
     coordinatorLastName: "Lazarević",
     coordinatorRole: "Koordinator takmičenja",
@@ -16,7 +16,7 @@ const orgTeams = [
     teamName: "Tim Koordinatora",
   },
   {
-    coordinatorImage: "images/PRKordi.jpg",
+    coordinatorImage: "images/osoba2.png",
     coordinatorFirstName: "Mina",
     coordinatorLastName: "Vuković",
     coordinatorRole: "Tim za odnose sa kompanijama",
@@ -24,7 +24,7 @@ const orgTeams = [
     teamName: "Tim za odnose sa kompanijama",
   },
   {
-    coordinatorImage: "images/kordilog.jpg",
+    coordinatorImage: "images/osoba3.png",
     coordinatorFirstName: "Anastasija",
     coordinatorLastName: "Rus",
     coordinatorRole: "Tim za odnose s javnošću",
@@ -32,7 +32,7 @@ const orgTeams = [
     teamName: "Tim za odnose s javnošću",
   },
   {
-    coordinatorImage: "images/PRKordi.jpg",
+    coordinatorImage: "images/osoba1.png",
     coordinatorFirstName: "Matija",
     coordinatorLastName: "Vujić",
     coordinatorRole: "Tim za ljudske resurse",
@@ -40,7 +40,7 @@ const orgTeams = [
     teamName: "Tim za ljudske resurse",
   },
   {
-    coordinatorImage: "images/kordilog.jpg",
+    coordinatorImage: "images/osoba2.png",
     coordinatorFirstName: "Danica",
     coordinatorLastName: "Živković",
     coordinatorRole: "Tim za dizajn",
@@ -48,7 +48,7 @@ const orgTeams = [
     teamName: "Tim za dizajn",
   },
   {
-    coordinatorImage: "images/PRKordi.jpg",
+    coordinatorImage: "images/osoba3.png",
     coordinatorFirstName: "Emilija",
     coordinatorLastName: "Simić",
     coordinatorRole: "Tim za logistiku",
@@ -56,7 +56,7 @@ const orgTeams = [
     teamName: "Tim za logistiku",
   },
   {
-    coordinatorImage: "images/kordilog.jpg",
+    coordinatorImage: "images/osoba1.png",
     coordinatorFirstName: "Matija",
     coordinatorLastName: "Radović",
     coordinatorRole: "Tim za informacione tehnologije",

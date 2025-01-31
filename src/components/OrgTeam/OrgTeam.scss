@@ -13,7 +13,7 @@
   .slider-controls {
     display: flex;
     gap: 120px;
-    margin-top: 50px;
+    margin-top: 30px;
     button {
       min-width: 35px;
       min-height: 45px;
@@ -23,7 +23,7 @@
       cursor: pointer;
 
       &:hover {
-        background-color: #555;
+        background-color: #dbdada;
       }
     }
     .slider-left-arrow {
