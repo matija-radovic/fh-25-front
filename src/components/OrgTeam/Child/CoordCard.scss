@@ -158,9 +158,9 @@
       transparent 75%
     );
     background-position: var(--gradient-pos, 50% 50%);
-    background-size: 180% 180%; // Smanjeno sa 200% na 180%
-    opacity: 0.7; // Smanjeno sa 0.8
-    filter: brightness(0.4) contrast(0.9); // Smanjeno sa 0.5 i 1
+    background-size: 180% 180%;
+    opacity: 0.7;
+    filter: brightness(0.4) contrast(0.9);
     z-index: 1;
   }
 
@@ -169,32 +169,32 @@
       linear-gradient(
         125deg,
         #ff008420 15%,
-        // Smanjen intenzitet boje
+
         #fca40020 30%,
-        // Smanjen intenzitet boje
+
         #ffff0020 40%,
-        // Smanjen intenzitet boje
+
         #00ff8a10 60%,
-        // Smanjen intenzitet boje
+
         #00cfff20 70%,
-        // Smanjen intenzitet boje
-        #cc4cfa20 85% // Smanjen intenzitet boje
+
+        #cc4cfa20 85%
       );
     background-position: var(--sparkle-pos, 50% 50%);
-    background-size: 110%; // Smanjeno sa 120% na 110%
+    background-size: 110%;
     background-blend-mode: overlay;
     z-index: 2;
-    filter: brightness(0.8) contrast(0.9); // Smanjeno sa 1 i 1
-    opacity: 0.6; // Smanjeno sa 0.75
+    filter: brightness(0.8) contrast(0.9);
+    opacity: 0.3;
   }
 
   &:hover:before {
-    opacity: 0.8; // Smanjeno sa 1
-    filter: brightness(0.5) contrast(1); // Smanjeno sa 0.75 i 1.25
+    opacity: 0.5;
+    filter: brightness(0.5) contrast(1);
   }
 
   &:hover:after {
-    opacity: 0.7; // Smanjeno sa 1
-    filter: brightness(0.9) contrast(1); // Smanjeno sa 1.2 i 1.2
+    opacity: 0.5;
+    filter: brightness(0.9) contrast(1);
   }
 }

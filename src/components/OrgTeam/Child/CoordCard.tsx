@@ -33,23 +33,22 @@ const CoordCard: React.FC<CoordCardProps> = ({ coordinator }) => {
     const h = rect.height;
     const w = rect.width;
 
-    // Izračunaj relativnu poziciju miša u odnosu na centar kartice
+    // relativna pozicija miša u odnosu na centar kartice
     const px = Math.abs(Math.floor((100 / w) * x) - 100);
     const py = Math.abs(Math.floor((100 / h) * y) - 100);
     const pa = 50 - px + (50 - py);
 
-    // Izračunaj poziciju za gradient i sparkle efekat
+    // pozicija za gradient i sparkle efekat
     const lp = 50 + (px - 50) / 1.5;
     const tp = 50 + (py - 50) / 1.5;
     const pxSpark = 50 + (px - 50) / 7;
     const pySpark = 50 + (py - 50) / 7;
     const opacity = 20 + Math.abs(pa) * 1.5;
 
-    // Povećani faktori rotacije
-    const ty = ((tp - 50) / 2) * -3; // Povećano sa -1 na -3
-    const tx = ((lp - 50) / 1.5) * 1.5; // Povećano sa 0.5 na 1.5
+    // faktori rotacije
+    const ty = ((tp - 50) / 2) * -2;
+    const tx = ((lp - 50) / 1.5) * 0.8;
 
-    // Dinamički ažuriraj CSS promenljive
     card.style.setProperty("--gradient-pos", `${lp}% ${tp}%`);
     card.style.setProperty("--sparkle-pos", `${pxSpark}% ${pySpark}%`);
     card.style.setProperty("--opacity", `${opacity / 100}`);
