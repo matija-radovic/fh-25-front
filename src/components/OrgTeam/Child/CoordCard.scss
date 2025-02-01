@@ -152,9 +152,7 @@
       115deg,
       transparent 25%,
       rgba(0, 231, 255, 0.4) 48%,
-      // Smanjen intenzitet boje
       rgba(255, 0, 231, 0.4) 52%,
-      // Smanjen intenzitet boje
       transparent 75%
     );
     background-position: var(--gradient-pos, 50% 50%);
@@ -169,15 +167,10 @@
       linear-gradient(
         125deg,
         #ff008420 15%,
-
         #fca40020 30%,
-
         #ffff0020 40%,
-
         #00ff8a10 60%,
-
         #00cfff20 70%,
-
         #cc4cfa20 85%
       );
     background-position: var(--sparkle-pos, 50% 50%);
@@ -196,5 +189,53 @@
   &:hover:after {
     opacity: 0.5;
     filter: brightness(0.9) contrast(1);
+  }
+
+  // Responzivnost za ekrane šire od 768px
+  @media (max-width: 1024px) {
+    height: 300px;
+    width: 200px;
+
+    .left {
+      .left-upper {
+        .vertical-text {
+          font-size: 30px;
+          left: 20px;
+        }
+      }
+
+      .left-lower {
+        .name h1 {
+          font-size: 18px;
+        }
+      }
+
+      .center-image {
+        width: 190px;
+        height: 250px;
+      }
+    }
+
+    .right {
+      width: 30px;
+
+      .star-image {
+        width: 15px;
+        height: 15px;
+      }
+
+      .FHLogo-image {
+        width: 25px;
+        height: 25px;
+      }
+
+      .role {
+        font-size: 12px;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    width: 190px;
+    height: 280px;
   }
 }

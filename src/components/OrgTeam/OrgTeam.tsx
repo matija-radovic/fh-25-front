@@ -66,6 +66,26 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
           <button className="slider-right-arrow" onClick={goToNext}></button>
         </div>
       </div>
+      <div className="mobile-org-team-slider">
+        <div className="org-team-slider-content">
+          <div className="org-team-cards">
+            <div></div>
+            <CoordCard
+              coordinator={{
+                coordinatorImage,
+                coordinatorFirstName,
+                coordinatorLastName,
+                coordinatorRole,
+              }}
+            />
+            <TeamCard team={{ teamImage, teamName }} />
+          </div>
+        </div>
+        <div className="slider-controls">
+          <button className="slider-left-arrow" onClick={goToPrevious}></button>
+          <button className="slider-right-arrow" onClick={goToNext}></button>
+        </div>
+      </div>
     </Section>
   );
 };

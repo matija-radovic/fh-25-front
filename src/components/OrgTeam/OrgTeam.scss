@@ -34,3 +34,20 @@
     }
   }
 }
+
+.mobile-org-team-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .org-team-slider {
+    .org-team-cards {
+      display: flex;
+      justify-content: space-between;
+      gap: 50px;
+    }
+  }
+}

@@ -1,15 +1,31 @@
 .team-card {
   max-width: 605px;
   max-height: 415px;
+  width: 100%;
+  height: auto;
   border: 7px solid #24bdde;
   border-radius: 30px;
   background-color: #24bdde;
   overflow: hidden;
   position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out, box-shadow 0.1s ease;
+  will-change: transform, box-shadow;
+  box-shadow: -5px -5px 5px -5px rgba(0, 231, 255, 0.5),
+    5px 5px 5px -5px rgba(255, 0, 231, 0.5),
+    0 55px 35px -20px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+
+  &:hover {
+    box-shadow: -20px -20px 30px -25px rgba(0, 231, 255, 0.75),
+      20px 20px 30px -25px rgba(0, 231, 255, 0.5),
+      0 0 13px 4px rgba(255, 255, 255, 0.3),
+      0 55px 35px -20px rgba(0, 0, 0, 0.5);
+  }
 
   img {
-    max-width: 605px;
-    max-height: 415px;
+    max-width: 100%;
+    height: auto;
     border-radius: 20px;
     object-fit: cover;
   }
@@ -22,14 +38,90 @@
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
+    z-index: 3;
   }
 
   .trapezoid {
     position: absolute;
     bottom: -5px;
     height: 40px;
-    width: 530px;
+    width: 90%;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-repeat: no-repeat;
+    opacity: var(--opacity, 0.5);
+    mix-blend-mode: color-dodge;
+    transition: all 0.33s ease;
+    pointer-events: none;
+  }
+
+  &:before {
+    background-image: linear-gradient(
+      115deg,
+      transparent 25%,
+      rgba(0, 231, 255, 0.4) 48%,
+      rgba(255, 0, 231, 0.4) 52%,
+      transparent 75%
+    );
+    background-position: var(--gradient-pos, 50% 50%);
+    background-size: 180% 180%;
+    opacity: 0.7;
+    filter: brightness(0.4) contrast(0.9);
+    z-index: 1;
+  }
+
+  &:after {
+    background-image: url("https://assets.codepen.io/13471/sparkles.gif"),
+      linear-gradient(
+        125deg,
+        #ff008420 15%,
+        #fca40020 30%,
+        #ffff0020 40%,
+        #00ff8a10 60%,
+        #00cfff20 70%,
+        #cc4cfa20 85%
+      );
+    background-position: var(--sparkle-pos, 50% 50%);
+    background-size: 110%;
+    background-blend-mode: overlay;
+    z-index: 2;
+    filter: brightness(0.8) contrast(0.9);
+    opacity: 0.6;
+  }
+
+  &:hover:before {
+    opacity: 0.8;
+    filter: brightness(0.5) contrast(1);
+  }
+
+  &:hover:after {
+    opacity: 0.7;
+    filter: brightness(0.9) contrast(1);
+  }
+
+  // Responzivnost za ekrane šire od 768px
+  @media (max-width: 1024px) {
+    max-width: 450px;
+    max-height: 300px;
+
+    .team-name {
+      font-size: 18px;
+    }
+
+    .trapezoid {
+      height: 30px;
+      width: 80%;
+    }
   }
 }
