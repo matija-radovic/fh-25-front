@@ -30,7 +30,7 @@ const Pocetna: React.FC = () => {
   const [width, setWidth] = useState(window.innerWidth);
 
   const [wavePath, setWavePath] = useState("");
-// Ovo je useEffect koji se koristi za animaciju talasa vode
+  // Ovo je useEffect koji se koristi za animaciju talasa vode
   useEffect(() => {
     setWidth(svgRef.current ? svgRef.current.clientWidth : window.innerWidth);
     const waveLength = width * 0.3;
@@ -42,14 +42,14 @@ const Pocetna: React.FC = () => {
       offset += speed;
 
       const generateSinPath = () => {
-      let d = `M 0 50`;
-      for (let i = 0; i <= segments; i++) {
-        const x = (i / segments) * width;
-        const y =
-        50 + Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
-        d += ` L ${x} ${y} `;
-      }
-      return d;
+        let d = `M 0 50`;
+        for (let i = 0; i <= segments; i++) {
+          const x = (i / segments) * width;
+          const y =
+            50 + Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
+          d += ` L ${x} ${y} `;
+        }
+        return d;
       };
 
       setWavePath(generateSinPath());
@@ -57,16 +57,16 @@ const Pocetna: React.FC = () => {
       const topPoints = [];
 
       for (let x = 0; x <= width; x += 10) {
-      const yTop =
-        Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
+        const yTop =
+          Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
 
-      topPoints.push(`${x}px ${yTop + amplitude}px`);
+        topPoints.push(`${x}px ${yTop + amplitude}px`);
       }
 
       if (svgRef.current) {
-      svgRef.current.style.clipPath = `polygon(0 0, ${topPoints.join(
-        ", "
-      )}, 100% calc(100%), 0 calc(100%))`;
+        svgRef.current.style.clipPath = `polygon(0 0, ${topPoints.join(
+          ", "
+        )}, 100% calc(100%), 0 calc(100%))`;
       }
 
       requestAnimationFrame(animate);
@@ -75,7 +75,17 @@ const Pocetna: React.FC = () => {
     const animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
   }, [width]);
-// Ovo je useEffect koji se koristi za deformisanje vode
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  // Ovo je useEffect koji se koristi za deformisanje vode
   useEffect(() => {
     const updatePath = () => {
       if (!svgRef.current) return;

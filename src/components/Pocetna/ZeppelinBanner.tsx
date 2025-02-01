@@ -24,7 +24,7 @@ const ZeppelinBanner = () => {
     const waveLength = width * 1.2;
     const amplitude = 5;
     const segments = 50;
-    const speed = 0.015;
+    const speed = 0.035;
     let offset = 0;
 
     const animate = () => {
