@@ -1,0 +1,123 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0A374B;
+  background-image:
+    linear-gradient(to right, #002440 2px, transparent 1px),
+    linear-gradient(to bottom, #002440 1px, transparent 1px),
+    linear-gradient(to left, #002440 2px, transparent 1px),
+    linear-gradient(to top, #002440 1px, transparent 1px);
+  background-size: 15px 13px;
+  background-repeat: repeat;
+  position: relative;
+}
+
+/* Horizontal lines */
+body::before {
+  content: '';
+  position: absolute;
+  top: 150px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 40px);
+  background-image: linear-gradient(to bottom, #064061 2px, transparent 1px);
+  background-size: 100% 180px;
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+/* Vertical lines */
+body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 180px;
+  width: calc(100% - 40px);
+  height: 100%;
+  background-image: linear-gradient(to right, #064061 2px, transparent 1px);
+  background-size: 180px 100%;
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.svg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.svg-animation {
+  width: 100%;
+  height: auto;
+}
+
+
+/* Binary Background */
+.binary-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 35px;
+  color: rgba(36, 189, 222, 0.3);
+  pointer-events: none;
+}
+
+.binary-char {
+  opacity: 0.7; /* Adjust opacity for a subtle effect */
+  margin: 2px 0px; /* Spacing between characters */
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .svg-container {
+    height: auto;
+    padding: 0;
+  }
+
+  .svg-animation {
+    width: 100%;
+    height: auto;
+  }
+
+  .fon-group {
+    transform: scale(0.48) translateY(-1px) translateX(1011px);
+  }
+
+  .hakaton-group {
+    transform: scale(0.48) translateY(100px) translateX(421px);
+  }
+}
+
