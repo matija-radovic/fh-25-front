@@ -6,3 +6,6 @@ export { Section }
 
 import ExampleComponent from "./Example/Example";
 export { ExampleComponent }
+
+import TextBox from "./-shared/Section/TextBox/TextBox";
+export { TextBox }

@@ -1,0 +1,88 @@
+@use './../../../../utils/css/mediaqueries';
+@use './../../../../utils/css/colors';
+
+$padding: 15px;
+
+.text-box {
+    border-radius: 34px;
+    text-align: center;
+    padding: $padding;
+
+    &>h2 {
+        margin: 10px;
+        text-align: center;
+    }
+
+    &-white {
+        background-color: rgba(colors.$bela, 0.4);
+    }
+
+    &-purple {
+        background-color: rgba(colors.$ljubičasta, 0.5);
+    }
+
+    &.text-box-w-650,
+    &.text-box-w-800,
+    &.text-box-w-900 {
+        width: 100%;
+    }
+
+    &.text-box-w-650 {
+        max-width: 650px;
+    }
+
+    &.text-box-w-800 {
+        max-width: 800px;
+    }
+
+    &.text-box-w-900 {
+        max-width: 900px;
+    }
+
+    &.text-box-about-competition {
+        min-height: 330px;
+
+        @media #{mediaqueries.$phone} {
+            min-height: 150px;
+            width: auto;
+            margin: 0 calc(var(--container-spacing) + 5%);
+        }
+    }
+
+    &.text-box-experiences {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @media #{mediaqueries.$except-phone} {
+            padding: 25px;
+        }
+
+        .experiences-content {
+            display: flex;
+            align-items: center;
+            text-align: left;
+            width: 100%;
+            gap: clamp(20px, 4.5vw, 40px);
+        }
+
+        &>img {
+            width: 220px;
+            height: 220px;
+            border-radius: 22px;
+            background-color: colors.$bela;
+
+            @media #{mediaqueries.$phone} {
+                width: 95px;
+                height: 95px;
+                border-radius: 22px;
+            }
+        }
+
+        .experiences-text {
+            text-align: left;
+            flex: 1;
+        }
+    }
+
+}
