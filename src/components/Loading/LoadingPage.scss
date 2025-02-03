@@ -22,38 +22,36 @@ body {
   background-size: 15px 13px;
   background-repeat: repeat;
   position: relative;
-}
 
-/* Horizontal lines */
-body::before {
-  content: '';
-  position: absolute;
-  top: 150px;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 40px);
-  background-image: linear-gradient(to bottom, #064061 2px, transparent 1px);
-  background-size: 100% 180px;
-  background-repeat: repeat;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.6;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 40px);
+    background-image: linear-gradient(to bottom, #064061 2px, transparent 1px);
+    background-size: 100% 180px;
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
+  }
 
-/* Vertical lines */
-body::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 180px;
-  width: calc(100% - 40px);
-  height: 100%;
-  background-image: linear-gradient(to right, #064061 2px, transparent 1px);
-  background-size: 180px 100%;
-  background-repeat: repeat;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.6;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 180px;
+    width: calc(100% - 40px);
+    height: 100%;
+    background-image: linear-gradient(to right, #064061 2px, transparent 1px);
+    background-size: 180px 100%;
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
+  }
 }
 
 .svg-container {
@@ -62,13 +60,12 @@ body::after {
   align-items: center;
   width: 100%;
   height: 100vh;
-}
 
-.svg-animation {
-  width: 100%;
-  height: auto;
+  .svg-animation {
+    width: 100%;
+    height: auto;
+  }
 }
-
 
 /* Binary Background */
 .binary-background {
@@ -85,11 +82,11 @@ body::after {
   font-size: 35px;
   color: rgba(36, 189, 222, 0.3);
   pointer-events: none;
-}
 
-.binary-char {
-  opacity: 0.7; /* Adjust opacity for a subtle effect */
-  margin: 2px 0px; /* Spacing between characters */
+  .binary-char {
+    opacity: 0.7;
+    margin: 2px 0px;
+  }
 }
 
 @keyframes float {
@@ -120,4 +117,3 @@ body::after {
     transform: scale(0.48) translateY(100px) translateX(421px);
   }
 }
-
