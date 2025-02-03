@@ -4,6 +4,7 @@ import Section from "../-shared/Section/Section";
 
 import CoordCard from "./Child/CoordCard";
 import TeamCard from "./Child/TeamCard";
+import Hexagon from "./Child/Hexagon";
 
 interface OrgTeamProps {
   teams: {
@@ -46,20 +47,32 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
   };
 
   return (
-    <Section heading="ORGANIZACIONI TIM">
+    <Section className="org-team-section" heading="ORGANIZACIONI TIM">
       <div className="org-team-slider">
-        <div className="org-team-slider-content">
-          <div className="org-team-cards">
-            <CoordCard
-              coordinator={{
-                coordinatorImage,
-                coordinatorFirstName,
-                coordinatorLastName,
-                coordinatorRole,
-              }}
-            />
-            <TeamCard team={{ teamImage, teamName }} />
-          </div>
+        <Hexagon
+          width={680}
+          height={680}
+          left={"5%"}
+          top={"-25%"}
+          className="large"
+        />
+        <Hexagon
+          width={163}
+          height={163}
+          left={"82%"}
+          top={"85%"}
+          className="small"
+        />
+        <div className="org-team-cards">
+          <CoordCard
+            coordinator={{
+              coordinatorImage,
+              coordinatorFirstName,
+              coordinatorLastName,
+              coordinatorRole,
+            }}
+          />
+          <TeamCard team={{ teamImage, teamName }} />
         </div>
         <div className="slider-controls">
           <button className="slider-left-arrow" onClick={goToPrevious}></button>
@@ -67,9 +80,12 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
         </div>
       </div>
       <div className="mobile-org-team-slider">
-        <div className="org-team-slider-content">
-          <div className="org-team-cards">
-            <div></div>
+        <div className="org-team-cards">
+          <div className="upper-section">
+            <button
+              className="slider-left-arrow"
+              onClick={goToPrevious}
+            ></button>
             <CoordCard
               coordinator={{
                 coordinatorImage,
@@ -78,12 +94,10 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
                 coordinatorRole,
               }}
             />
-            <TeamCard team={{ teamImage, teamName }} />
+            <button className="slider-right-arrow" onClick={goToNext}></button>
           </div>
-        </div>
-        <div className="slider-controls">
-          <button className="slider-left-arrow" onClick={goToPrevious}></button>
-          <button className="slider-right-arrow" onClick={goToNext}></button>
+
+          <TeamCard team={{ teamImage, teamName }} />
         </div>
       </div>
     </Section>

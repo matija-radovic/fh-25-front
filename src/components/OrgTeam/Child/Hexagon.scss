@@ -1,0 +1,33 @@
+.hexagon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  overflow: hidden;
+}
+
+.hexagon-border {
+  animation: rotateHex 30s linear infinite;
+  overflow: hidden;
+}
+
+@keyframes rotateHex {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hexagon-container.large {
+    transform: scale(0.95);
+    left: -50%; /* Pomeri veći hexagon udesno */
+    top: 100%;
+  }
+
+  .hexagon-container.small {
+    left: 75% !important; /* Pomeri manji hexagon ulevo */
+  }
+}

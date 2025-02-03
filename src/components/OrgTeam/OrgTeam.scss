@@ -1,53 +1,104 @@
-.org-team-slider {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-
-  .org-team-cards {
-    display: flex;
-    justify-content: space-between;
-    gap: 100px;
-  }
-
-  .slider-controls {
-    display: flex;
-    gap: 120px;
-    margin-top: 30px;
-    button {
-      min-width: 35px;
-      min-height: 45px;
-      background-color: #fff;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #dbdada;
-      }
-    }
-    .slider-left-arrow {
-      clip-path: polygon(0 50%, 100% 100%, 100% 0);
-    }
-    .slider-right-arrow {
-      clip-path: polygon(100% 50%, 0 100%, 0 0);
-    }
-  }
-}
-
-.mobile-org-team-slider {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-@media (max-width: 1024px) {
+.org-team-section {
+  width: 100%;
   .org-team-slider {
+    margin-top: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    gap: 20px;
+
     .org-team-cards {
       display: flex;
       justify-content: space-between;
-      gap: 50px;
+      gap: 100px;
+    }
+
+    .slider-controls {
+      display: flex;
+      gap: 120px;
+      margin-top: 30px;
+      button {
+        min-width: 35px;
+        min-height: 45px;
+        background-color: #fff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #dbdada;
+        }
+      }
+      .slider-left-arrow {
+        clip-path: polygon(0 50%, 100% 100%, 100% 0);
+      }
+      .slider-right-arrow {
+        clip-path: polygon(100% 50%, 0 100%, 0 0);
+      }
     }
   }
+
+  .mobile-org-team-slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .upper-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+      margin-bottom: 30px;
+
+      button {
+        min-width: 35px;
+        min-height: 45px;
+        background-color: #fff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #dbdada;
+        }
+      }
+      .slider-left-arrow {
+        clip-path: polygon(0 50%, 100% 100%, 100% 0);
+      }
+      .slider-right-arrow {
+        clip-path: polygon(100% 50%, 0 100%, 0 0);
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .org-team-slider {
+      .org-team-cards {
+        gap: 50px;
+      }
+    }
+  }
+
+  @media (min-width: 770px) {
+    .org-team-slider {
+      display: flex;
+    }
+    .mobile-org-team-slider {
+      display: none;
+    }
+  }
+
+  @media (max-width: 769px) {
+    .org-team-slider {
+      display: none;
+    }
+
+    .mobile-org-team-slider {
+      display: flex;
+    }
+  }
+}
+.org-team-section > h1 {
+  text-align: center;
 }

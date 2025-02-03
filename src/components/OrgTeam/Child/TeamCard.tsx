@@ -35,8 +35,8 @@ const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
     const opacity = 20 + Math.abs(pa) * 1.5;
 
     // Ispravljeni faktori rotacije
-    const ty = ((tp - 50) / 2) * -2; // Obrnuti znak za Y osu
-    const tx = ((lp - 50) / 1.5) * 0.9;
+    const ty = ((tp - 50) / 2) * -1; // Obrnuti znak za Y osu
+    const tx = ((lp - 50) / 1.5) * 0.5;
 
     // Dinamički ažuriraj CSS promenljive
     card.style.setProperty("--gradient-pos", `${lp}% ${tp}%`);
