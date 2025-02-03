@@ -1,3 +1,4 @@
+import Faq from '../../components/Faq/Faq'
 import './Test.scss'
 
 /**
@@ -7,7 +8,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      {/* Put your component here */}
+      <Faq />
     </>
   )
 }
