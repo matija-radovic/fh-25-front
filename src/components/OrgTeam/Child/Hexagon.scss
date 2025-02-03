@@ -22,9 +22,9 @@
 
 @media (max-width: 1024px) {
   .hexagon-container.large {
-    transform: scale(0.95);
-    left: -50%; /* Pomeri veći hexagon udesno */
-    top: 100%;
+    transform: scale(0.9);
+    left: -250%; /* Pomeri veći hexagon udesno */
+    top: 50%;
   }
 
   .hexagon-container.small {

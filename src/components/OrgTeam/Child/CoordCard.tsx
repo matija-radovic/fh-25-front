@@ -46,7 +46,7 @@ const CoordCard: React.FC<CoordCardProps> = ({ coordinator }) => {
     const opacity = 20 + Math.abs(pa) * 1.5;
 
     // faktori rotacije
-    const ty = ((tp - 50) / 2) * -2;
+    const ty = ((tp - 50) / 2) * -1;
     const tx = ((lp - 50) / 1.5) * 0.8;
 
     card.style.setProperty("--gradient-pos", `${lp}% ${tp}%`);
