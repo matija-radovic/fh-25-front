@@ -1,4 +1,5 @@
-import './Test.scss'
+import Form from "../../components/Form/Form";
+import "./Test.scss";
 
 /**
  * This component should be used to test your components, shared components or pages.
@@ -8,8 +9,9 @@ const Test = () => {
   return (
     <>
       {/* Put your component here */}
+      <Form />
     </>
-  )
-}
+  );
+};
 
-export default Test
+export default Test;

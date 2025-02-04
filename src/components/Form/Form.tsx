@@ -1,8 +1,16 @@
 import React from "react";
 import "./Form.scss";
+import IndividualForm from "./IndividualForm/IndividualForm";
 
 const Form = () => {
-  return <div></div>;
+  return (
+    <div>
+      <IndividualForm />
+      <IndividualForm />
+      <IndividualForm />
+      <IndividualForm />
+    </div>
+  );
 };
 
 export default Form;
