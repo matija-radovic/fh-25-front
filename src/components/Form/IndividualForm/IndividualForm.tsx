@@ -10,6 +10,7 @@ import CustomSelect from "../CustomSelect/CustomSelect";
 interface IndividualFormProps {
   nextForm: () => void;
   prevForm: () => void;
+  indexIndividual: number;
 }
 // Shema za validaciju
 const formSchema = z.object({
@@ -26,6 +27,7 @@ const formSchema = z.object({
 const IndividualForm: React.FC<IndividualFormProps> = ({
   nextForm,
   prevForm,
+  indexIndividual,
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -82,7 +84,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
         </div>
         <form className="form-body" onSubmit={handleSubmit}>
           <div className="form-body-upper">
-            <p className="form-upper-p">1. ČLAN</p>
+            <p className="form-upper-p">{indexIndividual}. ČLAN</p>
           </div>
           <div className="form-body-center">
             <div className="center-upper">

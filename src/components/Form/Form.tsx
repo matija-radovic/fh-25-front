@@ -25,22 +25,26 @@ const Form = () => {
     <IndividualForm
       key={0}
       nextForm={handleNextForm}
-      prevForm={() => setCurrentIndex(0)} // Dodajemo handlePrevForm za prvu formu
+      prevForm={() => setCurrentIndex(0)}
+      indexIndividual={1} // Dodajemo handlePrevForm za prvu formu
     />,
     <IndividualForm
       key={1}
       nextForm={handleNextForm}
       prevForm={handlePrevForm}
+      indexIndividual={2}
     />,
     <IndividualForm
       key={2}
       nextForm={handleNextForm}
       prevForm={handlePrevForm}
+      indexIndividual={3}
     />,
     <IndividualForm
       key={3}
       nextForm={handleNextForm}
       prevForm={handlePrevForm}
+      indexIndividual={4}
     />,
   ];
 
