@@ -1,0 +1,145 @@
+@import "../../../../utils/css/_mediaqueries.scss";
+
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px;
+
+  .slider-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+
+    .slider-item {
+      flex: 0 0 auto;
+      transition: opacity 0.5s linear, transform 0.5s linear;
+      opacity: 0.5;
+      width: 15%;
+      max-width: 250px;
+      padding: 10px;
+      border-radius: 10%;
+      aspect-ratio: 1 / 1;
+      background-size: cover;
+      background-position: center;
+      background-color: white; // optional
+    }
+  }
+
+  .slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.prev {
+      left: 2px;
+    }
+    &.next {
+      right: 2px;
+    }
+
+    .arrow {
+      width: 0;
+      height: 0;
+      border-style: solid;
+
+      &.left {
+        border-width: 18px 27px 18px 0;
+        border-color: transparent white transparent transparent;
+      }
+
+      &.right {
+        border-width: 18px 0 18px 27px;
+        border-color: transparent transparent transparent white;
+      }
+    }
+  }
+}
+
+@media #{$tablet} {
+  .slider {
+    padding: 5px;
+
+    .slider-content {
+      .slider-item {
+        width: 20%;
+        max-width: 250px;
+        padding: 8px;
+      }
+    }
+
+    .slider-button {
+      width: 30px;
+      height: 30px;
+
+      &.prev {
+        left: 2px;
+      }
+      &.next {
+        right: 2px;
+      }
+
+      .arrow {
+        &.left {
+          border-width: 16px 24px 16px 0;
+        }
+
+        &.right {
+          border-width: 16px 0 16px 24px;
+        }
+      }
+    }
+  }
+}
+
+
+@media #{$phone} {
+  .slider {
+    padding: 5px;
+
+    .slider-content {
+      .slider-item {
+        width: 30%;
+        max-width: 150px;
+        padding: 3px;
+      }
+    }
+
+    .slider-button {
+      width: 20px;
+      height: 20px;
+
+      &.prev {
+        left: 2px;
+      }
+      &.next {
+        right: 2px;
+      }
+
+      .arrow {
+        &.left {
+          border-width: 10px 15px 10px 0;
+        }
+        &.right {
+          border-width: 10px 0 10px 15px;
+        }
+      }
+    }
+  }
+}
