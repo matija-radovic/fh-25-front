@@ -4,9 +4,10 @@
   height: 730px;
   width: 1110px;
   overflow: hidden;
+
   .form-textbox {
     background-color: white;
-    border: 0px;
+    border: none;
     border-radius: 8px;
     font-size: 16px;
     height: 45px;
@@ -15,16 +16,25 @@
     color: black;
     outline: 0;
     transition: all 0.2s ease-in-out;
-  }
-  .form-textbox:hover {
-    background-color: #2a7697;
-    color: white;
-    padding: 0 10px;
-  }
-  .form-textbox:focus {
-    background-color: #2a7697;
-    color: white;
-    padding: 0 10px;
+
+    &.error {
+      border: 1px solid red; // Crveni okvir za polje sa greškom
+      &::placeholder {
+        color: red; // Crvena boja za placeholder (grešku)
+      }
+    }
+
+    &:hover {
+      background-color: #2a7697;
+      color: white;
+      padding: 0 10px;
+    }
+
+    &:focus {
+      background-color: #2a7697;
+      color: white;
+      padding: 0 10px;
+    }
   }
 
   .form-header {
@@ -37,16 +47,18 @@
     padding-left: 50px;
     padding-right: 35px;
     justify-content: space-between;
+
     .prijava-text {
       font-size: 32px;
-
       text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
   }
+
   .form-body {
     background: linear-gradient(to bottom, #24bdde, #002440);
     padding: 20px;
     font-family: "Montserrat", sans-serif;
+
     .form-body-upper {
       .form-upper-p {
         font-size: 20px;
@@ -63,14 +75,15 @@
       flex-direction: row;
       font-size: 20px;
       gap: 50px;
+
       .form-label {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
+
       .form-name {
-        width: 100%;
-        max-width: 300px;
+        width: 300px;
         align-items: center;
       }
 
@@ -78,6 +91,7 @@
         align-items: center;
         width: 310px;
       }
+
       .form-email {
         align-items: center;
         width: 415px;
@@ -88,17 +102,20 @@
         max-width: 100%;
         padding: 10px;
         height: 170px;
+        font-size: 16px;
       }
+
       .form-tech-label {
         display: flex;
         flex-direction: column;
         gap: 15px;
       }
+
       input[type="radio"] {
         appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
-        width: 27px; /* Podešava veličinu */
+        width: 27px;
         height: 27px;
         border-radius: 100%;
         box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -107,45 +124,48 @@
         cursor: pointer;
         background-color: white;
         transition: all 0.3s ease-in-out;
-      }
-      input[type="radio"]:hover {
-        background-color: #2a7697;
+
+        &:hover {
+          background-color: #2a7697;
+        }
+
+        &::before {
+          content: "";
+          width: 17px;
+          height: 17px;
+          background-color: #24bdde;
+          border-radius: 100%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
+        }
+
+        &:checked::before {
+          opacity: 1;
+        }
       }
 
-      /* Dodaj unutrašnji kružić kada je selektovan */
-      input[type="radio"]::before {
-        content: "";
-        width: 17px;
-        height: 17px;
-        background-color: #24bdde; /* Beli unutrašnji krug */
-        border-radius: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-        transition: opacity 0.2s ease-in-out;
-      }
-
-      /* Prikaži unutrašnji krug kada je selektovan */
-      input[type="radio"]:checked::before {
-        opacity: 1;
-      }
       .center-upper-left {
         display: flex;
         flex-direction: column;
         width: 500px;
         gap: 20px;
       }
+
       .center-upper-right {
         display: flex;
         flex-direction: column;
+        width: 465px;
 
         .occupation-div {
           display: flex;
           flex-direction: row;
-          gap: 30px;
+          gap: 65px;
           margin-bottom: 40px;
+
           .occupation-radio {
             display: flex;
             flex-direction: column;
@@ -157,40 +177,47 @@
             }
           }
         }
+
         .grade-label {
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: space-between;
+          text-align: right;
         }
+
         .school-label {
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 10px;
           margin-bottom: 30px;
           text-wrap: nowrap;
         }
       }
     }
+
     .center-cv {
       display: flex;
       padding-left: 30px;
       padding-right: 30px;
       align-items: center;
       gap: 10px;
+
       .center-cv-textbox {
         width: 830px;
       }
+
       margin-bottom: 55px;
     }
+
     .form-body-lower {
       display: flex;
       gap: 10px;
       justify-content: flex-end;
       padding-left: 60px;
       padding-right: 60px;
+
       button {
         padding-top: 3px;
         min-width: 35px;
@@ -200,9 +227,11 @@
         border-radius: 8px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         transition: all 0.3s ease-in-out;
-      }
-      button:hover {
-        background-color: #ffffff;
+
+        &:hover {
+          background-color: #ffffff;
+          cursor: pointer;
+        }
       }
     }
   }

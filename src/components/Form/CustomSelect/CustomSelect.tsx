@@ -6,7 +6,8 @@ interface CustomSelectProps {
   name: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  values: string[]; // Sada samo prosleđuješ niz stringova
+  values: string[];
+  className?: string;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -14,6 +15,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   value,
   onChange,
   values,
+  className,
 }) => {
   return (
     <div className="dropdown-container">
@@ -21,7 +23,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         name={name}
         value={value}
         onChange={onChange}
-        className="custom-select"
+        className={`custom-select ${className || ""}`}
       >
         <option value="">Izaberite...</option>
         {values.map((val, index) => (
