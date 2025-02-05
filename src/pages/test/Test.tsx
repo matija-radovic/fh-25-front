@@ -1,4 +1,5 @@
 import Form from "../../components/Form/Form";
+import TeamForm from "../../components/Form/TeamForm/TeamForm";
 import "./Test.scss";
 
 /**

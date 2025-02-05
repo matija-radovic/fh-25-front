@@ -1,0 +1,169 @@
+.team-form-container {
+  border-radius: 70px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 730px;
+  width: 1110px;
+  background: linear-gradient(to bottom, #24bdde, #002440);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+
+  .team-form-header {
+    background: linear-gradient(to right, #002440, #24bdde);
+    height: 65px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 35px;
+    justify-content: space-between;
+
+    .prijava-text {
+      font-size: 32px;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .icons img {
+      height: 40px;
+    }
+  }
+
+  .team-form-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 50px;
+    font-family: "Montserrat", sans-serif;
+
+    .team-form-body-upper {
+      display: flex;
+
+      gap: 20px;
+      flex-grow: 1;
+      height: 100%;
+
+      .team-form-body-upper-left,
+      .team-form-body-upper-right {
+        width: 48%;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        label {
+          font-size: 18px;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+      }
+      .team-form-label {
+        display: flex;
+        gap: 10px;
+      }
+      // 🛠 **Promena za team-form-motivation**
+      .team-form-body-upper-left {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
+        .team-form-label-name {
+          display: flex;
+          flex-direction: row;
+          max-height: 45px;
+          align-items: center;
+          gap: 10px;
+          text-wrap: nowrap;
+          text-align: center;
+          justify-content: center;
+          margin-bottom: 30px;
+        }
+
+        .team-form-motivation {
+          height: 100%;
+          resize: none;
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      .team-form-body-upper-right {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        .team-form-roles,
+        .team-form-situations {
+          flex-grow: 1;
+          height: 100%;
+          resize: none;
+        }
+
+        .team-form-label-situations {
+          margin-top: 25px;
+        }
+      }
+
+      .team-form-textbox {
+        width: 100%;
+        background-color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        padding: 10px;
+        color: black;
+        outline: none;
+        transition: all 0.2s ease-in-out;
+        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+        &:focus {
+          background-color: #1a91c1;
+          color: white;
+        }
+        &.error {
+          border: 1px solid red; // Crveni okvir za polje sa greškom
+          &::placeholder {
+            color: red; // Crvena boja za placeholder (grešku)
+          }
+        }
+      }
+    }
+  }
+
+  .team-form-body-lower {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 60px;
+
+    button {
+      padding-top: 3px;
+      min-width: 35px;
+      min-height: 35px;
+      background-color: #24bdde;
+      font-family: "Montserrat", sans-serif;
+      border: 0;
+      color: black;
+      font-size: 24px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        height: 20px;
+      }
+
+      &:hover {
+        background-color: #ffffff;
+        cursor: pointer;
+      }
+    }
+    .right-button {
+      padding: 5px;
+    }
+  }
+}

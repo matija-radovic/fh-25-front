@@ -1,20 +1,18 @@
 import { useState } from "react";
 import "./Form.scss";
 import IndividualForm from "./IndividualForm/IndividualForm";
+import TeamForm from "./TeamForm/TeamForm";
 
 const Form = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [hiddenForms, setHiddenForms] = useState<number[]>([]); // Niz za sakrivene forme
+  const [hiddenForms, setHiddenForms] = useState<number[]>([]);
 
   const handleNextForm = () => {
-    // Sakrijemo trenutnu formu kada se submituje
     setHiddenForms((prevHidden) => [...prevHidden, currentIndex]);
-    // Pomeramo se na sledeću formu
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
   const handlePrevForm = () => {
-    // Vraćamo se na prethodnu formu i uklanjamo je iz sakrivenih
     setHiddenForms((prevHidden) =>
       prevHidden.filter((index) => index !== currentIndex - 1)
     );
@@ -26,7 +24,7 @@ const Form = () => {
       key={0}
       nextForm={handleNextForm}
       prevForm={() => setCurrentIndex(0)}
-      indexIndividual={1} // Dodajemo handlePrevForm za prvu formu
+      indexIndividual={1}
     />,
     <IndividualForm
       key={1}
@@ -46,13 +44,13 @@ const Form = () => {
       prevForm={handlePrevForm}
       indexIndividual={4}
     />,
+    <TeamForm key={4} nextForm={handleNextForm} prevForm={handlePrevForm} />,
   ];
 
   return (
     <div className="form-wrapper">
       <div className="forms-container">
         {forms.map((form, index) => {
-          // Brojimo koliko formi ispred ove je sakriveno
           const hiddenBefore = hiddenForms.filter(
             (hiddenIndex) => hiddenIndex < index
           ).length;
@@ -66,7 +64,7 @@ const Form = () => {
                 transform: `translate(${(index - hiddenBefore) * -20}px, ${
                   (index - hiddenBefore) * -20
                 }px)`,
-                opacity: hiddenForms.includes(index) ? 0 : 1, // Sakrijemo formu ako je u hiddenForms
+                opacity: hiddenForms.includes(index) ? 0 : 1,
                 transition:
                   "transform 0.3s ease-in-out, opacity 0.3s ease-in-out",
               }}
