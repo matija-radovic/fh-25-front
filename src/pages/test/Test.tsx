@@ -1,4 +1,5 @@
 import MobileForm from "../../components/MobileForm/MobileForm";
+import Form from "../../components/Form/Form";
 import "./Test.scss";
 
 /**
@@ -9,7 +10,8 @@ const Test = () => {
   return (
     <>
       {/* Put your component here */}
-      <MobileForm />
+      <Form />
+      {/*<MobileForm />*/}
     </>
   );
 };

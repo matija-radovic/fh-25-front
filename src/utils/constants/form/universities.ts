@@ -1,1 +1,22 @@
-export const universities = [] as const;
+export const universities = [
+  "Univerzitet u Beogradu",
+  "Univerzitet u Novom Sadu",
+  "Univerzitet u Nišu",
+  "Univerzitet u Kragujevcu",
+  "Univerzitet u Novom Pazaru",
+  "Univerzitet u Prištini",
+  "Univerzitet u Banjoj Luci",
+  "Univerzitet u Sarajevu",
+  "Univerzitet u Podgorici",
+  "Univerzitet u Skoplju",
+  "Fakultet organizacionih nauka (FON)",
+  "Elektrotehnički fakultet u Beogradu",
+  "Mašinski fakultet u Beogradu",
+  "Pravni fakultet u Beogradu",
+  "Medicinski fakultet u Beogradu",
+  "Filozofski fakultet u Beogradu",
+  "Ekonomski fakultet u Beogradu",
+  "Arhitektonski fakultet u Beogradu",
+  "Fakultet dramskih umetnosti u Beogradu",
+  "Fakultet za informacione tehnologije u Beogradu",
+] as const;

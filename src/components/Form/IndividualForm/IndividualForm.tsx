@@ -8,15 +8,16 @@ import icons from "../../../assets/Form/icons.svg";
 import leftArrow from "../../../assets/Form/leftarrow.svg";
 import rightArrow from "../../../assets/Form/rightarrow.svg";
 import CustomSelect from "../CustomSelect/CustomSelect";
+import { Profession } from "../../../utils/constants/form/professions";
+import { schools } from "../../../utils/constants/form/schools";
+import { universities } from "../../../utils/constants/form/universities";
 
-// Liste fakulteta i škola
-const HIGH_SCHOOLS = ["Tehnička", "Gimnazija", "Elektrotehnička", "Umetnička"];
-const FACULTIES = [
-  "Tehnički fakultet",
-  "Filozofski fakultet",
-  "Ekonomski fakultet",
-  "Umetnički fakultet",
-];
+import { Contestant } from "../../../utils/api/models/contestant.model";
+
+import {
+  HighSchoolYear,
+  UniversityYear,
+} from "../../../utils/constants/form/schoolYears";
 
 // Shema za validaciju
 const formSchema = z
@@ -26,15 +27,19 @@ const formSchema = z
     email: z.string().email("Unesite validnu email adresu."),
     technologies: z.string().min(1, "Tehnologije su obavezne."),
     cvLink: z.string().url("Unesite validan URL za CV."),
-    occupation: z.enum(["Zaposlen", "Student", "Srednjoškolac"]),
+    occupation: z.enum([
+      Profession.EMPLOYED,
+      Profession.STUDENT,
+      Profession.HIGH_SCHOOL_STUDENT,
+    ]),
     school: z.string().optional(),
     grade: z.string().optional(),
   })
   .refine(
     (data) => {
       if (
-        data.occupation === "Student" ||
-        data.occupation === "Srednjoškolac"
+        data.occupation === Profession.STUDENT ||
+        data.occupation === Profession.HIGH_SCHOOL_STUDENT
       ) {
         return data.school && data.grade;
       }
@@ -45,17 +50,20 @@ const formSchema = z
       path: ["school", "grade"],
     }
   );
-
 interface IndividualFormProps {
   nextForm: () => void;
   prevForm: () => void;
   indexIndividual: number;
+  onSaveContestant: (contestant: Contestant) => void;
+  onSkipFourthMember?: () => void; // Dodato za preskakanje
 }
 
 const IndividualForm: React.FC<IndividualFormProps> = ({
   nextForm,
   prevForm,
   indexIndividual,
+  onSaveContestant,
+  onSkipFourthMember,
 }) => {
   const {
     control,
@@ -70,7 +78,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
       email: "",
       technologies: "",
       cvLink: "",
-      occupation: "Srednjoškolac",
+      occupation: Profession.HIGH_SCHOOL_STUDENT,
       school: "",
       grade: "",
     },
@@ -78,9 +86,23 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
 
   const occupation = watch("occupation");
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Forma je uspešno validirana:", data);
-    nextForm();
+  const onSubmit = (data: any) => {
+    const contestant: Contestant = {
+      email: data.email,
+      name: data.name,
+      phoneNumber: data.phone,
+      techDescription: data.technologies,
+      CVURL: data.cvLink,
+      proffesion: data.occupation,
+      educationalInstitution: data.school || undefined,
+      yearOfStudy: data.grade || undefined,
+    };
+
+    // Sačuvaj podatke o učesniku
+    onSaveContestant(contestant);
+
+    console.log("Podaci o učesniku:", contestant);
+    nextForm(); // Prelazak na sledeću formu
   };
 
   return (
@@ -191,8 +213,8 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                           <input
                             {...field}
                             type="radio"
-                            value="Zaposlen"
-                            checked={field.value === "Zaposlen"}
+                            value={Profession.EMPLOYED}
+                            checked={field.value === Profession.EMPLOYED}
                           />
                           Zaposlen
                         </label>
@@ -200,8 +222,8 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                           <input
                             {...field}
                             type="radio"
-                            value="Student"
-                            checked={field.value === "Student"}
+                            value={Profession.STUDENT}
+                            checked={field.value === Profession.STUDENT}
                           />
                           Student
                         </label>
@@ -209,8 +231,10 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                           <input
                             {...field}
                             type="radio"
-                            value="Srednjoškolac"
-                            checked={field.value === "Srednjoškolac"}
+                            value={Profession.HIGH_SCHOOL_STUDENT}
+                            checked={
+                              field.value === Profession.HIGH_SCHOOL_STUDENT
+                            }
                           />
                           Srednjoškolac
                         </label>
@@ -221,10 +245,11 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
               </div>
 
               {/* Prikaz polja u zavisnosti od zanimanja */}
-              {(occupation === "Srednjoškolac" || occupation === "Student") && (
+              {(occupation === Profession.HIGH_SCHOOL_STUDENT ||
+                occupation === Profession.STUDENT) && (
                 <>
                   <label className="school-label">
-                    {occupation === "Srednjoškolac"
+                    {occupation === Profession.HIGH_SCHOOL_STUDENT
                       ? "Srednja škola:"
                       : "Fakultet:"}
                     <Controller
@@ -234,9 +259,9 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                         <CustomSelect
                           {...field}
                           values={
-                            occupation === "Srednjoškolac"
-                              ? HIGH_SCHOOLS
-                              : FACULTIES
+                            occupation === Profession.HIGH_SCHOOL_STUDENT
+                              ? schools
+                              : universities
                           }
                           className={errors.school ? "error" : ""}
                         />
@@ -245,7 +270,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                   </label>
 
                   <label className="grade-label">
-                    {occupation === "Srednjoškolac"
+                    {occupation === Profession.HIGH_SCHOOL_STUDENT
                       ? "Razred:"
                       : "Godina studija:"}
                     <Controller
@@ -254,7 +279,11 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                       render={({ field }) => (
                         <CustomSelect
                           {...field}
-                          values={["1", "2", "3", "4"]}
+                          values={
+                            occupation === Profession.HIGH_SCHOOL_STUDENT
+                              ? Object.keys(HighSchoolYear)
+                              : Object.keys(UniversityYear)
+                          }
                           className={errors.grade ? "error" : ""}
                         />
                       )}
@@ -285,7 +314,11 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
           </label>
           <div className="form-body-lower">
             {indexIndividual === 4 && (
-              <button className="fourth" onClick={nextForm}>
+              <button
+                className="fourth"
+                type="button" // Dodato type="button" da sprečimo automatsko slanje forme
+                onClick={onSkipFourthMember} // Koristi onSkipFourthMember
+              >
                 <p>Bez 4. člana</p>
               </button>
             )}

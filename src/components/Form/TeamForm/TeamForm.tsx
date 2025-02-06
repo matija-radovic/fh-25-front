@@ -18,9 +18,14 @@ const formSchema = z.object({
 interface TeamFormProps {
   nextForm: () => void;
   prevForm: () => void;
+  onSaveTeamData: (teamData: any) => void; // Dodato za čuvanje podataka o timu
 }
 
-const TeamForm: React.FC<TeamFormProps> = ({ nextForm, prevForm }) => {
+const TeamForm: React.FC<TeamFormProps> = ({
+  nextForm,
+  prevForm,
+  onSaveTeamData,
+}) => {
   const {
     control,
     handleSubmit,
@@ -35,9 +40,12 @@ const TeamForm: React.FC<TeamFormProps> = ({ nextForm, prevForm }) => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Forma je uspešno validirana:", data);
-    nextForm();
+  const onSubmit = (data: any) => {
+    // Sačuvaj podatke o timu
+    onSaveTeamData(data);
+
+    console.log("Podaci o timu:", data);
+    nextForm(); // Prelazak na sledeću formu
   };
 
   return (

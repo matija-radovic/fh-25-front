@@ -5,14 +5,12 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import MobileCustomSelect from "../MobileCustomSelect/MobileCustomSelect";
-
-const HIGH_SCHOOLS = ["Tehnička", "Gimnazija", "Elektrotehnička", "Umetnička"];
-const FACULTIES = [
-  "Tehnički fakultet",
-  "Filozofski fakultet",
-  "Ekonomski fakultet",
-  "Umetnički fakultet",
-];
+import { Profession } from "../../constants/form/professions";
+import { schools, universities } from "../../constants/form/schools";
+import { HighSchoolYear, UniversityYear } from "../../constants/form/schoolYears";
+import { Contestant } from "../../utils/api/models/contestant.model";
+import { FHApplication } from "../../utils/api/models/application.model";
+import { applicationService } from "../../utils/api/services/applications.service";
 
 // Shema za validaciju
 const formSchema = z
@@ -22,15 +20,19 @@ const formSchema = z
     email: z.string().email("Unesite validnu email adresu."),
     technologies: z.string().min(1, "Tehnologije su obavezne."),
     cvLink: z.string().url("Unesite validan URL za CV."),
-    occupation: z.enum(["Zaposlen", "Student", "Srednjoškolac"]),
+    occupation: z.enum([
+      Profession.EMPLOYED,
+      Profession.STUDENT,
+      Profession.HIGH_SCHOOL_STUDENT,
+    ]),
     school: z.string().optional(),
     grade: z.string().optional(),
   })
   .refine(
     (data) => {
       if (
-        data.occupation === "Student" ||
-        data.occupation === "Srednjoškolac"
+        data.occupation === Profession.STUDENT ||
+        data.occupation === Profession.HIGH_SCHOOL_STUDENT
       ) {
         return data.school && data.grade;
       }
@@ -46,12 +48,14 @@ interface MobileIndividualFormProps {
   nextForm: () => void;
   prevForm: () => void;
   indexIndividual: number;
+  onSaveContestant: (contestant: Contestant) => void; // Dodato za čuvanje podataka o učesniku
 }
 
 const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
   nextForm,
   prevForm,
   indexIndividual,
+  onSaveContestant,
 }) => {
   const {
     control,
@@ -66,7 +70,7 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
       email: "",
       technologies: "",
       cvLink: "",
-      occupation: "Srednjoškolac",
+      occupation: Profession.HIGH_SCHOOL_STUDENT,
       school: "",
       grade: "",
     },
@@ -74,10 +78,25 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
 
   const occupation = watch("occupation");
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Forma je uspešno validirana:", data);
-    nextForm();
+  const onSubmit = async (data: any) => {
+    const contestant: Contestant = {
+      email: data.email,
+      name: data.name,
+      phoneNumber: data.phone,
+      techDescription: data.technologies,
+      CVURL: data.cvLink,
+      proffesion: data.occupation,
+      educationalInstitution: data.school || undefined,
+      yearOfStudy: data.grade || undefined,
+    };
+
+    // Sačuvaj podatke o učesniku
+    onSaveContestant(contestant);
+
+    console.log("Podaci o učesniku:", contestant);
+    nextForm(); // Prelazak na sledeću formu
   };
+
   return (
     <Section isContainer={false}>
       <div className="mobile-form-container">
@@ -170,8 +189,8 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                       <input
                         {...field}
                         type="radio"
-                        value="Zaposlen"
-                        checked={field.value === "Zaposlen"}
+                        value={Profession.EMPLOYED}
+                        checked={field.value === Profession.EMPLOYED}
                       />
                       Zaposlen
                     </label>
@@ -179,8 +198,8 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                       <input
                         {...field}
                         type="radio"
-                        value="Student"
-                        checked={field.value === "Student"}
+                        value={Profession.STUDENT}
+                        checked={field.value === Profession.STUDENT}
                       />
                       Student
                     </label>
@@ -188,8 +207,8 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                       <input
                         {...field}
                         type="radio"
-                        value="Srednjoškolac"
-                        checked={field.value === "Srednjoškolac"}
+                        value={Profession.HIGH_SCHOOL_STUDENT}
+                        checked={field.value === Profession.HIGH_SCHOOL_STUDENT}
                       />
                       Srednjoškolac
                     </label>
@@ -198,10 +217,12 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
               />
             </div>
           </div>
-          {(occupation === "Srednjoškolac" || occupation === "Student") && (
+
+          {(occupation === Profession.HIGH_SCHOOL_STUDENT ||
+            occupation === Profession.STUDENT) && (
             <>
               <label className="mobile-school-label">
-                {occupation === "Srednjoškolac"
+                {occupation === Profession.HIGH_SCHOOL_STUDENT
                   ? "Srednja škola:"
                   : "Fakultet:"}
                 <Controller
@@ -211,65 +232,8 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                     <MobileCustomSelect
                       {...field}
                       values={
-                        occupation === "Srednjoškolac"
-                          ? HIGH_SCHOOLS
-                          : FACULTIES
+                        occupation === Profession.HIGH_SCHOOL_STUDENT
+                          ? schools
+                          : universities
                       }
-                      className={errors.school ? "error" : ""}
-                    />
-                  )}
-                />
-              </label>
-
-              <label className="mobile-grade-label">
-                {occupation === "Srednjoškolac" ? "Razred:" : "Godina studija:"}
-                <Controller
-                  name="grade"
-                  control={control}
-                  render={({ field }) => (
-                    <MobileCustomSelect
-                      {...field}
-                      values={["1", "2", "3", "4"]}
-                      className={errors.grade ? "error" : ""}
-                    />
-                  )}
-                />
-              </label>
-            </>
-          )}
-          <label className="mobile-school-label">
-            Link ka CV-ju:
-            <Controller
-              name="cvLink"
-              control={control}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  className={`mobile-form-textbox ${
-                    errors.cvLink ? "error" : ""
-                  }`}
-                  type="url"
-                  placeholder={
-                    errors.cvLink?.message || "Unesite link ka CV-ju"
-                  }
-                />
-              )}
-            />
-          </label>
-          <div className="mobile-buttons">
-            <button
-              className="mobile-button-left-arrow"
-              onClick={prevForm}
-            ></button>
-            <button
-              className="mobile-button-right-arrow"
-              type="submit"
-            ></button>
-          </div>
-        </form>
-      </div>
-    </Section>
-  );
-};
-
-export default MobileIndividualForm;
+                      className={errors.school ? "error

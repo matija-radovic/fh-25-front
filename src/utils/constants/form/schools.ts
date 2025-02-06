@@ -1,1 +1,17 @@
-export const schools = [] as const;
+export const schools = [
+  "Prva beogradska gimnazija",
+  "Druga beogradska gimnazija",
+  "Treća beogradska gimnazija",
+  "Četvrta beogradska gimnazija",
+  "Prva novosadska gimnazija",
+  "Druga novosadska gimnazija",
+  "Gimnazija 'Svetozar Marković' u Nišu",
+  "Gimnazija 'Jovan Jovanović Zmaj' u Novom Sadu",
+  "Tehnička škola 'Mihajlo Pupin' u Beogradu",
+  "Elektrotehnička škola 'Nikola Tesla' u Beogradu",
+  "Medicinska škola 'Dr Dragiša Mišović' u Beogradu",
+  "Ekonomska škola 'Mihailo Đurić' u Beogradu",
+  "Umetnička škola 'Laza Kostić' u Novom Sadu",
+  "Gimnazija 'Isidora Sekulić' u Beogradu",
+  "Gimnazija 'Bora Stanković' u Nišu",
+] as const;
