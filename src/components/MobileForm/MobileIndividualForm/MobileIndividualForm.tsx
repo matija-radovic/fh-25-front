@@ -245,7 +245,7 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
               render={({ field }) => (
                 <input
                   {...field}
-                  className={`mobile-form-textbox center-cv-textbox ${
+                  className={`mobile-form-textbox ${
                     errors.cvLink ? "error" : ""
                   }`}
                   type="url"
