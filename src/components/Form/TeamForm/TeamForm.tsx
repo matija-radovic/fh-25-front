@@ -6,7 +6,6 @@ import "./TeamForm.scss";
 import Section from "../../-shared/Section/Section";
 import icons from "../../../assets/Form/icons.svg";
 import leftArrow from "../../../assets/Form/leftarrow.svg";
-import rightArrow from "../../../assets/Form/rightarrow.svg";
 
 // Shema za validaciju
 const formSchema = z.object({
