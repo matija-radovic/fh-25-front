@@ -81,7 +81,7 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
   return (
     <Section isContainer={false}>
       <div className="mobile-form-container">
-        <div className="mobile-form-wrapper">
+        <form className="mobile-form-wrapper" onSubmit={handleSubmit(onSubmit)}>
           <h1 className="mobile-form-prijave-text">PRIJAVA</h1>
           <p className="mobile-form-individual">Član {indexIndividual} </p>
           <label className="mobile-form-label">
@@ -256,7 +256,17 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
               )}
             />
           </label>
-        </div>
+          <div className="mobile-buttons">
+            <button
+              className="mobile-button-left-arrow"
+              onClick={prevForm}
+            ></button>
+            <button
+              className="mobile-button-right-arrow"
+              type="submit"
+            ></button>
+          </div>
+        </form>
       </div>
     </Section>
   );
