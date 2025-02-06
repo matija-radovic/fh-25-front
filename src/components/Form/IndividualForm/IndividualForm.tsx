@@ -322,7 +322,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                 <p>Bez 4. člana</p>
               </button>
             )}
-            <button className="left-button" onClick={prevForm}>
+            <button className="left-button" type="button" onClick={prevForm}>
               <img src={leftArrow} alt="<" />
             </button>
             <button className="right-button" type="submit">

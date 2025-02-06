@@ -141,7 +141,7 @@ const TeamForm: React.FC<TeamFormProps> = ({
             </div>
           </div>
           <div className="team-form-body-lower">
-            <button className="left-button" onClick={prevForm}>
+            <button className="left-button" type="button" onClick={prevForm}>
               <img src={leftArrow} alt="<" />
             </button>
             <button className="right-button" type="submit">

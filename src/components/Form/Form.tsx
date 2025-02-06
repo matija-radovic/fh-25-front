@@ -30,6 +30,7 @@ const Form = () => {
 
   // Funkcija za prelazak na prethodnu formu
   const handlePrevForm = () => {
+    // Pronađi poslednji prikazani slajd pre trenutnog
     let prevIndex = currentIndex - 1;
     while (hiddenForms.includes(prevIndex) && prevIndex >= 0) {
       prevIndex--;
