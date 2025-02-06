@@ -35,7 +35,7 @@ const TeamForm: React.FC<TeamFormProps> = ({ nextForm, prevForm }) => {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log("Forma je uspešno validirana:", data);
     nextForm();
   };

@@ -35,7 +35,7 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log("Forma je uspešno validirana:", data);
     nextForm();
   };
