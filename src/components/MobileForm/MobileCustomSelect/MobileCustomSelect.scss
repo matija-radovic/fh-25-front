@@ -1,0 +1,57 @@
+.mobile-dropdown-container {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  height: 35px;
+  width: 100%;
+  .mobile-custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: linear-gradient(to bottom, #ffffff, #c7c7c7);
+    border: none;
+    border-radius: 8px;
+    height: 35px;
+    width: 100%;
+    padding: 0 20px;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+    color: black;
+    transition: all 0.2s ease-in-out;
+
+    &.error {
+      border: 1px solid red; // Crveni okvir za padajući meni sa greškom
+    }
+
+    &:hover {
+      background: none;
+      background-color: #2a7697;
+      color: white;
+    }
+
+    &:focus {
+      background: none;
+      background-color: #2a7697;
+      color: white;
+    }
+  }
+
+  .mobile-dropdown-icon {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    padding: 8px 4px;
+    border-radius: 8px;
+    background-color: #24bdde;
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:hover,
+  &:focus {
+    .mobile-dropdown-icon {
+      background-color: white;
+    }
+  }
+}

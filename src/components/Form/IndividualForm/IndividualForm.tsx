@@ -60,6 +60,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(formSchema),
@@ -74,6 +75,8 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
       grade: "",
     },
   });
+
+  const occupation = watch("occupation");
 
   const onSubmit = (data: any) => {
     console.log("Forma je uspešno validirana:", data);
@@ -218,11 +221,10 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
               </div>
 
               {/* Prikaz polja u zavisnosti od zanimanja */}
-              {(control._formValues.occupation === "Srednjoškolac" ||
-                control._formValues.occupation === "Student") && (
+              {(occupation === "Srednjoškolac" || occupation === "Student") && (
                 <>
                   <label className="school-label">
-                    {control._formValues.occupation === "Srednjoškolac"
+                    {occupation === "Srednjoškolac"
                       ? "Srednja škola:"
                       : "Fakultet:"}
                     <Controller
@@ -232,7 +234,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                         <CustomSelect
                           {...field}
                           values={
-                            control._formValues.occupation === "Srednjoškolac"
+                            occupation === "Srednjoškolac"
                               ? HIGH_SCHOOLS
                               : FACULTIES
                           }
@@ -243,7 +245,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                   </label>
 
                   <label className="grade-label">
-                    {control._formValues.occupation === "Srednjoškolac"
+                    {occupation === "Srednjoškolac"
                       ? "Razred:"
                       : "Godina studija:"}
                     <Controller
