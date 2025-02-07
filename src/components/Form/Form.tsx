@@ -6,10 +6,17 @@ import { Contestant } from "../../utils/api/models/contestant.model";
 import { FHApplication } from "../../utils/api/models/application.model";
 import { applicationService } from "../../utils/api/services/application.service";
 
+interface TeamData {
+  teamName: string;
+  motivation: string;
+  roles: string;
+  situations: string;
+}
+
 const Form = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hiddenForms, setHiddenForms] = useState<number[]>([]);
-  const [teamData, setTeamData] = useState<any>(null); // Podaci o timu
+  const [teamData, setTeamData] = useState<TeamData | null>(null); // Podaci o timu
   const [membersData, setMembersData] = useState<Contestant[]>([]); // Podaci o članovima tima
 
   // Funkcija za čuvanje podataka o članovima tima
@@ -18,7 +25,7 @@ const Form = () => {
   };
 
   // Funkcija za čuvanje podataka o timu
-  const handleSaveTeamData = (data: any) => {
+  const handleSaveTeamData = (data: TeamData) => {
     setTeamData(data);
   };
 

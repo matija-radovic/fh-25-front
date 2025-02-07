@@ -11,9 +11,7 @@ import CustomSelect from "../CustomSelect/CustomSelect";
 import { Profession } from "../../../utils/constants/form/professions";
 import { schools } from "../../../utils/constants/form/schools";
 import { universities } from "../../../utils/constants/form/universities";
-
 import { Contestant } from "../../../utils/api/models/contestant.model";
-
 import {
   HighSchoolYear,
   UniversityYear,
@@ -50,6 +48,7 @@ const formSchema = z
       path: ["school", "grade"],
     }
   );
+
 interface IndividualFormProps {
   nextForm: () => void;
   prevForm: () => void;
@@ -70,7 +69,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -86,7 +85,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
 
   const occupation = watch("occupation");
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
     const contestant: Contestant = {
       email: data.email,
       name: data.name,
@@ -322,7 +321,11 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                 <p>Bez 4. člana</p>
               </button>
             )}
-            <button className="left-button" type="button" onClick={prevForm}>
+            <button
+              className="left-button"
+              type="button" // Dodato type="button" da sprečimo automatsko slanje forme
+              onClick={prevForm}
+            >
               <img src={leftArrow} alt="<" />
             </button>
             <button className="right-button" type="submit">
