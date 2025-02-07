@@ -22,84 +22,79 @@ const smoothNoise = (
 };
 
 const Pocetna: React.FC = () => {
-  const [initialTranslateX, setInitialTranslateX] = useState<
-    Map<HTMLElement, number>
-  >(new Map());
   const [pathData, setPathData] = useState<string>(frame1);
   const svgRef = useRef<SVGSVGElement>(null);
   const [width, setWidth] = useState(window.innerWidth);
-
   const [wavePath, setWavePath] = useState("");
-  // Ovo je useEffect koji se koristi za animaciju talasa vode
+
   useEffect(() => {
-    setWidth(svgRef.current ? svgRef.current.clientWidth : window.innerWidth);
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     const waveLength = width * 0.3;
-    const amplitude = 10;
+    const amplitude = width <= 768 ? 7 : 10;
     const segments = 100;
     const speed = 0.015;
     let offset = 0;
+    let animationFrameId: number;
+
     const animate = () => {
-      offset += speed;
+      if (svgRef.current && svgRef.current.getBoundingClientRect().bottom > 0) {
+        offset += speed;
 
-      const generateSinPath = () => {
-        let d = `M 0 50`;
-        for (let i = 0; i <= segments; i++) {
-          const x = (i / segments) * width;
-          const y =
-            50 + Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
-          d += ` L ${x} ${y} `;
-        }
-        return d;
-      };
+        const generateSinPath = () => {
+          let d = `M 0 50`;
+          for (let i = 0; i <= segments; i++) {
+            const x = (i / segments) * width;
+            const y =
+              50 +
+              Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
+            d += ` L ${x} ${y} `;
+          }
+          return d;
+        };
 
-      setWavePath(generateSinPath());
+        setWavePath(generateSinPath());
 
-      const topPoints = [];
+        const topPoints = Array.from(
+          { length: Math.ceil(width / 10) + 1 },
+          (_, i) => {
+            const x = i * 10;
+            const yTop =
+              Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
+            return `${x}px ${yTop + amplitude}px`;
+          }
+        );
 
-      for (let x = 0; x <= width; x += 10) {
-        const yTop =
-          Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
-
-        topPoints.push(`${x}px ${yTop + amplitude}px`);
-      }
-
-      if (svgRef.current) {
         svgRef.current.style.clipPath = `polygon(0 0, ${topPoints.join(
           ", "
         )}, 100% calc(100%), 0 calc(100%))`;
       }
 
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
-    const animationFrameId = requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
   }, [width]);
-  useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-    };
 
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  // Ovo je useEffect koji se koristi za deformisanje vode
   useEffect(() => {
     const updatePath = () => {
       if (!svgRef.current) return;
       const time = Date.now() / 2000;
 
-      let newPath = frame1;
-
-      newPath = newPath.replace(/([0-9.-]+)/g, (match) => {
+      const newPath = frame1.replace(/([0-9.-]+)/g, (match) => {
         const value = parseFloat(match);
         const distortedValue = value + smoothNoise(value, time, time, 5);
         return distortedValue.toFixed(3);
       });
 
-      setPathData(newPath);
+      if (svgRef.current.getBoundingClientRect().bottom > 0) {
+        setPathData(newPath);
+      }
       requestAnimationFrame(updatePath);
     };
 
@@ -109,64 +104,57 @@ const Pocetna: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      console.log(scrollPosition);
-      const firstRowLeft = document.querySelector(
-        ".prvi_red .slika1"
-      ) as HTMLElement;
-      const firstRowRight = document.querySelector(
-        ".prvi_red .slika2"
-      ) as HTMLElement;
-      const secondRowLeft = document.querySelector(
-        ".drugi_red .slika1"
-      ) as HTMLElement;
-      const secondRowRight = document.querySelector(
-        ".drugi_red .slika2"
-      ) as HTMLElement;
-      const thirdRowLeft = document.querySelector(
-        ".treci_red .slika1"
-      ) as HTMLElement;
-      const thirdRowRight = document.querySelector(
-        ".treci_red .slika2"
-      ) as HTMLElement;
+      const windowHeight = window.innerHeight;
 
-      const getInitialTranslateX = (element: HTMLElement) => {
-        if (!initialTranslateX.has(element)) {
-          const style = window.getComputedStyle(element);
-          const transform = style.transform;
-          let currentTranslateX = 0;
-          if (transform && transform !== "none") {
-            const matrix = new WebKitCSSMatrix(transform);
-            currentTranslateX = matrix.m41;
-          }
-          initialTranslateX.set(element, currentTranslateX);
-          setInitialTranslateX(new Map(initialTranslateX));
-        }
-        return initialTranslateX.get(element) || 0;
+      const isElementInViewport = (element: HTMLElement) => {
+        const rect = element.getBoundingClientRect();
+        return rect.top < windowHeight && rect.bottom > 0;
       };
 
-      const applyTranslateX = (element: HTMLElement, factor: number) => {
-        if (element) {
-          const initialX = getInitialTranslateX(element);
+      const rows = [
+        { left: ".prvi_red .slika1", right: ".prvi_red .slika2", factor: 0.5 },
+        {
+          left: ".drugi_red .slika1",
+          right: ".drugi_red .slika2",
+          factor: 0.25,
+        },
+        {
+          left: ".treci_red .slika1",
+          right: ".treci_red .slika2",
+          factor: 0.1,
+        },
+      ];
+
+      const getTranslateXForWidth = (width: number) => {
+        if (width > 1024) return 0;
+        if (width <= 1024 && width > 768) return 0.3 * width;
+        if (width <= 768 && width > 500) return 0.3 * width;
+        if (width <= 500) return 0.35 * width;
+        return 0;
+      };
+
+      const applyTranslateX = (selector: string, factor: number) => {
+        const element = document.querySelector(selector) as HTMLElement;
+        if (element && isElementInViewport(element)) {
+          const initialX =
+            (element.classList.contains("slika1") ? -1 : 1) *
+            getTranslateXForWidth(width);
           const newTranslateX = initialX + scrollPosition * factor;
           element.style.transform = `translateX(${newTranslateX}px)`;
         }
       };
 
-      applyTranslateX(firstRowLeft, -0.5);
-      applyTranslateX(firstRowRight, 0.5);
-      applyTranslateX(secondRowLeft, -0.25);
-      applyTranslateX(secondRowRight, 0.25);
-      applyTranslateX(thirdRowLeft, -0.1);
-      applyTranslateX(thirdRowRight, 0.1);
+      rows.forEach(({ left, right, factor }) => {
+        applyTranslateX(left, -factor);
+        applyTranslateX(right, factor);
+      });
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [initialTranslateX]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [width]);
 
   return (
     <Section isContainer={false} className="pocetna-wrapper">
@@ -184,29 +172,30 @@ const Pocetna: React.FC = () => {
         <img src={Desna3} alt="Desna3" className="slika2" />
       </div>
       <div className="voda">
-        <svg
-          className="wave-path"
-          viewBox={`0 0 ${width} 140`}
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            id="wavePath"
-            d={wavePath}
-            stroke="white"
-            strokeWidth={10}
-            fill="transparent"
-          />
-        </svg>
-        <svg
-          className="voda-slicica"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1082.78 360.22"
-          ref={svgRef}
-        >
-          <path d={pathData} className="voda1" />
-        </svg>
+        <div className="voda-wrapper">
+          <svg
+            className="wave-path"
+            viewBox={`0 0 ${width} 140`}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              id="wavePath"
+              d={wavePath}
+              stroke="white"
+              strokeWidth={10}
+              fill="transparent"
+            />
+          </svg>
+          <svg
+            className="voda-slicica"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1082.78 360.22"
+            ref={svgRef}
+          >
+            <path d={pathData} />
+          </svg>
+        </div>
 
-        <span className="gradient"></span>
         <div className="countdown">
           <h1>
             <Countdown date={new Date("2025-03-23T00:00:00")} />

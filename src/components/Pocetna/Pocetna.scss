@@ -4,7 +4,7 @@
 .pocetna-wrapper {
   margin: 0;
   width: 100%;
-  height: 130dvh; /* Koristi visinu ekrana, a ne '100dvh' */
+  height: 115dvh; /* Koristi visinu ekrana, a ne '100dvh' */
   background-color: colors.$svetlo-plava;
   justify-content: center;
   align-items: center;
@@ -19,30 +19,18 @@
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
-  height: 130%;
+  height: 115%;
   overflow-x: hidden;
 }
 
-.gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 36, 64, 1),
-    rgba(2, 44, 72, 0.99),
-    rgba(7, 65, 94, 0.9),
-    rgba(15, 99, 129, 0.4),
-    rgba(26, 146, 178, 0.1),
-    rgba(36, 189, 222, 0)
-  );
-}
 .voda-slicica {
   position: absolute;
   width: 100%;
-  height: auto;
+  height: max-content;
   top: 50px;
   fill: #{colors.$svetlo-plava};
   filter: drop-shadow(15px 15px rgb(0, 23, 12));
+  
 }
 .wave-path {
   width: 100%;
@@ -62,22 +50,24 @@
 }
 .treci_red {
   z-index: 1;
-  top: 25px;
 }
 
 .prvi_red .slika1,
-.prvi_red .slika2,
 .drugi_red .slika1,
-.drugi_red .slika2,
-.treci_red .slika1,
-.treci_red .slika2 {
-  width: 50%; /* Postavljanje širine slika */
+.treci_red .slika1 {
+  width: 47%; /* Postavljanje širine slika1 */
 }
+
+.prvi_red .slika2,
+.drugi_red .slika2,
+.treci_red .slika2 {
+  width: 50%; /* Postavljanje širine slika2 */
+}
+
 .countdown {
   z-index: 10;
-  padding: 0.35rem;
   height: max-content;
-  width: 40rem;
+  width: 38rem;
   margin: 1rem auto 0 auto;
   text-align: center;
   border-radius: 100px;
@@ -111,18 +101,24 @@
 .slika2 {
   right: 0;
 }
+.voda-wrapper{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  mask-image: linear-gradient(to top, transparent,black);
+}
 .voda {
   position: absolute;
-  overflow: hidden;
-  top: 129%;
+  top: 114%;
+  bottom: 0;
   z-index: 5;
+  overflow: hidden;
   display: flex;
   width: 100%;
-  height: 550px;
+  height: 50%;
   background-color: colors.$tamno-plava;
   transition: transform 0.3s ease-out;
 }
-
 @media #{mediaqueries.$tablet} {
   .wave-path {
     top: 10px;
@@ -135,10 +131,12 @@
     font-size: 4rem;
   }
   .prvi_red .slika1,
-  .prvi_red .slika2,
   .drugi_red .slika1,
+  .treci_red .slika1 {
+    width: 75%;
+  }
+  .prvi_red .slika2,
   .drugi_red .slika2,
-  .treci_red .slika1,
   .treci_red .slika2 {
     width: 80%;
   }
@@ -167,33 +165,36 @@
   .wave-path {
     top: 15px;
   }
-  .pocetna-wrapper{
-    height: 80dvh;
-  }
+  
   .voda-slicica {
     top: 100px;
   }
   .countdown {
-    width: 34rem;
+    width: 32rem;
   }
   .countdown h1 {
     font-size: 4rem;
   }
   .prvi_red .slika1,
-  .prvi_red .slika2,
   .drugi_red .slika1,
+  .treci_red .slika1 {
+    width: 77%;
+  }
+  .prvi_red .slika2,
   .drugi_red .slika2,
-  .treci_red .slika1,
   .treci_red .slika2 {
-    width: 80%;
+    width: 82%;
+  }
+  .pocetna-wrapper {
+    height: 60dvh;
   }
   .prvi_red,
   .drugi_red,
   .treci_red {
-    height: 80%;
+    height: 60%;
   }
   .voda {
-    top: 79%;
+    top: 59%;
   }
   .slika1 {
     transform: translateX(calc(-30vw));
@@ -208,26 +209,28 @@
   .countdown {
     width: 20rem;
   }
-  
+
   .wave-path {
-    top: 25px;
-    scale: 2;
+    top: 0px;
+    scale: 1.5;
   }
-  .wave-path path{
+  .wave-path path {
     stroke-width: 2px;
   }
   .voda-slicica {
-    top: 7rem;
-    scale: 2;
+    top: 4rem;
+    scale: 1.5;
   }
   .countdown h1 {
     font-size: 2.5rem;
   }
   .prvi_red .slika1,
-  .prvi_red .slika2,
   .drugi_red .slika1,
+  .treci_red .slika1 {
+    width: 82%;
+  }
+  .prvi_red .slika2,
   .drugi_red .slika2,
-  .treci_red .slika1,
   .treci_red .slika2 {
     width: 85%;
   }
@@ -239,15 +242,15 @@
   .slika2 {
     transform: translateX(calc(35vw));
   }
+  .pocetna-wrapper {
+    height: 58dvh;
+  }
   .prvi_red,
   .drugi_red,
   .treci_red {
-    height: 50%;
-  }
-  .pocetna-wrapper{
-    height: 50dvh;
+    height: 58%;
   }
   .voda {
-    top: 49%;
+    top: 57%;
   }
 }

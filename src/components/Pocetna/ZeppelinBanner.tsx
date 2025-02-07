@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import "./Zeppelin.scss";
 import Zeppelin from "../../assets/pocetna/zeppelin.svg";
+import { useInView } from "framer-motion";
 
 const ZeppelinBanner = () => {
   const bannerRef = useRef<HTMLDivElement>(null);
   const zeppelinRef = useRef<HTMLImageElement>(null); // Ref za sliku
   const [textPath, setTextPath] = useState("");
   const [width, setWidth] = useState(500);
-
+  const isInView = useInView(bannerRef);
   useEffect(() => {
     const updateWidth = () => {
       if (bannerRef.current) {
@@ -26,6 +27,7 @@ const ZeppelinBanner = () => {
     const segments = 50;
     const speed = 0.035;
     let offset = 0;
+    let animationFrameId: number;
 
     const animate = () => {
       offset += speed;
@@ -75,12 +77,17 @@ const ZeppelinBanner = () => {
         zeppelinRef.current.style.transform = `translateY(${firstY}px)`; // Zeppelin gore-dole
       }
 
-      requestAnimationFrame(animate);
+      if (isInView) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
     };
 
-    const animationFrameId = requestAnimationFrame(animate);
+    if (isInView) {
+      animationFrameId = requestAnimationFrame(animate);
+    }
+
     return () => cancelAnimationFrame(animationFrameId);
-  }, [width]);
+  }, [width, isInView]);
 
   return (
     <div className="banner">
@@ -102,14 +109,19 @@ const ZeppelinBanner = () => {
             transform: "translateY(-43%)",
             zIndex: 2,
             width: "100%",
-            height: "100%"
+            height: "100%",
           }}
         >
           <path id="textPath" d={textPath} fill="transparent" />
           <text className="orbitron" fontWeight="bold" textAnchor="left">
             <textPath href="#textPath" startOffset="5%" textAnchor="left">
               <tspan className="banner-year">2025</tspan>
-              <tspan className="banner-moto montserrat" dy="1em" x="0" fontSize="18">
+              <tspan
+                className="banner-moto montserrat"
+                dy="1em"
+                x="0"
+                fontSize="18"
+              >
                 &lt;Use your code to change the road&gt;
               </tspan>
             </textPath>
