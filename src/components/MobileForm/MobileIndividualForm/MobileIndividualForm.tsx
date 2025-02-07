@@ -5,12 +5,13 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import MobileCustomSelect from "../MobileCustomSelect/MobileCustomSelect";
-import { Profession } from "../../constants/form/professions";
-import { schools, universities } from "../../constants/form/schools";
-import { HighSchoolYear, UniversityYear } from "../../constants/form/schoolYears";
-import { Contestant } from "../../utils/api/models/contestant.model";
-import { FHApplication } from "../../utils/api/models/application.model";
-import { applicationService } from "../../utils/api/services/applications.service";
+import { Profession } from "../../../utils/constants/form/professions";
+import { schools } from "../../../utils/constants/form/schools";
+import { universities } from "../../../utils/constants/form/universities";
+import {
+  HighSchoolYear,
+  UniversityYear,
+} from "../../../utils/constants/form/schoolYears";
 
 // Shema za validaciju
 const formSchema = z
@@ -48,21 +49,19 @@ interface MobileIndividualFormProps {
   nextForm: () => void;
   prevForm: () => void;
   indexIndividual: number;
-  onSaveContestant: (contestant: Contestant) => void; // Dodato za čuvanje podataka o učesniku
 }
 
 const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
   nextForm,
   prevForm,
   indexIndividual,
-  onSaveContestant,
 }) => {
   const {
     control,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -78,23 +77,9 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
 
   const occupation = watch("occupation");
 
-  const onSubmit = async (data: any) => {
-    const contestant: Contestant = {
-      email: data.email,
-      name: data.name,
-      phoneNumber: data.phone,
-      techDescription: data.technologies,
-      CVURL: data.cvLink,
-      proffesion: data.occupation,
-      educationalInstitution: data.school || undefined,
-      yearOfStudy: data.grade || undefined,
-    };
-
-    // Sačuvaj podatke o učesniku
-    onSaveContestant(contestant);
-
-    console.log("Podaci o učesniku:", contestant);
-    nextForm(); // Prelazak na sledeću formu
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log("Forma je uspešno validirana:", data);
+    nextForm();
   };
 
   return (
@@ -236,4 +221,70 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                           ? schools
                           : universities
                       }
-                      className={errors.school ? "error
+                      className={errors.school ? "error" : ""}
+                    />
+                  )}
+                />
+              </label>
+
+              <label className="mobile-grade-label">
+                {occupation === Profession.HIGH_SCHOOL_STUDENT
+                  ? "Razred:"
+                  : "Godina studija:"}
+                <Controller
+                  name="grade"
+                  control={control}
+                  render={({ field }) => (
+                    <MobileCustomSelect
+                      {...field}
+                      values={
+                        occupation === Profession.HIGH_SCHOOL_STUDENT
+                          ? Object.keys(HighSchoolYear)
+                          : Object.keys(UniversityYear)
+                      }
+                      className={errors.grade ? "error" : ""}
+                    />
+                  )}
+                />
+              </label>
+            </>
+          )}
+
+          <label className="mobile-school-label">
+            Link ka CV-ju:
+            <Controller
+              name="cvLink"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className={`mobile-form-textbox ${
+                    errors.cvLink ? "error" : ""
+                  }`}
+                  type="url"
+                  placeholder={
+                    errors.cvLink?.message || "Unesite link ka CV-ju"
+                  }
+                />
+              )}
+            />
+          </label>
+
+          <div className="mobile-buttons">
+            <button
+              className="mobile-button-left-arrow"
+              type="button" // Dodato type="button" da sprečimo automatsko slanje forme
+              onClick={prevForm}
+            ></button>
+            <button
+              className="mobile-button-right-arrow"
+              type="submit"
+            ></button>
+          </div>
+        </form>
+      </div>
+    </Section>
+  );
+};
+
+export default MobileIndividualForm;

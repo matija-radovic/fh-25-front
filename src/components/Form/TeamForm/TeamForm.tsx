@@ -15,10 +15,13 @@ const formSchema = z.object({
   situations: z.string().min(1, "Situacije u timu su obavezne."),
 });
 
+// Definišemo tip za podatke o timu
+type TeamData = z.infer<typeof formSchema>;
+
 interface TeamFormProps {
   nextForm: () => void;
   prevForm: () => void;
-  onSaveTeamData: (teamData: any) => void; // Dodato za čuvanje podataka o timu
+  onSaveTeamData: (teamData: TeamData) => void; // Koristimo pravilni tip
 }
 
 const TeamForm: React.FC<TeamFormProps> = ({
@@ -30,7 +33,7 @@ const TeamForm: React.FC<TeamFormProps> = ({
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<TeamData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       teamName: "",
@@ -40,7 +43,7 @@ const TeamForm: React.FC<TeamFormProps> = ({
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: TeamData) => {
     // Sačuvaj podatke o timu
     onSaveTeamData(data);
 
@@ -141,7 +144,11 @@ const TeamForm: React.FC<TeamFormProps> = ({
             </div>
           </div>
           <div className="team-form-body-lower">
-            <button className="left-button" type="button" onClick={prevForm}>
+            <button
+              className="left-button"
+              type="button" // Dodato type="button" da sprečimo automatsko slanje forme
+              onClick={prevForm}
+            >
               <img src={leftArrow} alt="<" />
             </button>
             <button className="right-button" type="submit">
