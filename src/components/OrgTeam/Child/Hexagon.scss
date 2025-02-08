@@ -4,6 +4,7 @@
   align-items: center;
   position: absolute;
   overflow: hidden;
+  transform-origin: center; // Centriramo transformacije
 }
 
 .hexagon-border {
@@ -20,14 +21,74 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .hexagon-container.large {
-    transform: scale(0.9);
-    left: -250%; /* Pomeri veći hexagon udesno */
-    top: 50%;
+.hexagon-container.top-left {
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
+}
+
+.hexagon-container.top-right {
+  top: 0;
+  right: 0;
+  transform: translate(0, 0);
+}
+
+.hexagon-container.bottom-left {
+  bottom: -7%;
+  left: 5%;
+  transform: translate(0, 0);
+}
+
+.hexagon-container.bottom-right {
+  bottom: 0;
+  right: 3%;
+  transform: translate(0, 0);
+}
+
+.hexagon-container.center {
+  top: -10%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 1100px) {
+  .hexagon-container.bottom-left {
+    bottom: 0;
+    left: -10%;
+    transform: translate(0, 0);
   }
 
-  .hexagon-container.small {
-    left: 75% !important; /* Pomeri manji hexagon ulevo */
+  .hexagon-container.bottom-right {
+    bottom: 0;
+    right: -10%;
+    transform: translate(0, 0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hexagon-container.bottom-left {
+    bottom: 0;
+    left: -15%;
+    transform: translate(0, 0);
+  }
+
+  .hexagon-container.bottom-right {
+    bottom: 0;
+    right: -12%;
+    transform: translate(0, 0);
+  }
+}
+
+@media (max-width: 860px) {
+  .hexagon-container.bottom-left {
+    bottom: 0;
+    left: -25%;
+    transform: translate(0, 0);
+  }
+
+  .hexagon-container.bottom-right {
+    bottom: 0;
+    right: -18%;
+    transform: translate(0, 0);
   }
 }

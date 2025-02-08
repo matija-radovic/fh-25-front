@@ -69,6 +69,7 @@ const Test = () => {
     <>
       {/* Put your component here */}
       <OrgTeam teams={orgTeams}></OrgTeam>
+      <OrgTeam teams={orgTeams}></OrgTeam>
     </>
   );
 };

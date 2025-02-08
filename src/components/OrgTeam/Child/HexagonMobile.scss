@@ -1,0 +1,27 @@
+.mobile-hexagon-wrapper {
+  position: absolute;
+}
+
+.mobile-hexagon-wrapper .hexagon {
+  position: absolute;
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.mobile-hexagon-wrapper .big {
+  width: 165px;
+  height: 165px;
+}
+
+.mobile-hexagon-wrapper .small {
+  width: 65px;
+  height: 65px;
+}

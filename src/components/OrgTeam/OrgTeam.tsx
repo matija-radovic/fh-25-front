@@ -5,6 +5,7 @@ import Section from "../-shared/Section/Section";
 import CoordCard from "./Child/CoordCard";
 import TeamCard from "./Child/TeamCard";
 import Hexagon from "./Child/Hexagon";
+import HexagonMobile from "./Child/HexagonMobile";
 
 interface OrgTeamProps {
   teams: {
@@ -49,20 +50,8 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
   return (
     <Section className="org-team-section" heading="ORGANIZACIONI TIM">
       <div className="org-team-slider">
-        <Hexagon
-          width={680}
-          height={680}
-          left={"5%"}
-          top={"-25%"}
-          className="large"
-        />
-        <Hexagon
-          width={163}
-          height={163}
-          left={"82%"}
-          top={"85%"}
-          className="small"
-        />
+        <Hexagon width={650} height={650} rotate={0} className="bottom-left" />
+        <Hexagon width={163} height={163} rotate={0} className="bottom-right" />
         <div className="org-team-cards">
           <CoordCard
             coordinator={{

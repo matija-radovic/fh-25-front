@@ -2,17 +2,15 @@ import React from "react";
 import "./Hexagon.scss";
 import hexagon from "../../../assets/OrgTeam/hexagon.svg";
 
-const Hexagon = ({
-  width = 0,
-  height = 0,
-  left = "0%",
-  top = "0%",
-  className = "",
-}) => {
+const Hexagon = ({ width = 0, height = 0, rotate = 0, className = "" }) => {
   return (
     <div
       className={`hexagon-container ${className}`}
-      style={{ width, height, left, top }}
+      style={{
+        width,
+        height,
+        transform: `rotate(${rotate}deg)`, // Samo rotacija ostaje ovde
+      }}
     >
       <img
         className="hexagon-border"
