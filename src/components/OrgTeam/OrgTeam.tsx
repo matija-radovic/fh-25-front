@@ -5,7 +5,6 @@ import Section from "../-shared/Section/Section";
 import CoordCard from "./Child/CoordCard";
 import TeamCard from "./Child/TeamCard";
 import Hexagon from "./Child/Hexagon";
-import HexagonMobile from "./Child/HexagonMobile";
 
 interface OrgTeamProps {
   teams: {
