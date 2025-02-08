@@ -22,23 +22,22 @@ const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
     const h = rect.height;
     const w = rect.width;
 
-    // Izračunaj relativnu poziciju miša u odnosu na centar kartice
+    // RELATIVNA POZICIJA MIŠA U ODNOSU NA CENTAR
     const px = Math.abs(Math.floor((100 / w) * x) - 100);
     const py = Math.abs(Math.floor((100 / h) * y) - 100);
     const pa = 50 - px + (50 - py);
 
-    // Izračunaj poziciju za gradient i sparkle efekat
+    // OVO JE ZA GRADIENT I SPARKLE EFEKAT
     const lp = 50 + (px - 50) / 1.5;
     const tp = 50 + (py - 50) / 1.5;
     const pxSpark = 50 + (px - 50) / 7;
     const pySpark = 50 + (py - 50) / 7;
     const opacity = 20 + Math.abs(pa) * 1.5;
 
-    // Ispravljeni faktori rotacije
-    const ty = ((tp - 50) / 2) * -1; // Obrnuti znak za Y osu
+    // OVA DVA MENJAŠ ZA JAČINU ROTACIJE
+    const ty = ((tp - 50) / 2) * -1;
     const tx = ((lp - 50) / 1.5) * 0.5;
 
-    // Dinamički ažuriraj CSS promenljive
     card.style.setProperty("--gradient-pos", `${lp}% ${tp}%`);
     card.style.setProperty("--sparkle-pos", `${pxSpark}% ${pySpark}%`);
     card.style.setProperty("--opacity", `${opacity / 100}`);

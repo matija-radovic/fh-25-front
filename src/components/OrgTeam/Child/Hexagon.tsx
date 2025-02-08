@@ -9,7 +9,7 @@ const Hexagon = ({ width = 0, height = 0, rotate = 0, className = "" }) => {
       style={{
         width,
         height,
-        transform: `rotate(${rotate}deg)`, // Samo rotacija ostaje ovde
+        transform: `rotate(${rotate}deg)`,
       }}
     >
       <img
