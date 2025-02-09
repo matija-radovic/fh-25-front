@@ -1,0 +1,104 @@
+
+.container {
+  position: relative; 
+  width: 100%; 
+  height: 100%; 
+}
+
+.arrow-container {
+    position: relative;
+    width: 500px; 
+    height: auto;
+  }
+  
+  .big-arrow {
+    width: 100%;
+    height: auto;
+  }
+  
+  .small-triangle {
+    position: absolute;
+    width: 36px; 
+    height: auto;
+    
+    transition: fill 0.5s ease-in-out;
+  }
+  
+  .small-triangle.active {
+    // animation: fillEffect 1.5s alternate; 
+  }
+  .small-triangle-purple.active {
+    // animation: fillEffect-purple 1.5s alternate; 
+  }
+
+  .animation-blue-1{
+    animation: fillEffect 4.5s infinite !important; 
+  }
+  
+  .animation-blue-2{
+    animation: fillEffect 2.5s infinite !important; 
+  }
+  .animation-blue-3{
+    animation: fillEffect 7.5s infinite !important; 
+  }
+
+  .animation-purple-1{
+    animation: fillEffect-purple 4.5s infinite !important;
+  }
+
+  .animation-purple-2{
+    animation: fillEffect-purple 2.5s infinite !important;
+  }
+
+  .animation-purple-3{
+    animation: fillEffect-purple 7.5s infinite !important;
+  }
+  
+  .flippedY {
+    transform: scaleY(-1); /* Flip vertically */
+  }
+  /*.flippedXFalse{
+    transform: scaleX(1);
+  }
+
+  .flippedYFalse{
+    transform: scaleY(1);
+  }*/
+  
+  .flippedX {
+    transform: scaleX(-1); /* Flip horizontally */
+  }
+
+  .flippedX.flippedY {
+    transform: scaleX(-1) scaleY(-1);
+  }
+
+  @keyframes fillEffect {
+    0% { fill: transparent; }
+    50% { fill: #24BDDE; } 
+    100% {fill: transparent;}
+  }
+  @keyframes fillEffect-purple {
+    0% { fill: transparent; }
+    50% { fill: #832091; } 
+    100% {fill: transparent;}
+  }
+  
+  
+  /* Responsivnost */
+  @media (max-width: 768px) {
+    .arrow-container {
+      width: 50vw;
+    }
+    .small-triangle {
+      width: 15px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .arrow-container {
+      width: 35vw;
+      width: 35vw;
+    }
+  }
+  
