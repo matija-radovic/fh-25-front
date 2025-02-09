@@ -12,30 +12,10 @@ const ArrowComponent = ({ color = "#24BDDE", flippedX=false, flippedY=false }) =
     }else{
       setAnimation("animation-blue");
     }
-    // const paths = document.querySelectorAll(".theChosenOne");
+
     setColour(color)
 
-    // const activateRandomPaths = () => {
-    //   // Uklanjanje prethodne klase
-    //   paths.forEach((path) => path.classList.remove("small-triangle", "active"));
-
-    //   // Nasumični izbor 15 path elemenata
-    //   const randomPaths = Array.from(paths)
-    //     .sort(() => Math.random() - 0.5) // Nasumično sortiranje
-    //     .slice(0, 15); // Prvih 15 elemenata
-
-    //   // Dodavanje klasa
-    //   randomPaths.forEach((path) =>
-    //     path.classList.add("small-triangle", "active")
-    //   );
-    // };
-
-    // Pokretanje na svakih 5 sekundi
-    // activateRandomPaths();
-    // const intervalId = setInterval(activateRandomPaths, 5000);
-
-    // return () => clearInterval(intervalId); // Čišćenje intervala
-  }, []);
+  }, [color]);
 
   return (
     <div className="arrow-container">
