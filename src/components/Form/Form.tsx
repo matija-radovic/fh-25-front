@@ -117,7 +117,6 @@ const Form = () => {
     />,
     <TeamForm
       key={4}
-      nextForm={handleNextForm}
       prevForm={handlePrevForm}
       onSaveTeamData={handleSaveTeamData}
       onSubmitFinalForm={handleSubmitFinalForm}

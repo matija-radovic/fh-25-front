@@ -19,14 +19,12 @@ const formSchema = z.object({
 type TeamData = z.infer<typeof formSchema>;
 
 interface TeamFormProps {
-  nextForm: () => void;
   prevForm: () => void;
   onSaveTeamData: (teamData: TeamData) => void;
   onSubmitFinalForm: () => void;
 }
 
 const TeamForm: React.FC<TeamFormProps> = ({
-  nextForm,
   prevForm,
   onSaveTeamData,
   onSubmitFinalForm,
@@ -148,11 +146,7 @@ const TeamForm: React.FC<TeamFormProps> = ({
             </div>
           </div>
           <div className="team-form-body-lower">
-            <button
-              className="left-button"
-              type="button" // Dodato type="button" da sprečimo automatsko slanje forme
-              onClick={prevForm}
-            >
+            <button className="left-button" type="button" onClick={prevForm}>
               <img src={leftArrow} alt="<" />
             </button>
             <button className="right-button" type="submit">
