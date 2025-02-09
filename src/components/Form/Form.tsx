@@ -37,18 +37,11 @@ const Form = () => {
 
   // Funkcija za prelazak na prethodnu formu
   const handlePrevForm = () => {
-    // Pronađi poslednji prikazani slajd pre trenutnog
-    let prevIndex = currentIndex - 1;
-    while (hiddenForms.includes(prevIndex) && prevIndex >= 0) {
-      prevIndex--;
-    }
-
-    if (prevIndex >= 0) {
-      setCurrentIndex(prevIndex);
-      setHiddenForms((prevHidden) =>
-        prevHidden.filter((index) => index !== prevIndex)
-      );
-    }
+    // Vraćamo se na prethodnu formu i uklanjamo je iz sakrivenih
+    setHiddenForms((prevHidden) =>
+      prevHidden.filter((index) => index !== currentIndex - 1)
+    );
+    setCurrentIndex((prevIndex) => prevIndex - 1);
   };
 
   // Funkcija za preskakanje forme za 4. člana
@@ -76,7 +69,7 @@ const Form = () => {
         member4: membersData[3], // Opciono
       },
     };
-
+    console.log(teamApplication);
     try {
       const response = await applicationService.createApplication(
         teamApplication,
@@ -92,7 +85,6 @@ const Form = () => {
     }
   };
 
-  // Niz formi
   const forms = [
     <IndividualForm
       key={0}
@@ -121,13 +113,14 @@ const Form = () => {
       prevForm={handlePrevForm}
       indexIndividual={4}
       onSaveContestant={handleSaveContestant}
-      onSkipFourthMember={handleSkipFourthMember} // Dodato za preskakanje
+      onSkipFourthMember={handleSkipFourthMember}
     />,
     <TeamForm
       key={4}
       nextForm={handleNextForm}
       prevForm={handlePrevForm}
       onSaveTeamData={handleSaveTeamData}
+      onSubmitFinalForm={handleSubmitFinalForm}
     />,
   ];
 
@@ -146,7 +139,7 @@ const Form = () => {
               style={{
                 zIndex: forms.length - index,
                 transform: `translate(${(index - hiddenBefore) * -20}px, ${
-                  (index - hiddenBefore) * -20
+                  (index - hiddenBefore) * -30
                 }px)`,
                 opacity: hiddenForms.includes(index) ? 0 : 1,
                 transition:
@@ -158,13 +151,6 @@ const Form = () => {
           );
         })}
       </div>
-
-      {/* Dugme za slanje podataka */}
-      {currentIndex === forms.length - 1 && (
-        <button onClick={handleSubmitFinalForm} className="submit-button">
-          Pošalji prijavu
-        </button>
-      )}
     </div>
   );
 };

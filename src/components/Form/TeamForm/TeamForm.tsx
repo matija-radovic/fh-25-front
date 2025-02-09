@@ -21,13 +21,15 @@ type TeamData = z.infer<typeof formSchema>;
 interface TeamFormProps {
   nextForm: () => void;
   prevForm: () => void;
-  onSaveTeamData: (teamData: TeamData) => void; // Koristimo pravilni tip
+  onSaveTeamData: (teamData: TeamData) => void;
+  onSubmitFinalForm: () => void;
 }
 
 const TeamForm: React.FC<TeamFormProps> = ({
   nextForm,
   prevForm,
   onSaveTeamData,
+  onSubmitFinalForm,
 }) => {
   const {
     control,
@@ -48,7 +50,9 @@ const TeamForm: React.FC<TeamFormProps> = ({
     onSaveTeamData(data);
 
     console.log("Podaci o timu:", data);
-    nextForm(); // Prelazak na sledeću formu
+
+    // Pozovite funkciju za slanje podataka na backend
+    onSubmitFinalForm();
   };
 
   return (
