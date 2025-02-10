@@ -1,36 +1,55 @@
 import React from "react";
-import hexagon from "../../../assets/OrgTeam/hexagon.svg";
-type PositionType = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+import "./HexagonMobile.scss";
 
-const HexagonAnimation: React.FC<{ position?: PositionType }> = ({
-  position = "top-left",
+interface HexagonMobileProps {
+  top?: string | number;
+  left?: string | number;
+  right?: string | number;
+  bottom?: string | number;
+  width?: string | number;
+  height?: string | number;
+  className?: string;
+}
+
+const HexagonMobile: React.FC<HexagonMobileProps> = ({
+  top,
+  left,
+  right,
+  bottom,
+  width = "184",
+  height = "210",
+  className,
 }) => {
-  const positions: Record<PositionType, React.CSSProperties> = {
-    "top-left": { top: 0, left: 0 },
-    "top-right": { top: 0, right: 0 },
-    "bottom-left": { bottom: 0, left: 0 },
-    "bottom-right": { bottom: 0, right: 0 },
+  const style: React.CSSProperties = {
+    position: "absolute",
+    top,
+    left,
+    right,
+    bottom,
+    width,
+    height,
   };
 
   return (
-    <div
-      className="hexagon-mobile-wrapper"
-      style={{ position: "absolute", ...positions[position] }}
+    <svg
+      className={`mobile-hexagon-wrapper ${className}`}
+      style={style}
+      viewBox="0 0 184 210"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <img
-        className="hexagon big"
-        src={hexagon}
-        alt="Hexagon"
-        style={{ width: "100%", height: "100%" }}
+      <path
+        className="hexagon-path hexagon-1"
+        d="M60.6029 35.3208L129.226 35.0126L163.271 94.5961L128.688 154.496L60.0645 154.804L26.0199 95.2205L60.6029 35.3208Z"
+        stroke="#24BDDE"
       />
-      <img
-        className="hexagon small"
-        src={hexagon}
-        alt="Hexagon"
-        style={{ width: "100%", height: "100%" }}
+      <path
+        className="hexagon-path hexagon-2"
+        d="M117.44 140.175L148.014 140.037L163.182 166.583L147.772 193.275L117.198 193.412L102.03 166.866L117.44 140.175Z"
+        stroke="#24BDDE"
       />
-    </div>
+    </svg>
   );
 };
 
-export default HexagonAnimation;
+export default HexagonMobile;

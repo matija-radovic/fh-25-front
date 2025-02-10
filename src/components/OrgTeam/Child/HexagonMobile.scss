@@ -1,27 +1,18 @@
-.mobile-hexagon-wrapper {
-  position: absolute;
-}
-
-.mobile-hexagon-wrapper .hexagon {
-  position: absolute;
-  animation: rotate 10s linear infinite;
-}
-
 @keyframes rotate {
-  0% {
+  from {
     transform: rotate(0deg);
   }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }
 
-.mobile-hexagon-wrapper .big {
-  width: 165px;
-  height: 165px;
+.hexagon-1 {
+  transform-origin: 94.5px 95px; /* Podesite prema potrebama */
+  animation: rotate 5s linear infinite;
 }
 
-.mobile-hexagon-wrapper .small {
-  width: 65px;
-  height: 65px;
+.hexagon-2 {
+  transform-origin: 132.5px 166.5px; /* Podesite prema potrebama */
+  animation: rotate 5s linear infinite;
 }
