@@ -4,13 +4,14 @@
   align-items: center;
   height: 100vh;
   background-color: transparent; // Bez bele pozadine
-  transform: scale(0.8);
 }
 
 .forms-container {
+  transform-origin: center;
   position: relative;
-  width: 400px; // Prilagodite širinu prema potrebi
-  height: 300px; // Prilagodite visinu prema potrebi
+  width: 400px;
+  height: 300px;
+  transform: scale(0.8);
 }
 
 .form-slide {

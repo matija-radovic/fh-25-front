@@ -12,6 +12,7 @@ import {
   HighSchoolYear,
   UniversityYear,
 } from "../../../utils/constants/form/schoolYears";
+import { Contestant } from "../../../utils/api/models/contestant.model";
 
 // Shema za validaciju
 const formSchema = z
@@ -49,12 +50,16 @@ interface MobileIndividualFormProps {
   nextForm: () => void;
   prevForm: () => void;
   indexIndividual: number;
+  onSaveContestant: (contestant: Contestant) => void;
+  onSkipFourthMember?: () => void;
 }
 
 const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
   nextForm,
   prevForm,
   indexIndividual,
+  onSaveContestant,
+  onSkipFourthMember,
 }) => {
   const {
     control,
@@ -78,8 +83,22 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
   const occupation = watch("occupation");
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Forma je uspešno validirana:", data);
-    nextForm();
+    const contestant: Contestant = {
+      email: data.email,
+      name: data.name,
+      phoneNumber: data.phone,
+      techDescription: data.technologies,
+      CVURL: data.cvLink,
+      proffesion: data.occupation,
+      educationalInstitution: data.school || undefined,
+      yearOfStudy: data.grade || undefined,
+    };
+
+    // Sačuvaj podatke o učesniku
+    onSaveContestant(contestant);
+
+    console.log("Podaci o učesniku:", contestant);
+    nextForm(); // Prelazak na sledeću formu
   };
 
   return (
@@ -273,9 +292,18 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
           <div className="mobile-buttons">
             <button
               className="mobile-button-left-arrow"
-              type="button" // Dodato type="button" da sprečimo automatsko slanje forme
+              type="button"
               onClick={prevForm}
             ></button>
+            {indexIndividual === 4 && (
+              <button
+                className="mobile-button-skip"
+                type="button"
+                onClick={onSkipFourthMember}
+              >
+                Preskoči
+              </button>
+            )}
             <button
               className="mobile-button-right-arrow"
               type="submit"

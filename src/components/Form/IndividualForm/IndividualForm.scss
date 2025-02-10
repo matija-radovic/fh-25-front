@@ -28,12 +28,18 @@
       background-color: #2a7697;
       color: white;
       padding: 0 10px;
+      &:hover::placeholder {
+        color: white;
+      }
     }
 
     &:focus {
       background-color: #2a7697;
       color: white;
       padding: 0 10px;
+      &:focus::placeholder {
+        color: white;
+      }
     }
   }
 

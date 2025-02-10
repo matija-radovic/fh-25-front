@@ -12,14 +12,25 @@ const formSchema = z.object({
   situations: z.string().min(1, "Situacije u timu su obavezne."),
 });
 
+interface TeamData {
+  teamName: string;
+  motivation: string;
+  roles: string;
+  situations: string;
+}
+
 interface MobileTeamFormProps {
   nextForm: () => void;
   prevForm: () => void;
+  onSaveTeamData: (teamData: TeamData) => void;
+  onSubmitFinalForm: () => void;
 }
 
 const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
   nextForm,
   prevForm,
+  onSaveTeamData,
+  onSubmitFinalForm,
 }) => {
   const {
     control,
@@ -36,9 +47,15 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Forma je uspešno validirana:", data);
-    nextForm();
+    // Sačuvaj podatke o timu
+    onSaveTeamData(data);
+
+    console.log("Podaci o timu:", data);
+
+    // Pošalji podatke na backend
+    onSubmitFinalForm();
   };
+
   return (
     <Section isContainer={false}>
       <div className="mobile-team-form-container">

@@ -6,7 +6,7 @@ interface CustomSelectProps {
   name: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  values: readonly string[];
+  values: string[];
   className?: string;
 }
 
