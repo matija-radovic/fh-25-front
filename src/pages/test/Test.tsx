@@ -1,4 +1,4 @@
-import { LoadingPage } from '../../components'
+import { AboutCompetition } from '../../components'
 import './Test.scss'
 
 /**
@@ -8,7 +8,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      {<LoadingPage></LoadingPage>}
+      <AboutCompetition></AboutCompetition>
     </>
   )
 }

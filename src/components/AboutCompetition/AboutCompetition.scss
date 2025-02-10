@@ -1,0 +1,64 @@
+.about-competition {
+    display: flex;
+    flex-direction: column;
+    gap: 212px;
+    overflow: visible;
+}
+.about-hackathon{
+    margin-top: 113px;
+}
+
+.about-hackathon, .web3-challenge, .why-to-join {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.web3-challenge {
+    flex-direction: row-reverse;
+}
+
+.about-hachathon-text, .web3-challenge-text, .why-to-join-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.text-box-about-competition {
+    width: 593px;
+    height: 371px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+h2 {
+    margin-bottom: 36px; // Razmak između h2 i teksta
+    font-family: 'Orbitron'; // Font za h2
+    font-size: 50px; // Veličina naslova
+    font-weight: bold; // Deblji font za naslov
+}
+
+.about-hachathon-arrows, .web3-challenge-arrows, .why-to-join-arrows {
+    width: 725px; // Fiksna širina za strelice
+    height: 324px; // Visina strelica (možete prilagoditi po potrebi)
+    background-color: #f0f0f0; // Privremena boja za strelice (možete ukloniti)
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.heksagoni{
+    position: absolute;
+}
