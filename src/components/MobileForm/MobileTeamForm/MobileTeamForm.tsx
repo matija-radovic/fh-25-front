@@ -27,7 +27,6 @@ interface MobileTeamFormProps {
 }
 
 const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
-  nextForm,
   prevForm,
   onSaveTeamData,
   onSubmitFinalForm,
