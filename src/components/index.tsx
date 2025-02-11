@@ -7,6 +7,3 @@ export { Section, TextBox }
 
 import ExampleComponent from "./Example/Example";
 export { ExampleComponent }
-
-import LoadingPage from "../components/Loading/LoadingPage"
-export { LoadingPage }
