@@ -1,5 +1,5 @@
-import { LoadingPage } from '../../components'
 import './Test.scss'
+import Footer from '../../components/Footer/Footer'
 
 /**
  * This component should be used to test your components, shared components or pages.
@@ -8,7 +8,9 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      {<LoadingPage></LoadingPage>}
+
+    <Footer />
+      
     </>
   )
 }
