@@ -1,0 +1,175 @@
+@use '../../utils/css/colors';
+@use '../../utils/css/mediaqueries';
+
+
+.signup-section {
+  display: flex;
+  justify-content: center;
+
+
+  /*.text-box {
+    background: rgba(243, 242, 255, 0.5);
+    padding: 20px;
+    border-radius: 34px;
+    max-width: 633px;
+    min-height: 230px;
+    color: #FFFFFF;
+    font-family: "Arial", sans-serif;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 42px;
+  }*/
+
+  .signup-text-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+
+    @media #{mediaqueries.$except-phone} {
+      margin-bottom: 100px; //TODO
+
+    }
+
+    p {
+      z-index: 99; //TODO
+    }
+  }
+
+
+  .signup-button {
+    position: absolute;
+    transform: translate(-50%, 100%);
+    left: 50%;
+    bottom: -40px;
+    background-color: colors.$bela;
+    //padding: 10px 24px;
+    padding: 5px 12px;
+    color: colors.$tamno-plava;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    text-decoration: none;
+    outline: 5px solid colors.$bela;
+    outline-offset: 1.5px;
+    transition: 0.2s ease-in-out background-color, 0.1s ease-in-out scale; //3 vrednosti
+
+    @media #{mediaqueries.$phone} {
+      position: static;
+      transform: none;
+      left: unset;
+      bottom: unset;
+      margin: 5px 0;
+
+    }
+
+
+    &:hover {
+      background-color: rgba(colors.$bela, 0.5);
+    }
+
+    &:active {
+      scale: 0.96;
+    }
+
+  }
+
+
+}
+
+.hexagon {
+  position: absolute;
+  object-fit: contain;
+  aspect-ratio: 1;
+  animation: rotateHexagon 10s infinite linear;
+
+  &.hex1 {
+    width: 375px;
+    top: 18px;
+    left: -300px;
+
+    @media #{mediaqueries.$s-desktop} {
+      width: 130px;
+      top: -100px;
+      left: -20px;
+    }
+
+    @media #{mediaqueries.$phone} {
+      width: 90px;
+      top: -60px;
+      left: 0px;
+    }
+  }
+
+  &.hex2 {
+    width: 250px;
+    top: -60px;
+    right: -220px;
+
+    @media #{mediaqueries.$s-desktop} {
+      width: 140px;
+      top: unset;
+      bottom: -110px;
+      right: -30px;
+    }
+
+    @media #{mediaqueries.$phone} {
+      width: 110px;
+      top: unset;
+      bottom: -85px;
+      right: 0;
+    }
+  }
+
+  &.hex3 {
+    width: 150px;
+    top: 130px;
+    right: -250px;
+
+    @media #{mediaqueries.$s-desktop} {
+      width: 70px;
+      top: unset;
+      bottom: -147.5px;
+      right: 45px;
+    }
+
+    @media #{mediaqueries.$phone} {
+      width: 60px;
+      top: unset;
+      bottom: -110px;
+      right: 70px;
+    }
+  }
+
+  &.hex4 {
+    display: none;
+    width: 375px;
+    top: 0;
+    left: -200px;
+
+    @media #{mediaqueries.$s-desktop} {
+      display: block;
+      width: 70px;
+      top: -125.5px;
+      left: 60px;
+    }
+
+    @media #{mediaqueries.$phone} {
+      width: 60px;
+      top: -90px;
+      left: 55px;
+    }
+  }
+}
+
+@keyframes rotateHexagon {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}

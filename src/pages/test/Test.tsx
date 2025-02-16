@@ -1,3 +1,4 @@
+import SignupSection from '../../components/Signup/SignupSection'
 import './Test.scss'
 
 /**
@@ -7,7 +8,8 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      {/* Put your component here */}
+    <SignupSection/>
+
     </>
   )
 }
