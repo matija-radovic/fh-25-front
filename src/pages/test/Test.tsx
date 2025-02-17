@@ -1,3 +1,4 @@
+import { Header } from '../../components'
 import './Test.scss'
 
 /**
@@ -7,7 +8,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      {/* Put your component here */}
+     <Header/>
     </>
   )
 }

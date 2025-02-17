@@ -1,0 +1,188 @@
+@use "../../utils/css/colors";
+@use"../../utils/css/mediaqueries";
+
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center; //to do:Matija ocd
+  justify-content: space-between;
+  background-color: colors.$svetlo-plava;
+
+
+  transition: .1s ease-out all;
+
+  a {
+    color: colors.$tamno-plava;
+    font-size: 0.9rem;
+    position: relative;
+    margin: 0 1rem;
+    text-decoration: none;
+    white-space: nowrap;
+    
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+    }
+
+    &::before {
+      left: -0.6rem;
+    }
+
+    &::after {
+      right: -0.6rem;
+    }
+
+
+    &:hover::before {
+      content: '<';
+    }
+
+    &:hover::after {
+      content: '>';
+    }
+  }
+
+  .header-container {
+    display: flex;
+    &.h-open{
+      @media #{mediaqueries.$lt-desktop}{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding:0 12px;
+        
+        background-color:colors.$bela;
+        left:unset;
+        right: 50px;
+        opacity: 1;
+        
+        animation:sirenje .2s cubic-bezier(.53,.18,.43,1) forwards;
+
+        a{
+          color: colors.$tamno-plava;
+          font-weight: 700;
+          font-size: 1.2rem;
+          padding:12px 0;
+        }
+
+      }
+    }
+
+    .hamburger-sign-up {
+      display: none;
+
+      @media #{mediaqueries.$lt-desktop} {
+        display: block;
+      }
+    }
+
+    @media #{mediaqueries.$lt-desktop} {
+      position: absolute;
+      top: calc(100% + 20px);
+      left: 100%;
+      opacity: 0;
+
+    }
+  }
+
+  .header-logo {
+    width: 100px;
+    object-fit: contain;
+    @media #{mediaqueries.$phone}{
+      width: 60px;
+    }
+      
+    
+  }
+
+
+
+  .header-sign-up {
+    margin-left: 1rem;
+    margin-right: 0;
+    padding: 14px 20px;
+    outline: 2px solid colors.$tamno-plava;
+    outline-offset: -4px;
+    background-color: colors.$svetlo-plava ;
+    border-radius: 100px;
+    color: colors.$tamno-plava;
+    transition: .1s ease-in all;
+
+    &::after,
+    &::before {
+      content: none !important;
+    }
+
+    @media #{mediaqueries.$lt-desktop} {
+      display: none;
+    }
+  }
+
+  .header-sign-up:hover {
+    outline-color: colors.$svetlo-plava;
+    color: colors.$svetlo-plava;
+    background-color: colors.$tamno-plava;
+  }
+
+  $razmak: 8px;
+  $razmak-mali: 5px;
+  $sirina: 56px;
+  $sirina-mala: 32px;
+
+  .hamburger {
+    display: none;
+    width: $sirina;
+    flex-direction: column;
+    gap: $razmak;
+    cursor: pointer;
+    &.h-open{
+      background-color: red;
+    }
+    @media #{mediaqueries.$lt-desktop} {
+      display: flex;
+    }
+
+    @media #{mediaqueries.$phone} {
+      width: $sirina-mala;
+      gap: $razmak-mali ;
+    }
+
+
+    .hamburger-line {
+      height: $razmak;
+      width: 100%;
+      background-color: colors.$tamno-plava;
+      @media #{mediaqueries.$phone} {
+        height: $razmak-mali;
+      }
+    }
+  }
+
+  &.header-dark {
+    background-color: colors.$tamno-plava;
+
+    a {
+      color: colors.$svetlo-plava;
+    }
+  }
+}
+
+@keyframes sirenje{
+  0%{
+    height: 0px;
+  }
+  99.9%{
+    height:472.2px ;
+    //472
+  }
+  100%{
+    height: auto;
+  }
+}
