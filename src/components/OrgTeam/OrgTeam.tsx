@@ -5,6 +5,7 @@ import CoordCard from "./Child/CoordCard";
 import TeamCard from "./Child/TeamCard";
 import Hexagon from "./Child/Hexagon";
 import HexagonMobile from "./Child/HexagonMobile";
+import OrgTeamArrow from "./Child/Arrow/OrgTeamArrow";
 
 interface OrgTeamProps {
   teams: {
@@ -84,6 +85,12 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
       {/* Dodatni wrapper sa ref */}
       <Section className="org-team-section" heading="ORGANIZACIONI TIM">
         <div className="org-team-slider">
+          <OrgTeamArrow flippedX={true} className="arrow-top-right" />
+          <OrgTeamArrow
+            flippedX={false}
+            flippedY={true}
+            className="arrow-bottom-left"
+          />
           <Hexagon
             width={650}
             height={650}
