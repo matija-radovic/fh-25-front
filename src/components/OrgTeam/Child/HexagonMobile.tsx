@@ -12,20 +12,12 @@ interface HexagonMobileProps {
 }
 
 const HexagonMobile: React.FC<HexagonMobileProps> = ({
-  top,
-  left,
-  right,
-  bottom,
-  width = "184",
-  height = "210",
+  width = "284",
+  height = "310",
   className,
 }) => {
   const style: React.CSSProperties = {
     position: "absolute",
-    top,
-    left,
-    right,
-    bottom,
     width,
     height,
   };

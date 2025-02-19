@@ -91,18 +91,8 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
             flippedY={true}
             className="arrow-bottom-left"
           />
-          <Hexagon
-            width={650}
-            height={650}
-            rotate={0}
-            className="bottom-left"
-          />
-          <Hexagon
-            width={163}
-            height={163}
-            rotate={0}
-            className="bottom-right"
-          />
+          <Hexagon isBig={true} rotate={0} className="bottom-left" />
+          <Hexagon isBig={false} rotate={0} className="bottom-right" />
           <div className="org-team-cards">
             <CoordCard
               coordinator={{
@@ -123,18 +113,8 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
           </div>
         </div>
         <div className="mobile-org-team-slider">
-          <HexagonMobile
-            top="-20px"
-            right="-120px"
-            width="290px"
-            height="310px"
-          />
-          <HexagonMobile
-            bottom="0"
-            left="-100px"
-            width="290px"
-            height="310px"
-          />
+          <HexagonMobile className="hexagon-mobile-top-right " />
+          <HexagonMobile className="hexagon-mobile-bottom-left " />
           <div className="org-team-cards">
             <div className="upper-section">
               <button

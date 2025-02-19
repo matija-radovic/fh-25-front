@@ -132,14 +132,14 @@
   @media (max-width: 480px) {
     .mobile-org-team-slider {
       display: flex;
-      transform: scale(0.6);
+      transform: scale(0.55);
     }
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 380px) {
     .mobile-org-team-slider {
       display: flex;
-      transform: scale(0.5);
+      transform: scale(0.45);
     }
   }
 }
@@ -172,13 +172,13 @@
 
 @media (max-width: 480px) {
   .org-team-section {
-    height: 750px !important;
+    height: 700px !important;
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
   .org-team-section {
-    height: 600px !important;
+    height: 550px !important;
   }
   .org-team-section > h1 {
     text-align: center;
