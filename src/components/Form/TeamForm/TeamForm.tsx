@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -23,7 +23,6 @@ interface TeamFormProps {
   onSaveTeamData: (teamData: TeamData) => void;
   onSubmitFinalForm: () => void;
   isSubmitted: boolean;
-  setIsSubmitted: (value: boolean) => void;
 }
 
 const TeamForm: React.FC<TeamFormProps> = ({
@@ -31,7 +30,6 @@ const TeamForm: React.FC<TeamFormProps> = ({
   onSaveTeamData,
   onSubmitFinalForm,
   isSubmitted,
-  setIsSubmitted,
 }) => {
   const {
     control,

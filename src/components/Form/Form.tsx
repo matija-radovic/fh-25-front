@@ -124,7 +124,6 @@ const Form = () => {
       onSaveTeamData={handleSaveTeamData}
       onSubmitFinalForm={handleSubmitFinalForm}
       isSubmitted={isSubmitted}
-      setIsSubmitted={setIsSubmitted}
     />,
   ];
 
