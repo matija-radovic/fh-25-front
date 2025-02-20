@@ -10,6 +10,13 @@
   position: relative;
   overflow: hidden;
 
+  .success-message {
+    font-size: 96px;
+    align-self: center;
+    justify-content: center;
+    margin-top: 20%;
+  }
+
   .team-form-header {
     background: linear-gradient(to right, #002440, #24bdde);
     height: 65px;

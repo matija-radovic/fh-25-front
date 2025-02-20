@@ -1,5 +1,6 @@
 import MobileForm from "../../components/MobileForm/MobileForm";
 import "./Test.scss";
+import Form from "../../components/Form/Form";
 
 /**
  * This component should be used to test your components, shared components or pages.
@@ -10,7 +11,7 @@ const Test = () => {
     <>
       {/* Put your component here */}
       {/*<Form />*/}
-      <MobileForm />
+      <Form />
     </>
   );
 };

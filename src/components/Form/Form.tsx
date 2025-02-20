@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Form.scss";
 import IndividualForm from "./IndividualForm/IndividualForm";
 import TeamForm from "./TeamForm/TeamForm";
@@ -18,7 +18,8 @@ const Form = () => {
   const [hiddenForms, setHiddenForms] = useState<number[]>([]);
   const [teamData, setTeamData] = useState<TeamData | null>(null); // Podaci o timu
   const [membersData, setMembersData] = useState<Contestant[]>([]); // Podaci o članovima tima
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
   // Funkcija za čuvanje podataka o članovima tima
   const handleSaveContestant = (contestant: Contestant) => {
     setMembersData((prev) => [...prev, contestant]);
@@ -79,9 +80,11 @@ const Form = () => {
         console.log("Aplikacija uspešno poslata!");
       } else {
         console.error("Greška pri slanju aplikacije:", response.message);
+        setIsSubmitted(true);
       }
     } catch (error) {
       console.error("Došlo je do greške:", error);
+      setIsSubmitted(true);
     }
   };
 
@@ -120,36 +123,51 @@ const Form = () => {
       prevForm={handlePrevForm}
       onSaveTeamData={handleSaveTeamData}
       onSubmitFinalForm={handleSubmitFinalForm}
+      isSubmitted={isSubmitted}
+      setIsSubmitted={setIsSubmitted}
     />,
   ];
 
+  useEffect(() => {
+    if (isSubmitted) {
+      const timer = setTimeout(() => {
+        setIsFormVisible(false); // Sakrij formu nakon 5 sekundi
+      }, 5000);
+      return () => clearTimeout(timer); // Očisti timer ako se komponenta unmountuje
+    }
+  }, [isSubmitted]);
+
   return (
     <div className="form-wrapper">
-      <div className="forms-container">
-        {forms.map((form, index) => {
-          const hiddenBefore = hiddenForms.filter(
-            (hiddenIndex) => hiddenIndex < index
-          ).length;
+      {isFormVisible && (
+        <div className="forms-container">
+          {forms.map((form, index) => {
+            const hiddenBefore = hiddenForms.filter(
+              (hiddenIndex) => hiddenIndex < index
+            ).length;
 
-          return (
-            <div
-              key={index}
-              className={`form-slide ${index === currentIndex ? "active" : ""}`}
-              style={{
-                zIndex: forms.length - index,
-                transform: `translate(${(index - hiddenBefore) * -20}px, ${
-                  (index - hiddenBefore) * -30
-                }px)`,
-                opacity: hiddenForms.includes(index) ? 0 : 1,
-                transition:
-                  "transform 0.3s ease-in-out, opacity 0.3s ease-in-out",
-              }}
-            >
-              {form}
-            </div>
-          );
-        })}
-      </div>
+            return (
+              <div
+                key={index}
+                className={`form-slide ${
+                  index === currentIndex ? "active" : ""
+                }`}
+                style={{
+                  zIndex: forms.length - index,
+                  transform: `translate(${(index - hiddenBefore) * -20}px, ${
+                    (index - hiddenBefore) * -30
+                  }px)`,
+                  opacity: hiddenForms.includes(index) ? 0 : 1,
+                  transition:
+                    "transform 0.3s ease-in-out, opacity 0.3s ease-in-out",
+                }}
+              >
+                {form}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

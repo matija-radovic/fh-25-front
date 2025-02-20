@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -22,12 +22,16 @@ interface TeamFormProps {
   prevForm: () => void;
   onSaveTeamData: (teamData: TeamData) => void;
   onSubmitFinalForm: () => void;
+  isSubmitted: boolean;
+  setIsSubmitted: (value: boolean) => void;
 }
 
 const TeamForm: React.FC<TeamFormProps> = ({
   prevForm,
   onSaveTeamData,
   onSubmitFinalForm,
+  isSubmitted,
+  setIsSubmitted,
 }) => {
   const {
     control,
@@ -44,12 +48,9 @@ const TeamForm: React.FC<TeamFormProps> = ({
   });
 
   const onSubmit = (data: TeamData) => {
-    // Sačuvaj podatke o timu
     onSaveTeamData(data);
 
     console.log("Podaci o timu:", data);
-
-    // Pozovite funkciju za slanje podataka na backend
     onSubmitFinalForm();
   };
 
@@ -62,98 +63,102 @@ const TeamForm: React.FC<TeamFormProps> = ({
             <img src={icons} alt="ikonice" />
           </div>
         </div>
-        <form className="team-form-body" onSubmit={handleSubmit(onSubmit)}>
-          <div className="team-form-body-upper">
-            <div className="team-form-body-upper-left">
-              <label className="team-form-label-name">
-                Naziv tima:
-                <Controller
-                  name="teamName"
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      className={`team-form-textbox team-form-name ${
-                        errors.teamName ? "error" : ""
-                      }`}
-                      type="text"
-                      placeholder={
-                        errors.teamName?.message || "Unesite naziv tima"
-                      }
-                    />
-                  )}
-                />
-              </label>
-              <label className="team-form-label">
-                Motivacija za FON Hakaton:
-                <Controller
-                  name="motivation"
-                  control={control}
-                  render={({ field }) => (
-                    <textarea
-                      {...field}
-                      className={`team-form-textbox team-form-motivation ${
-                        errors.motivation ? "error" : ""
-                      }`}
-                      placeholder={
-                        errors.motivation?.message ||
-                        "Motivacija za FON Hakaton"
-                      }
-                    />
-                  )}
-                />
-              </label>
+        {isSubmitted ? (
+          <h1 className="success-message">Uspešna prijava</h1>
+        ) : (
+          <form className="team-form-body" onSubmit={handleSubmit(onSubmit)}>
+            <div className="team-form-body-upper">
+              <div className="team-form-body-upper-left">
+                <label className="team-form-label-name">
+                  Naziv tima:
+                  <Controller
+                    name="teamName"
+                    control={control}
+                    render={({ field }) => (
+                      <input
+                        {...field}
+                        className={`team-form-textbox team-form-name ${
+                          errors.teamName ? "error" : ""
+                        }`}
+                        type="text"
+                        placeholder={
+                          errors.teamName?.message || "Unesite naziv tima"
+                        }
+                      />
+                    )}
+                  />
+                </label>
+                <label className="team-form-label">
+                  Motivacija za FON Hakaton:
+                  <Controller
+                    name="motivation"
+                    control={control}
+                    render={({ field }) => (
+                      <textarea
+                        {...field}
+                        className={`team-form-textbox team-form-motivation ${
+                          errors.motivation ? "error" : ""
+                        }`}
+                        placeholder={
+                          errors.motivation?.message ||
+                          "Motivacija za FON Hakaton"
+                        }
+                      />
+                    )}
+                  />
+                </label>
+              </div>
+              <div className="team-form-body-upper-right">
+                <label className="team-form-label">
+                  Kako biste podelili uloge u timu?
+                  <Controller
+                    name="roles"
+                    control={control}
+                    render={({ field }) => (
+                      <textarea
+                        {...field}
+                        className={`team-form-textbox team-form-roles ${
+                          errors.roles ? "error" : ""
+                        }`}
+                        placeholder={
+                          errors.roles?.message ||
+                          "Kako biste podelili uloge u timu?"
+                        }
+                      />
+                    )}
+                  />
+                </label>
+                <label className="team-form-label team-form-label-situations">
+                  Navedite pozitivne i negativne situacije u timu:
+                  <Controller
+                    name="situations"
+                    control={control}
+                    render={({ field }) => (
+                      <textarea
+                        {...field}
+                        className={`team-form-textbox team-form-situations ${
+                          errors.situations ? "error" : ""
+                        }`}
+                        placeholder={
+                          errors.situations?.message ||
+                          "Navedite pozitivne i negativne situacije u timu"
+                        }
+                      />
+                    )}
+                  />
+                </label>
+              </div>
             </div>
-            <div className="team-form-body-upper-right">
-              <label className="team-form-label">
-                Kako biste podelili uloge u timu?
-                <Controller
-                  name="roles"
-                  control={control}
-                  render={({ field }) => (
-                    <textarea
-                      {...field}
-                      className={`team-form-textbox team-form-roles ${
-                        errors.roles ? "error" : ""
-                      }`}
-                      placeholder={
-                        errors.roles?.message ||
-                        "Kako biste podelili uloge u timu?"
-                      }
-                    />
-                  )}
-                />
-              </label>
-              <label className="team-form-label team-form-label-situations">
-                Navedite pozitivne i negativne situacije u timu:
-                <Controller
-                  name="situations"
-                  control={control}
-                  render={({ field }) => (
-                    <textarea
-                      {...field}
-                      className={`team-form-textbox team-form-situations ${
-                        errors.situations ? "error" : ""
-                      }`}
-                      placeholder={
-                        errors.situations?.message ||
-                        "Navedite pozitivne i negativne situacije u timu"
-                      }
-                    />
-                  )}
-                />
-              </label>
+            <div className="team-form-body-lower">
+              <button className="left-button" type="button" onClick={prevForm}>
+                <img src={leftArrow} alt="<" />
+              </button>
+              <button className="right-button" type="submit">
+                <p>Pošalji</p>
+              </button>
             </div>
-          </div>
-          <div className="team-form-body-lower">
-            <button className="left-button" type="button" onClick={prevForm}>
-              <img src={leftArrow} alt="<" />
-            </button>
-            <button className="right-button" type="submit">
-              <p>Pošalji</p>
-            </button>
-          </div>
-        </form>
+          </form>
+        )}
       </div>
     </Section>
   );
