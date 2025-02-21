@@ -22,6 +22,7 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null); // Ref za dodatni wrapper
+  const intervalRef = useRef<number | null>(null); // Ref za interval
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -50,14 +51,28 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
     };
   }, []);
 
-  useEffect(() => {
-    let interval: number;
-    if (isVisible) {
-      interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % teams.length);
-      }, 5000);
+  const startInterval = () => {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
     }
-    return () => clearInterval(interval);
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % teams.length);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      startInterval();
+    } else {
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+      }
+    }
+    return () => {
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, [isVisible, teams.length]);
 
   const {
@@ -71,12 +86,14 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % teams.length);
+    startInterval(); // Resetuj interval
   };
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? teams.length - 1 : prevIndex - 1
     );
+    startInterval(); // Resetuj interval
   };
 
   return (
