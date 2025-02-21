@@ -1,36 +1,61 @@
 .form-wrapper {
-  display: flex;
-  padding-left: 10%;
-  align-items: center;
-  height: 100vh;
-  background-color: transparent; // Bez bele pozadine
+  height: 100dvh;
+  width: 100%;
+  position: fixed;
+  z-index: 1001;
+  backdrop-filter: blur(50px);
+  background-color: rgba(4, 19, 57, 0.5);
 }
 
 .forms-container {
-  transform-origin: center;
   position: relative;
-  width: 400px;
-  height: 300px;
   transform: scale(0.8);
 }
 
 .form-slide {
+  margin-top: 9%;
   position: absolute;
-  top: 0;
-  left: 0;
+  margin-left: 15%;
   width: 100%;
   height: 100%;
-  background-color: transparent; // Bez bele pozadine
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   opacity: 1;
-
   &.active {
     opacity: 1;
     transform: translate(0, 0) !important;
   }
   &[style*="opacity: 0"] {
     pointer-events: none;
+  }
+}
+
+@media (max-width: 1280px) {
+  .forms-container {
+    transform: scale(0.75);
+  }
+  .form-slide {
+    margin-top: 15%;
+    margin-left: 10%;
+  }
+}
+@media (max-width: 1024px) {
+  .forms-container {
+    transform: scale(0.65);
+  }
+  .form-slide {
+    margin-top: 30%;
+    margin-left: 0%;
+  }
+}
+
+@media (max-width: 859px) {
+  .forms-container {
+    transform: scale(0.55);
+  }
+  .form-slide {
+    margin-top: 30%;
+    margin-left: -10%;
   }
 }

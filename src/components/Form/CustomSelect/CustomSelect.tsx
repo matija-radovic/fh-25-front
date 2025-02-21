@@ -4,7 +4,7 @@ import downArrow from "../../../assets/Form/downArrow.svg";
 
 interface CustomSelectProps {
   name: string;
-  value: string;
+  value: string | undefined;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   values: string[];
   className?: string;

@@ -17,6 +17,9 @@ import {
   UniversityYear,
 } from "../../../utils/constants/form/schoolYears";
 
+// Definišite tip za YearOfStudy
+type YearOfStudy = keyof typeof HighSchoolYear | keyof typeof UniversityYear;
+
 // Shema za validaciju
 const formSchema = z
   .object({
@@ -86,16 +89,35 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
   const occupation = watch("occupation");
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const contestant: Contestant = {
-      email: data.email,
-      name: data.name,
-      phoneNumber: data.phone,
-      techDescription: data.technologies,
-      CVURL: data.cvLink,
-      proffesion: data.occupation,
-      educationalInstitution: data.school || undefined,
-      yearOfStudy: data.grade || undefined,
-    };
+    let contestant: Contestant;
+
+    if (data.occupation === Profession.EMPLOYED) {
+      // Ako je zaposlen, educationalInstitution i yearOfStudy moraju biti undefined
+      contestant = {
+        email: data.email,
+        name: data.name,
+        phoneNumber: data.phone,
+        techDescription: data.technologies,
+        CVURL: data.cvLink,
+        profession: data.occupation,
+        educationalInstitution: undefined, // Obavezno undefined
+        yearOfStudy: undefined, // Obavezno undefined
+      };
+    } else {
+      // Ako je student ili srednjoškolac, educationalInstitution i yearOfStudy moraju biti definisani
+      const yearOfStudy = data.grade as YearOfStudy | undefined;
+
+      contestant = {
+        email: data.email,
+        name: data.name,
+        phoneNumber: data.phone,
+        techDescription: data.technologies,
+        CVURL: data.cvLink,
+        profession: data.occupation,
+        educationalInstitution: data.school || undefined,
+        yearOfStudy: yearOfStudy,
+      };
+    }
 
     // Sačuvaj podatke o učesniku
     onSaveContestant(contestant);
@@ -259,8 +281,8 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                           {...field}
                           values={
                             occupation === Profession.HIGH_SCHOOL_STUDENT
-                              ? schools
-                              : universities
+                              ? [...schools]
+                              : [...universities]
                           }
                           className={errors.school ? "error" : ""}
                         />

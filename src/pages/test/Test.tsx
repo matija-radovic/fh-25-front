@@ -1,4 +1,4 @@
-import MobileForm from "../../components/MobileForm/MobileForm";
+import FinalForm from "../../components/FinalForm/FinalForm";
 import "./Test.scss";
 
 /**
@@ -10,7 +10,9 @@ const Test = () => {
     <>
       {/* Put your component here */}
       {/*<Form />*/}
-      <MobileForm />
+      <div style={{ height: "100%" }}>
+        <FinalForm />
+      </div>
     </>
   );
 };

@@ -4,7 +4,7 @@ import downArrow from "../../../assets/Form/downArrow.svg";
 
 interface MobileCustomSelectProps {
   name: string;
-  value: string;
+  value: string | undefined;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   values: readonly string[];
   className?: string;

@@ -1,10 +1,11 @@
 .mobile-form-container {
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   padding: 30px;
 
   .mobile-form-wrapper {
     background: linear-gradient(to bottom, #24bdde, #136678);
+    height: 100%;
     border-radius: 17px;
     padding: 20px 35px;
     display: flex;
@@ -38,6 +39,7 @@
         &::placeholder {
           color: rgb(207, 207, 207);
         }
+        border: 1px solid white;
       }
 
       &:focus {
@@ -48,6 +50,7 @@
         &::placeholder {
           color: rgb(207, 207, 207);
         }
+        border: 1px solid white;
       }
     }
 
@@ -154,6 +157,14 @@
       }
       .mobile-button-right-arrow {
         clip-path: polygon(100% 50%, 0 100%, 0 0);
+      }
+      .mobile-button-skip {
+        font-size: 20px;
+        color: #002440;
+        background-color: #24bdde;
+        padding: 6px 8px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       }
     }
   }

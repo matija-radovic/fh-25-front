@@ -24,17 +24,19 @@ interface MobileTeamFormProps {
   prevForm: () => void;
   onSaveTeamData: (teamData: TeamData) => void;
   onSubmitFinalForm: () => void;
+  isSubmitted: boolean;
 }
 
 const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
   prevForm,
   onSaveTeamData,
   onSubmitFinalForm,
+  isSubmitted,
 }) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,6 +78,7 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
                   }`}
                   type="text"
                   placeholder={errors.teamName?.message || "Unesite naziv tima"}
+                  disabled={isSubmitted || isSubmitting}
                 />
               )}
             />
@@ -94,6 +97,7 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
                   placeholder={
                     errors.motivation?.message || "Motivacija za FON Hakaton"
                   }
+                  disabled={isSubmitted || isSubmitting}
                 />
               )}
             />
@@ -112,6 +116,7 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
                   placeholder={
                     errors.roles?.message || "Kako biste podelili uloge u timu?"
                   }
+                  disabled={isSubmitted || isSubmitting}
                 />
               )}
             />
@@ -131,6 +136,7 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
                     errors.situations?.message ||
                     "Navedite pozitivne i negativne situacije u timu"
                   }
+                  disabled={isSubmitted || isSubmitting}
                 />
               )}
             />
@@ -139,11 +145,21 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
             <button
               className="mobile-button-left-arrow"
               onClick={prevForm}
+              disabled={isSubmitted || isSubmitting}
             ></button>
-            <button className="mobile-button-right-arrow" type="submit">
-              Pošalji
+            <button
+              className="mobile-button-right-arrow"
+              type="submit"
+              disabled={isSubmitted || isSubmitting}
+            >
+              {isSubmitting ? "Slanje..." : isSubmitted ? "Poslato" : "Pošalji"}
             </button>
           </div>
+          {isSubmitted && (
+            <p className="mobile-form-success-message">
+              Uspešno ste poslali prijavu!
+            </p>
+          )}
         </form>
       </div>
     </Section>

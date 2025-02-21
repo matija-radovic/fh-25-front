@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MobileForm.scss";
 import MobileIndividualForm from "./MobileIndividualForm/MobileIndividualForm";
 import MobileTeamForm from "./MobileTeamForm/MobileTeamForm";
@@ -17,6 +17,8 @@ const MobileForm = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [membersData, setMembersData] = useState<Contestant[]>([]);
   const [teamData, setTeamData] = useState<TeamData | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
 
   // Čuvanje podataka o članovima tima
   const handleSaveContestant = (contestant: Contestant, index: number) => {
@@ -64,9 +66,7 @@ const MobileForm = () => {
       );
       if (response.success) {
         console.log("Aplikacija uspešno poslata!");
-        setMembersData([]);
-        setTeamData(null);
-        setCurrentIndex(0);
+        setIsSubmitted(true); // Postavi stanje na uspešno slanje
       } else {
         console.error("Greška pri slanju aplikacije:", response.message);
       }
@@ -74,6 +74,15 @@ const MobileForm = () => {
       console.error("Došlo je do greške:", error);
     }
   };
+
+  useEffect(() => {
+    if (isSubmitted) {
+      const timer = setTimeout(() => {
+        setIsFormVisible(false); // Sakrij formu nakon 5 sekundi
+      }, 5000);
+      return () => clearTimeout(timer); // Očisti timer ako se komponenta unmountuje
+    }
+  }, [isSubmitted]);
 
   const forms = [
     <MobileIndividualForm
@@ -111,29 +120,32 @@ const MobileForm = () => {
       prevForm={handlePrevForm}
       onSaveTeamData={handleSaveTeamData}
       onSubmitFinalForm={handleSubmitFinalForm}
+      isSubmitted={isSubmitted}
     />,
   ];
 
   return (
     <div className="mobile-form-wrapper">
-      <div className="mobile-forms-container">
-        {forms.map((form, index) => {
-          let slideClass = "";
-          if (index === currentIndex) {
-            slideClass = "active"; // Aktivni slajd
-          } else if (index < currentIndex) {
-            slideClass = "prev"; // Prethodni slajdovi
-          } else {
-            slideClass = "next"; // Sledeći slajdovi
-          }
+      {isFormVisible && (
+        <div className="mobile-forms-container">
+          {forms.map((form, index) => {
+            let slideClass = "";
+            if (index === currentIndex) {
+              slideClass = "active"; // Aktivni slajd
+            } else if (index < currentIndex) {
+              slideClass = "prev"; // Prethodni slajdovi
+            } else {
+              slideClass = "next"; // Sledeći slajdovi
+            }
 
-          return (
-            <div key={index} className={`mobile-form-slide ${slideClass}`}>
-              {form}
-            </div>
-          );
-        })}
-      </div>
+            return (
+              <div key={index} className={`mobile-form-slide ${slideClass}`}>
+                {form}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

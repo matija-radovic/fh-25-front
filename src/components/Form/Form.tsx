@@ -20,32 +20,27 @@ const Form = () => {
   const [membersData, setMembersData] = useState<Contestant[]>([]); // Podaci o članovima tima
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
-  // Funkcija za čuvanje podataka o članovima tima
+
   const handleSaveContestant = (contestant: Contestant) => {
     setMembersData((prev) => [...prev, contestant]);
   };
 
-  // Funkcija za čuvanje podataka o timu
   const handleSaveTeamData = (data: TeamData) => {
     setTeamData(data);
   };
 
-  // Funkcija za prelazak na sledeću formu
   const handleNextForm = () => {
     setHiddenForms((prevHidden) => [...prevHidden, currentIndex]);
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
-  // Funkcija za prelazak na prethodnu formu
   const handlePrevForm = () => {
-    // Vraćamo se na prethodnu formu i uklanjamo je iz sakrivenih
     setHiddenForms((prevHidden) =>
       prevHidden.filter((index) => index !== currentIndex - 1)
     );
     setCurrentIndex((prevIndex) => prevIndex - 1);
   };
 
-  // Funkcija za preskakanje forme za 4. člana
   const handleSkipFourthMember = () => {
     setHiddenForms((prevHidden) => [...prevHidden, 3]); // Sakrij formu za 4. člana
     setCurrentIndex(4); // Pređi direktno na formu za tim
