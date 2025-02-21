@@ -12,7 +12,7 @@ const orgTeams = [
     coordinatorFirstName: "Filip",
     coordinatorLastName: "Lazarević",
     coordinatorRole: "Koordinator takmičenja",
-    teamImage: "images/CORE_TIM.webp",
+    teamImage: "images/CORE_TIM.jpg",
     teamName: "Tim Koordinatora",
   },
   {
@@ -20,7 +20,7 @@ const orgTeams = [
     coordinatorFirstName: "Mina",
     coordinatorLastName: "Vuković",
     coordinatorRole: "Koordinator tima za odnose sa kompanijama",
-    teamImage: "images/CR_TIM.webp",
+    teamImage: "images/CR_TIM.jpg",
     teamName: "Tim za odnose sa kompanijama",
   },
   {
@@ -28,7 +28,7 @@ const orgTeams = [
     coordinatorFirstName: "Anastasija",
     coordinatorLastName: "Rus",
     coordinatorRole: "Koordinator tima za odnose s javnošću",
-    teamImage: "images/PR_TIM.webp",
+    teamImage: "images/PR_TIM.png",
     teamName: "Tim za odnose s javnošću",
   },
   {
@@ -36,7 +36,7 @@ const orgTeams = [
     coordinatorFirstName: "Matija",
     coordinatorLastName: "Vujić",
     coordinatorRole: "Koordinator tima za ljudske resurse",
-    teamImage: "images/HR_TIM.webp",
+    teamImage: "images/HR_TIM.jpg",
     teamName: "Tim za ljudske resurse",
   },
   {
@@ -44,7 +44,7 @@ const orgTeams = [
     coordinatorFirstName: "Danica",
     coordinatorLastName: "Živković",
     coordinatorRole: "Koordinator tima za dizajn",
-    teamImage: "images/DIZAJN_TIM.webp",
+    teamImage: "images/DIZAJN_TIM.jpg",
     teamName: "Tim za dizajn",
   },
   {
@@ -52,7 +52,7 @@ const orgTeams = [
     coordinatorFirstName: "Emilija",
     coordinatorLastName: "Simić",
     coordinatorRole: "Koordinator tima za logistiku",
-    teamImage: "images/LOGISTIKA_TIM.webp",
+    teamImage: "images/LOGISTIKA_TIM.jpg",
     teamName: "Tim za logistiku",
   },
   {
@@ -60,7 +60,7 @@ const orgTeams = [
     coordinatorFirstName: "Matija",
     coordinatorLastName: "Radović",
     coordinatorRole: "Koordinator tima za informacione tehnologije",
-    teamImage: "images/IT_TIM.webp",
+    teamImage: "images/IT_TIM.jpg",
     teamName: "Tim za informacione tehnologije",
   },
 ];
