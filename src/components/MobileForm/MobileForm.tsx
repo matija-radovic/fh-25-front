@@ -65,9 +65,11 @@ const MobileForm = () => {
         setIsSubmitted(true);
       } else {
         console.error("Greška pri slanju aplikacije:", response.message);
+        setIsSubmitted(true);
       }
     } catch (error) {
       console.error("Došlo je do greške:", error);
+      setIsSubmitted(true);
     }
   };
 

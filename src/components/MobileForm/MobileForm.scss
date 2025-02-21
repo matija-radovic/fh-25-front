@@ -2,6 +2,8 @@
   width: 100%;
   height: 100dvh;
   position: relative; // Omogući apsolutno pozicioniranje unutar ovog kontejnera
+  backdrop-filter: blur(50px);
+  background-color: rgba(4, 19, 57, 0.5);
 }
 
 .mobile-forms-container {
@@ -14,8 +16,6 @@
   width: 100%;
   height: 100%;
   position: absolute; // Postavi sve slajdove na istu poziciju
-  top: 0;
-  left: 0;
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; // Dodaj animaciju za prelaz
   opacity: 0; // Sakrij sve slajdove osim aktivnog
   visibility: hidden; // Sakrij slajdove iz DOM renderovanja
