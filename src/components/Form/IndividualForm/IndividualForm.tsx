@@ -17,10 +17,8 @@ import {
   UniversityYear,
 } from "../../../utils/constants/form/schoolYears";
 
-// Definišite tip za YearOfStudy
 type YearOfStudy = keyof typeof HighSchoolYear | keyof typeof UniversityYear;
 
-// Shema za validaciju
 const formSchema = z
   .object({
     name: z.string().min(1, "Ime i prezime su obavezni."),
@@ -92,7 +90,6 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
     let contestant: Contestant;
 
     if (data.occupation === Profession.EMPLOYED) {
-      // Ako je zaposlen, educationalInstitution i yearOfStudy moraju biti undefined
       contestant = {
         email: data.email,
         name: data.name,
@@ -100,11 +97,10 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
         techDescription: data.technologies,
         CVURL: data.cvLink,
         profession: data.occupation,
-        educationalInstitution: undefined, // Obavezno undefined
-        yearOfStudy: undefined, // Obavezno undefined
+        educationalInstitution: undefined,
+        yearOfStudy: undefined,
       };
     } else {
-      // Ako je student ili srednjoškolac, educationalInstitution i yearOfStudy moraju biti definisani
       const yearOfStudy = data.grade as YearOfStudy | undefined;
 
       contestant = {
@@ -119,11 +115,10 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
       };
     }
 
-    // Sačuvaj podatke o učesniku
     onSaveContestant(contestant);
 
     console.log("Podaci o učesniku:", contestant);
-    nextForm(); // Prelazak na sledeću formu
+    nextForm();
   };
 
   return (
@@ -265,7 +260,6 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                 </div>
               </div>
 
-              {/* Prikaz polja u zavisnosti od zanimanja */}
               {(occupation === Profession.HIGH_SCHOOL_STUDENT ||
                 occupation === Profession.STUDENT) && (
                 <>
@@ -337,17 +331,13 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
             {indexIndividual === 4 && (
               <button
                 className="fourth"
-                type="button" // Dodato type="button" da sprečimo automatsko slanje forme
-                onClick={onSkipFourthMember} // Koristi onSkipFourthMember
+                type="button"
+                onClick={onSkipFourthMember}
               >
                 <p>Bez 4. člana</p>
               </button>
             )}
-            <button
-              className="left-button"
-              type="button" // Dodato type="button" da sprečimo automatsko slanje forme
-              onClick={prevForm}
-            >
+            <button className="left-button" type="button" onClick={prevForm}>
               <img src={leftArrow} alt="<" />
             </button>
             <button className="right-button" type="submit">

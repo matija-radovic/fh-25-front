@@ -5,27 +5,20 @@ import MobileForm from "../MobileForm/MobileForm";
 const FinalForm = () => {
   const [isMobile, setIsMobile] = useState(false);
 
-  // Funkcija za proveru veličine ekrana
   const checkIsMobile = () => {
-    setIsMobile(window.innerWidth <= 768); // 768px je uobičajeni breakpoint za mobilne uređaje
+    setIsMobile(window.innerWidth <= 768);
   };
 
-  // Postavite osluškivač za promenu veličine ekrana
   useEffect(() => {
-    checkIsMobile(); // Proveri na početku
-    window.addEventListener("resize", checkIsMobile); // Dodaj event listener za promenu veličine
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
 
     return () => {
-      window.removeEventListener("resize", checkIsMobile); // Ukloni event listener kada se komponenta unmountuje
+      window.removeEventListener("resize", checkIsMobile);
     };
   }, []);
 
-  return (
-    <div>
-      {isMobile ? <MobileForm /> : <Form />}{" "}
-      {/* Prikazujemo odgovarajuću formu */}
-    </div>
-  );
+  return <div>{isMobile ? <MobileForm /> : <Form />} </div>;
 };
 
 export default FinalForm;

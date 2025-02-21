@@ -20,7 +20,6 @@ const MobileForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
 
-  // Čuvanje podataka o članovima tima
   const handleSaveContestant = (contestant: Contestant, index: number) => {
     setMembersData((prev) => {
       const newMembers = [...prev];
@@ -29,17 +28,14 @@ const MobileForm = () => {
     });
   };
 
-  // Čuvanje podataka o timu
   const handleSaveTeamData = (data: TeamData) => {
     setTeamData(data);
   };
 
-  // Navigacija kroz forme
   const handleNextForm = () => setCurrentIndex((prevIndex) => prevIndex + 1);
   const handlePrevForm = () => setCurrentIndex((prevIndex) => prevIndex - 1);
   const handleSkipFourthMember = () => setCurrentIndex(4);
 
-  // Slanje podataka na server
   const handleSubmitFinalForm = async () => {
     if (!teamData || membersData.length < 3) {
       console.error("Nedostaju podaci o timu ili članovima tima.");
@@ -66,7 +62,7 @@ const MobileForm = () => {
       );
       if (response.success) {
         console.log("Aplikacija uspešno poslata!");
-        setIsSubmitted(true); // Postavi stanje na uspešno slanje
+        setIsSubmitted(true);
       } else {
         console.error("Greška pri slanju aplikacije:", response.message);
       }
@@ -78,9 +74,9 @@ const MobileForm = () => {
   useEffect(() => {
     if (isSubmitted) {
       const timer = setTimeout(() => {
-        setIsFormVisible(false); // Sakrij formu nakon 5 sekundi
+        setIsFormVisible(false);
       }, 5000);
-      return () => clearTimeout(timer); // Očisti timer ako se komponenta unmountuje
+      return () => clearTimeout(timer);
     }
   }, [isSubmitted]);
 
@@ -131,11 +127,11 @@ const MobileForm = () => {
           {forms.map((form, index) => {
             let slideClass = "";
             if (index === currentIndex) {
-              slideClass = "active"; // Aktivni slajd
+              slideClass = "active";
             } else if (index < currentIndex) {
-              slideClass = "prev"; // Prethodni slajdovi
+              slideClass = "prev";
             } else {
-              slideClass = "next"; // Sledeći slajdovi
+              slideClass = "next";
             }
 
             return (

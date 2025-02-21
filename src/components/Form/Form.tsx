@@ -43,10 +43,9 @@ const Form = () => {
 
   const handleSkipFourthMember = () => {
     setHiddenForms((prevHidden) => [...prevHidden, 3]); // Sakrij formu za 4. člana
-    setCurrentIndex(4); // Pređi direktno na formu za tim
+    setCurrentIndex(4);
   };
 
-  // Funkcija za slanje podataka na server
   const handleSubmitFinalForm = async () => {
     if (!teamData || membersData.length < 3) {
       console.error("Nedostaju podaci o timu ili članovima tima.");
@@ -125,9 +124,9 @@ const Form = () => {
   useEffect(() => {
     if (isSubmitted) {
       const timer = setTimeout(() => {
-        setIsFormVisible(false); // Sakrij formu nakon 5 sekundi
+        setIsFormVisible(false);
       }, 5000);
-      return () => clearTimeout(timer); // Očisti timer ako se komponenta unmountuje
+      return () => clearTimeout(timer);
     }
   }, [isSubmitted]);
 
