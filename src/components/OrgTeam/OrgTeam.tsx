@@ -36,7 +36,7 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
         });
       },
       {
-        threshold: 0.5, // 50% vidljivosti
+        threshold: 0.5,
       }
     );
 
@@ -86,20 +86,19 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % teams.length);
-    startInterval(); // Resetuj interval
+    startInterval();
   };
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? teams.length - 1 : prevIndex - 1
     );
-    startInterval(); // Resetuj interval
+    startInterval();
   };
 
   return (
     <div ref={wrapperRef}>
       {" "}
-      {/* Dodatni wrapper sa ref */}
       <Section className="org-team-section" heading="ORGANIZACIONI TIM">
         <div className="org-team-slider">
           <OrgTeamArrow flippedX={true} className="arrow-top-right" />

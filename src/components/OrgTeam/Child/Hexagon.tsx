@@ -1,4 +1,3 @@
-import React from "react";
 import "./Hexagon.scss";
 
 const Hexagon = ({ isBig = false, rotate = 0, className = "" }) => {
