@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -31,6 +31,8 @@ const TeamForm: React.FC<TeamFormProps> = ({
   onSubmitFinalForm,
   isSubmitted,
 }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -45,11 +47,18 @@ const TeamForm: React.FC<TeamFormProps> = ({
     },
   });
 
-  const onSubmit = (data: TeamData) => {
+  const onSubmit = async (data: TeamData) => {
+    setIsSubmitting(true); // Postavljamo stanje na "slanje u toku"
     onSaveTeamData(data);
 
     console.log("Podaci o timu:", data);
-    onSubmitFinalForm();
+    try {
+      await onSubmitFinalForm(); // Čekamo da se završi slanje
+    } catch (error) {
+      console.error("Došlo je do greške:", error);
+    } finally {
+      setIsSubmitting(false); // Vraćamo stanje na "slanje završeno"
+    }
   };
 
   return (
@@ -151,8 +160,18 @@ const TeamForm: React.FC<TeamFormProps> = ({
               <button className="left-button" type="button" onClick={prevForm}>
                 <img src={leftArrow} alt="<" />
               </button>
-              <button className="right-button" type="submit">
-                <p>Pošalji</p>
+              <button
+                className="right-button"
+                type="submit"
+                disabled={isSubmitting} // Onemogućavamo dugme samo dok se šalje
+              >
+                <p>
+                  {isSubmitted
+                    ? "Poslato"
+                    : isSubmitting
+                    ? "Šalje se..."
+                    : "Pošalji"}
+                </p>
               </button>
             </div>
           </form>
