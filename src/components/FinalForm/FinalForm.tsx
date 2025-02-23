@@ -22,7 +22,7 @@ const FinalForm = () => {
 
   return createPortal(
     <div className="form-content">{isMobile ? <MobileForm /> : <Form />}</div>,
-    document.getElementById("portal-root")! // Циљани DOM елемент
+    document.getElementById("portal-root")!
   );
 };
 
