@@ -65,7 +65,12 @@ const orgTeams = [
   },
 ];
 const Test = () => {
-  return <>{/* Put your component here */}</>;
+  return (
+    <>
+      {/* Put your component here */}
+      <OrgTeam teams={orgTeams}></OrgTeam>
+    </>
+  );
 };
 
 export default Test;
