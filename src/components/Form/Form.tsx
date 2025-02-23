@@ -16,8 +16,8 @@ interface TeamData {
 const Form = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hiddenForms, setHiddenForms] = useState<number[]>([]);
-  const [teamData, setTeamData] = useState<TeamData | null>(null); // Podaci o timu
-  const [membersData, setMembersData] = useState<Contestant[]>([]); // Podaci o članovima tima
+  const [teamData, setTeamData] = useState<TeamData | null>(null);
+  const [membersData, setMembersData] = useState<Contestant[]>([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
 
@@ -42,7 +42,7 @@ const Form = () => {
   };
 
   const handleSkipFourthMember = () => {
-    setHiddenForms((prevHidden) => [...prevHidden, 3]); // Sakrij formu za 4. člana
+    setHiddenForms((prevHidden) => [...prevHidden, 3]);
     setCurrentIndex(4);
   };
 
@@ -64,7 +64,7 @@ const Form = () => {
         member4: membersData[3], // Opciono
       },
     };
-    console.log(teamApplication);
+
     try {
       const response = await applicationService.createApplication(
         teamApplication,
@@ -72,13 +72,16 @@ const Form = () => {
       );
       if (response.success) {
         console.log("Aplikacija uspešno poslata!");
+        setIsSubmitted(true); // Postavljamo stanje na "poslato" samo ako je uspešno
       } else {
         console.error("Greška pri slanju aplikacije:", response.message);
-        setIsSubmitted(true);
+        // Ne postavljamo isSubmitted na true u slučaju greške
+        alert("Došlo je do greške pri slanju aplikacije. Pokušajte ponovo.");
       }
     } catch (error) {
       console.error("Došlo je do greške:", error);
-      setIsSubmitted(true);
+      // Ne postavljamo isSubmitted na true u slučaju greške
+      alert("Došlo je do greške pri slanju aplikacije. Pokušajte ponovo.");
     }
   };
 
