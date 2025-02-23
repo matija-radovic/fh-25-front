@@ -7,7 +7,6 @@ import Section from "../../-shared/Section/Section";
 import icons from "../../../assets/Form/icons.svg";
 import leftArrow from "../../../assets/Form/leftarrow.svg";
 
-// Shema za validaciju
 const formSchema = z.object({
   teamName: z.string().min(1, "Naziv tima je obavezan."),
   motivation: z.string().min(1, "Motivacija je obavezna."),
@@ -15,7 +14,6 @@ const formSchema = z.object({
   situations: z.string().min(1, "Situacije u timu su obavezne."),
 });
 
-// Definišemo tip za podatke o timu
 type TeamData = z.infer<typeof formSchema>;
 
 interface TeamFormProps {
@@ -48,16 +46,16 @@ const TeamForm: React.FC<TeamFormProps> = ({
   });
 
   const onSubmit = async (data: TeamData) => {
-    setIsSubmitting(true); // Postavljamo stanje na "slanje u toku"
+    setIsSubmitting(true);
     onSaveTeamData(data);
 
     console.log("Podaci o timu:", data);
     try {
-      await onSubmitFinalForm(); // Čekamo da se završi slanje
+      await onSubmitFinalForm();
     } catch (error) {
       console.error("Došlo je do greške:", error);
     } finally {
-      setIsSubmitting(false); // Vraćamo stanje na "slanje završeno"
+      setIsSubmitting(false);
     }
   };
 
@@ -163,7 +161,7 @@ const TeamForm: React.FC<TeamFormProps> = ({
               <button
                 className="right-button"
                 type="submit"
-                disabled={isSubmitting} // Onemogućavamo dugme samo dok se šalje
+                disabled={isSubmitting || isSubmitted}
               >
                 <p>
                   {isSubmitted

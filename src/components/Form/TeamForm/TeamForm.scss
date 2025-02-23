@@ -170,7 +170,11 @@
       }
     }
     .right-button {
-      padding: 5px;
+      padding: 7px;
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #24bdde;
+      }
     }
   }
 }

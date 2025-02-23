@@ -47,12 +47,13 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     onSaveTeamData(data);
-
-    console.log("Podaci o timu:", data);
-
-    onSubmitFinalForm();
+    try {
+      await onSubmitFinalForm();
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
   };
 
   return (
@@ -159,7 +160,7 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
                 disabled={isSubmitted || isSubmitting}
               >
                 {isSubmitting
-                  ? "Slanje..."
+                  ? "Šalje se..."
                   : isSubmitted
                   ? "Poslato"
                   : "Pošalji"}

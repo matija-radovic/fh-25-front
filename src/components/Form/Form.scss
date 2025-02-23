@@ -30,9 +30,30 @@
     pointer-events: none;
   }
 }
+@media (min-width: 1920px) {
+  .forms-container {
+    transform: scale(1);
+    display: flex;
+    width: 1480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 1440px) {
+  .forms-container {
+    display: flex;
+    transform: scale(0.85);
+    width: 1480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
 @media (max-width: 1280px) {
   .forms-container {
+    width: auto;
+    display: block;
     transform: scale(0.75);
   }
   .form-slide {

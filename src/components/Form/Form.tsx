@@ -72,15 +72,13 @@ const Form = () => {
       );
       if (response.success) {
         console.log("Aplikacija uspešno poslata!");
-        setIsSubmitted(true); // Postavljamo stanje na "poslato" samo ako je uspešno
+        setIsSubmitted(true);
       } else {
         console.error("Greška pri slanju aplikacije:", response.message);
-        // Ne postavljamo isSubmitted na true u slučaju greške
         alert("Došlo je do greške pri slanju aplikacije. Pokušajte ponovo.");
       }
     } catch (error) {
       console.error("Došlo je do greške:", error);
-      // Ne postavljamo isSubmitted na true u slučaju greške
       alert("Došlo je do greške pri slanju aplikacije. Pokušajte ponovo.");
     }
   };
