@@ -151,6 +151,7 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
             <div className="mobile-buttons">
               <button
                 className="mobile-button-left-arrow"
+                type="button"
                 onClick={prevForm}
                 disabled={isSubmitted || isSubmitting}
               ></button>

@@ -14,10 +14,8 @@ import {
 } from "../../../utils/constants/form/schoolYears";
 import { Contestant } from "../../../utils/api/models/contestant.model";
 
-// Definišite tip za YearOfStudy
 type YearOfStudy = keyof typeof HighSchoolYear | keyof typeof UniversityYear;
 
-// Shema za validaciju
 const formSchema = z
   .object({
     name: z.string().min(1, "Ime i prezime su obavezni."),
@@ -89,19 +87,17 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
     let contestant: Contestant;
 
     if (data.occupation === Profession.EMPLOYED) {
-      // Ako je zaposlen, educationalInstitution i yearOfStudy moraju biti undefined
       contestant = {
         email: data.email,
         name: data.name,
         phoneNumber: data.phone,
         techDescription: data.technologies,
         CVURL: data.cvLink,
-        proffesion: data.occupation,
-        educationalInstitution: undefined, // Obavezno undefined
-        yearOfStudy: undefined, // Obavezno undefined
+        profession: data.occupation,
+        educationalInstitution: undefined,
+        yearOfStudy: undefined,
       };
     } else {
-      // Ako je student ili srednjoškolac, educationalInstitution i yearOfStudy moraju biti definisani
       const yearOfStudy = data.grade as YearOfStudy | undefined;
 
       contestant = {
@@ -110,23 +106,25 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
         phoneNumber: data.phone,
         techDescription: data.technologies,
         CVURL: data.cvLink,
-        proffesion: data.occupation,
+        profession: data.occupation,
         educationalInstitution: data.school || undefined,
         yearOfStudy: yearOfStudy,
       };
     }
 
-    // Sačuvaj podatke o učesniku
     onSaveContestant(contestant);
 
     console.log("Podaci o učesniku:", contestant);
-    nextForm(); // Prelazak na sledeću formu
+    nextForm();
   };
 
   return (
     <Section isContainer={false}>
-      <div className="mobile-form-container">
-        <form className="mobile-form-wrapper" onSubmit={handleSubmit(onSubmit)}>
+      <div className="mobile-individual-form-container">
+        <form
+          className="mobile-individual-form-wrapper"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <h1 className="mobile-form-prijave-text">PRIJAVA</h1>
           <p className="mobile-form-individual">Član {indexIndividual} </p>
           <label className="mobile-form-label">
@@ -280,8 +278,8 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                       {...field}
                       values={
                         occupation === Profession.HIGH_SCHOOL_STUDENT
-                          ? Object.keys(HighSchoolYear) // Koristite ključeve iz HighSchoolYear
-                          : Object.keys(UniversityYear) // Koristite ključeve iz UniversityYear
+                          ? Object.keys(HighSchoolYear)
+                          : Object.keys(UniversityYear)
                       }
                       className={errors.grade ? "error" : ""}
                     />
