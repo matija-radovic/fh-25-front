@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Form from "../Form/Form";
 import MobileForm from "../MobileForm/MobileForm";
+import "./FinalForm.scss";
 
 const FinalForm = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -18,7 +20,10 @@ const FinalForm = () => {
     };
   }, []);
 
-  return <div>{isMobile ? <MobileForm /> : <Form />} </div>;
+  return createPortal(
+    <div className="form-content">{isMobile ? <MobileForm /> : <Form />}</div>,
+    document.getElementById("portal-root")! // Циљани DOM елемент
+  );
 };
 
 export default FinalForm;
