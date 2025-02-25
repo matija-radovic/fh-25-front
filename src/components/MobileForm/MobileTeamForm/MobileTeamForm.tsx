@@ -1,60 +1,32 @@
 import React from "react";
 import "./MobileTeamForm.scss";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useFormContext, Controller } from "react-hook-form";
 import Section from "../../-shared/Section/Section";
+import { MobileFullFormData } from "../MobileForm";
+import { z } from "zod";
 
-const formSchema = z.object({
+export const mobileTeamFormSchema = z.object({
   teamName: z.string().min(1, "Naziv tima je obavezan."),
   motivation: z.string().min(1, "Motivacija je obavezna."),
   roles: z.string().min(1, "Podela uloga je obavezna."),
   situations: z.string().min(1, "Situacije u timu su obavezne."),
 });
 
-interface TeamData {
-  teamName: string;
-  motivation: string;
-  roles: string;
-  situations: string;
-}
-
 interface MobileTeamFormProps {
-  nextForm: () => void;
   prevForm: () => void;
-  onSaveTeamData: (teamData: TeamData) => void;
-  onSubmitFinalForm: () => void;
   isSubmitted: boolean;
+  isSubmitting: boolean;
 }
 
 const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
   prevForm,
-  onSaveTeamData,
-  onSubmitFinalForm,
   isSubmitted,
+  isSubmitting,
 }) => {
   const {
     control,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      teamName: "",
-      motivation: "",
-      roles: "",
-      situations: "",
-    },
-  });
-
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    onSaveTeamData(data);
-    try {
-      await onSubmitFinalForm();
-    } catch (error) {
-      console.error("Submission error:", error);
-    }
-  };
+    formState: { errors },
+  } = useFormContext<MobileFullFormData>();
 
   return (
     <Section isContainer={false}>
@@ -64,25 +36,22 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
             Uspešno ste poslali prijavu!
           </p>
         ) : (
-          <form
-            className="mobile-team-form-wrapper"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <div className="mobile-team-form-wrapper">
             <h1 className="mobile-form-prijave-text">PRIJAVA</h1>
             <label className="mobile-team-form-label">
               Naziv tima:
               <Controller
-                name="teamName"
+                name="team.teamName"
                 control={control}
                 render={({ field }) => (
                   <input
                     {...field}
                     className={`mobile-team-form-textbox team-form-name ${
-                      errors.teamName ? "error" : ""
+                      errors.team?.teamName ? "error" : ""
                     }`}
                     type="text"
                     placeholder={
-                      errors.teamName?.message || "Unesite naziv tima"
+                      errors.team?.teamName?.message || "Unesite naziv tima"
                     }
                     disabled={isSubmitted || isSubmitting}
                   />
@@ -92,16 +61,17 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
             <label className="mobile-team-form-label">
               Motivacija za FON Hakaton:
               <Controller
-                name="motivation"
+                name="team.motivation"
                 control={control}
                 render={({ field }) => (
                   <textarea
                     {...field}
                     className={`mobile-team-form-textbox mobile-team-from-textarea ${
-                      errors.motivation ? "error" : ""
+                      errors.team?.motivation ? "error" : ""
                     }`}
                     placeholder={
-                      errors.motivation?.message || "Motivacija za FON Hakaton"
+                      errors.team?.motivation?.message ||
+                      "Motivacija za FON Hakaton"
                     }
                     disabled={isSubmitted || isSubmitting}
                   />
@@ -111,16 +81,16 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
             <label className="mobile-team-form-label">
               Kako biste podelili uloge u timu?
               <Controller
-                name="roles"
+                name="team.roles"
                 control={control}
                 render={({ field }) => (
                   <textarea
                     {...field}
                     className={`mobile-team-form-textbox mobile-team-from-textarea ${
-                      errors.roles ? "error" : ""
+                      errors.team?.roles ? "error" : ""
                     }`}
                     placeholder={
-                      errors.roles?.message ||
+                      errors.team?.roles?.message ||
                       "Kako biste podelili uloge u timu?"
                     }
                     disabled={isSubmitted || isSubmitting}
@@ -131,16 +101,16 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
             <label className="mobile-team-form-label">
               Navedite pozitivne i negativne situacije u timu:
               <Controller
-                name="situations"
+                name="team.situations"
                 control={control}
                 render={({ field }) => (
                   <textarea
                     {...field}
                     className={`mobile-team-form-textbox mobile-team-from-textarea ${
-                      errors.situations ? "error" : ""
+                      errors.team?.situations ? "error" : ""
                     }`}
                     placeholder={
-                      errors.situations?.message ||
+                      errors.team?.situations?.message ||
                       "Navedite pozitivne i negativne situacije u timu"
                     }
                     disabled={isSubmitted || isSubmitting}
@@ -167,7 +137,7 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
                   : "Pošalji"}
               </button>
             </div>
-          </form>
+          </div>
         )}
       </div>
     </Section>

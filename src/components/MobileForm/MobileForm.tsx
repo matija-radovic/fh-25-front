@@ -1,57 +1,149 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import "./MobileForm.scss";
-import MobileIndividualForm from "./MobileIndividualForm/MobileIndividualForm";
-import MobileTeamForm from "./MobileTeamForm/MobileTeamForm";
-import { Contestant } from "../../utils/api/models/contestant.model";
+import MobileIndividualForm, {
+  mobileIndividualFormSchema,
+} from "./MobileIndividualForm/MobileIndividualForm";
+import MobileTeamForm, {
+  mobileTeamFormSchema,
+} from "./MobileTeamForm/MobileTeamForm";
 import { FHApplication } from "../../utils/api/models/application.model";
 import { applicationService } from "../../utils/api/services/application.service";
+import { Contestant } from "../../utils/api/models/contestant.model";
+import { Profession } from "../../utils/constants/form/professions";
 
-interface TeamData {
-  teamName: string;
-  motivation: string;
-  roles: string;
-  situations: string;
-}
+// Full šema koja sadrži podatke za sve učesnike i tim
+const mobileFullFormSchema = z.object({
+  contestant1: mobileIndividualFormSchema,
+  contestant2: mobileIndividualFormSchema,
+  contestant3: mobileIndividualFormSchema,
+  contestant4: mobileIndividualFormSchema.optional(),
+  team: mobileTeamFormSchema,
+});
+
+export type MobileFullFormData = z.infer<typeof mobileFullFormSchema>;
 
 const MobileForm = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [membersData, setMembersData] = useState<Contestant[]>([]);
-  const [teamData, setTeamData] = useState<TeamData | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
+  const [hiddenForms, setHiddenForms] = useState<number[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSaveContestant = (contestant: Contestant, index: number) => {
-    setMembersData((prev) => {
-      const newMembers = [...prev];
-      newMembers[index] = contestant;
-      return newMembers;
-    });
+  const methods = useForm<MobileFullFormData>({
+    resolver: zodResolver(mobileFullFormSchema),
+    defaultValues: {
+      contestant1: {
+        name: "",
+        phone: "",
+        email: "",
+        technologies: "",
+        cvLink: "",
+        occupation: Profession.HIGH_SCHOOL_STUDENT,
+        school: "",
+        grade: "",
+      },
+      contestant2: {
+        name: "",
+        phone: "",
+        email: "",
+        technologies: "",
+        cvLink: "",
+        occupation: Profession.HIGH_SCHOOL_STUDENT,
+        school: "",
+        grade: "",
+      },
+      contestant3: {
+        name: "",
+        phone: "",
+        email: "",
+        technologies: "",
+        cvLink: "",
+        occupation: Profession.HIGH_SCHOOL_STUDENT,
+        school: "",
+        grade: "",
+      },
+      contestant4: {
+        name: "",
+        phone: "",
+        email: "",
+        technologies: "",
+        cvLink: "",
+        occupation: Profession.HIGH_SCHOOL_STUDENT,
+        school: "",
+        grade: "",
+      },
+      team: {
+        teamName: "",
+        motivation: "",
+        roles: "",
+        situations: "",
+      },
+    },
+  });
+
+  const { handleSubmit, setValue } = methods;
+
+  // Funkcije za navigaciju između slajdova
+  const handleNextForm = () => {
+    setHiddenForms((prev) => [...prev, currentIndex]);
+    setCurrentIndex((prev) => prev + 1);
+  };
+  const handlePrevForm = () => {
+    setHiddenForms((prev) => prev.filter((i) => i !== currentIndex - 1));
+    setCurrentIndex((prev) => prev - 1);
+  };
+  const handleSkipFourthMember = () => {
+    // Ako se preskoči 4. član, postavljamo contestant4 na undefined
+    setValue("contestant4", undefined);
+    setHiddenForms((prev) => [...prev, 3]);
+    setCurrentIndex(4);
   };
 
-  const handleSaveTeamData = (data: TeamData) => {
-    setTeamData(data);
-  };
-
-  const handleNextForm = () => setCurrentIndex((prevIndex) => prevIndex + 1);
-  const handlePrevForm = () => setCurrentIndex((prevIndex) => prevIndex - 1);
-  const handleSkipFourthMember = () => setCurrentIndex(4);
-
-  const handleSubmitFinalForm = async () => {
-    if (!teamData || membersData.length < 3) {
-      console.error("Nedostaju podaci o timu ili članovima tima.");
-      return;
-    }
+  const onSubmit = async (data: MobileFullFormData) => {
+    setIsSubmitting(true);
+    // Funkcija za konverziju podataka o učesniku u tip Contestant
+    const convertContestant = (d: any): Contestant => {
+      if (d.occupation === Profession.EMPLOYED) {
+        return {
+          email: d.email,
+          name: d.name,
+          phoneNumber: d.phone,
+          techDescription: d.technologies,
+          CVURL: d.cvLink,
+          profession: d.occupation,
+          educationalInstitution: undefined,
+          yearOfStudy: undefined,
+        };
+      } else {
+        return {
+          email: d.email,
+          name: d.name,
+          phoneNumber: d.phone,
+          techDescription: d.technologies,
+          CVURL: d.cvLink,
+          profession: d.occupation,
+          educationalInstitution: d.school || undefined,
+          yearOfStudy: d.grade,
+        };
+      }
+    };
 
     const teamApplication: FHApplication = {
-      teamName: teamData.teamName,
-      previousExperiences: teamData.motivation,
-      applicationReason: teamData.roles,
-      virtuesAndVices: teamData.situations,
+      teamName: data.team.teamName,
+      previousExperiences: data.team.motivation,
+      applicationReason: data.team.roles,
+      virtuesAndVices: data.team.situations,
       contestants: {
-        member1: membersData[0],
-        member2: membersData[1],
-        member3: membersData[2],
-        member4: membersData[3], // Opciono
+        member1: convertContestant(data.contestant1),
+        member2: convertContestant(data.contestant2),
+        member3: convertContestant(data.contestant3),
+        member4:
+          data.contestant4 && data.contestant4.name
+            ? convertContestant(data.contestant4)
+            : undefined,
       },
     };
 
@@ -70,81 +162,78 @@ const MobileForm = () => {
     } catch (error) {
       console.error("Došlo je do greške:", error);
       alert("Došlo je do greške pri slanju aplikacije. Pokušajte ponovo.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   useEffect(() => {
     if (isSubmitted) {
-      const timer = setTimeout(() => {
-        setIsFormVisible(false);
-      }, 5000);
+      const timer = setTimeout(() => setIsFormVisible(false), 5000);
       return () => clearTimeout(timer);
     }
   }, [isSubmitted]);
 
+  // Niz slajdova – raspored isti kao kod desktop verzije
   const forms = [
     <MobileIndividualForm
       key={0}
       nextForm={handleNextForm}
       prevForm={() => setCurrentIndex(0)}
       indexIndividual={1}
-      onSaveContestant={(contestant) => handleSaveContestant(contestant, 0)}
     />,
     <MobileIndividualForm
       key={1}
       nextForm={handleNextForm}
       prevForm={handlePrevForm}
       indexIndividual={2}
-      onSaveContestant={(contestant) => handleSaveContestant(contestant, 1)}
     />,
     <MobileIndividualForm
       key={2}
       nextForm={handleNextForm}
       prevForm={handlePrevForm}
       indexIndividual={3}
-      onSaveContestant={(contestant) => handleSaveContestant(contestant, 2)}
     />,
     <MobileIndividualForm
       key={3}
       nextForm={handleNextForm}
       prevForm={handlePrevForm}
       indexIndividual={4}
-      onSaveContestant={(contestant) => handleSaveContestant(contestant, 3)}
       onSkipFourthMember={handleSkipFourthMember}
     />,
     <MobileTeamForm
       key={4}
-      nextForm={handleNextForm}
       prevForm={handlePrevForm}
-      onSaveTeamData={handleSaveTeamData}
-      onSubmitFinalForm={handleSubmitFinalForm}
       isSubmitted={isSubmitted}
+      isSubmitting={isSubmitting}
     />,
   ];
 
   return (
-    <div className="mobile-form-wrapper">
+    <FormProvider {...methods}>
       {isFormVisible && (
-        <div className="mobile-forms-container">
-          {forms.map((form, index) => {
-            let slideClass = "";
-            if (index === currentIndex) {
-              slideClass = "active";
-            } else if (index < currentIndex) {
-              slideClass = "prev";
-            } else {
-              slideClass = "next";
-            }
-
-            return (
-              <div key={index} className={`mobile-form-slide ${slideClass}`}>
-                {form}
-              </div>
-            );
-          })}
-        </div>
+        // Jedinstveni roditeljski <form> koji obuhvata celu mobilnu formu
+        <form className="mobile-form-wrapper" onSubmit={handleSubmit(onSubmit)}>
+          <div className="mobile-forms-container">
+            {forms.map((form, index) => {
+              let slideClass = "";
+              if (index === currentIndex) {
+                slideClass = "active";
+              } else if (index < currentIndex) {
+                slideClass = "prev";
+              } else {
+                slideClass = "next";
+              }
+              return (
+                <div key={index} className={`mobile-form-slide ${slideClass}`}>
+                  {form}
+                </div>
+              );
+            })}
+          </div>
+        </form>
       )}
-    </div>
+    </FormProvider>
   );
 };
 

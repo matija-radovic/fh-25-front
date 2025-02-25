@@ -1,8 +1,7 @@
 import React from "react";
 import "./MobileIndividualForm.scss";
 import Section from "../../-shared/Section/Section";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useFormContext, Controller } from "react-hook-form";
 import { z } from "zod";
 import MobileCustomSelect from "../MobileCustomSelect/MobileCustomSelect";
 import { Profession } from "../../../utils/constants/form/professions";
@@ -12,11 +11,9 @@ import {
   HighSchoolYear,
   UniversityYear,
 } from "../../../utils/constants/form/schoolYears";
-import { Contestant } from "../../../utils/api/models/contestant.model";
+import { MobileFullFormData } from "../MobileForm";
 
-type YearOfStudy = keyof typeof HighSchoolYear | keyof typeof UniversityYear;
-
-const formSchema = z
+export const mobileIndividualFormSchema = z
   .object({
     name: z.string().min(1, "Ime i prezime su obavezni."),
     phone: z.string().min(1, "Broj telefona je obavezan."),
@@ -50,8 +47,7 @@ const formSchema = z
 interface MobileIndividualFormProps {
   nextForm: () => void;
   prevForm: () => void;
-  indexIndividual: number;
-  onSaveContestant: (contestant: Contestant) => void;
+  indexIndividual: 1 | 2 | 3 | 4;
   onSkipFourthMember?: () => void;
 }
 
@@ -59,153 +55,150 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
   nextForm,
   prevForm,
   indexIndividual,
-  onSaveContestant,
   onSkipFourthMember,
 }) => {
   const {
     control,
-    handleSubmit,
     watch,
+    trigger,
     formState: { errors },
-  } = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      phone: "",
-      email: "",
-      technologies: "",
-      cvLink: "",
-      occupation: Profession.HIGH_SCHOOL_STUDENT,
-      school: "",
-      grade: "",
-    },
-  });
+  } = useFormContext<MobileFullFormData>();
 
-  const occupation = watch("occupation");
+  // Ključ za trenutnog učesnika (contestant1, contestant2, …)
+  const contestantKey = `contestant${indexIndividual}` as
+    | "contestant1"
+    | "contestant2"
+    | "contestant3"
+    | "contestant4";
+  const currentContestant = watch(contestantKey);
+  const occupation = currentContestant?.occupation;
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    let contestant: Contestant;
+  // Pomoćna funkcija za kreiranje imena polja
+  const fieldName = (
+    field:
+      | "name"
+      | "phone"
+      | "email"
+      | "technologies"
+      | "cvLink"
+      | "occupation"
+      | "school"
+      | "grade"
+  ) => {
+    return `${contestantKey}.${field}` as const;
+  };
 
-    if (data.occupation === Profession.EMPLOYED) {
-      contestant = {
-        email: data.email,
-        name: data.name,
-        phoneNumber: data.phone,
-        techDescription: data.technologies,
-        CVURL: data.cvLink,
-        profession: data.occupation,
-        educationalInstitution: undefined,
-        yearOfStudy: undefined,
-      };
-    } else {
-      const yearOfStudy = data.grade as YearOfStudy | undefined;
-
-      contestant = {
-        email: data.email,
-        name: data.name,
-        phoneNumber: data.phone,
-        techDescription: data.technologies,
-        CVURL: data.cvLink,
-        profession: data.occupation,
-        educationalInstitution: data.school || undefined,
-        yearOfStudy: yearOfStudy,
-      };
+  const handleLocalSubmit = async () => {
+    const fieldsToValidate = [
+      fieldName("name"),
+      fieldName("phone"),
+      fieldName("email"),
+      fieldName("technologies"),
+      fieldName("cvLink"),
+      fieldName("occupation"),
+    ];
+    if (
+      occupation === Profession.STUDENT ||
+      occupation === Profession.HIGH_SCHOOL_STUDENT
+    ) {
+      fieldsToValidate.push(fieldName("school"), fieldName("grade"));
     }
-
-    onSaveContestant(contestant);
-
-    console.log("Podaci o učesniku:", contestant);
-    nextForm();
+    const valid = await trigger(fieldsToValidate as any);
+    if (valid) {
+      console.log("Podaci o učesniku:", currentContestant);
+      nextForm();
+    }
   };
 
   return (
     <Section isContainer={false}>
       <div className="mobile-individual-form-container">
-        <form
-          className="mobile-individual-form-wrapper"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <div className="mobile-individual-form-wrapper">
           <h1 className="mobile-form-prijave-text">PRIJAVA</h1>
-          <p className="mobile-form-individual">Član {indexIndividual} </p>
+          <p className="mobile-form-individual">Član {indexIndividual}</p>
           <label className="mobile-form-label">
             Ime i prezime:
             <Controller
-              name="name"
+              name={fieldName("name")}
               control={control}
               render={({ field }) => (
                 <input
                   {...field}
                   className={`mobile-form-textbox ${
-                    errors.name ? "error" : ""
+                    errors?.[contestantKey]?.name ? "error" : ""
                   }`}
                   type="text"
-                  placeholder={errors.name?.message || "Unesite ime i prezime"}
+                  placeholder={
+                    errors?.[contestantKey]?.name?.message ||
+                    "Unesite ime i prezime"
+                  }
                 />
               )}
             />
           </label>
-
           <label className="mobile-form-label">
             Broj telefona:
             <Controller
-              name="phone"
+              name={fieldName("phone")}
               control={control}
               render={({ field }) => (
                 <input
                   {...field}
                   className={`mobile-form-textbox ${
-                    errors.phone ? "error" : ""
+                    errors?.[contestantKey]?.phone ? "error" : ""
                   }`}
                   type="text"
-                  placeholder={errors.phone?.message || "Unesite broj telefona"}
+                  placeholder={
+                    errors?.[contestantKey]?.phone?.message ||
+                    "Unesite broj telefona"
+                  }
                 />
               )}
             />
           </label>
-
           <label className="mobile-form-label">
             Mejl:
             <Controller
-              name="email"
+              name={fieldName("email")}
               control={control}
               render={({ field }) => (
                 <input
                   {...field}
                   className={`mobile-form-textbox ${
-                    errors.email ? "error" : ""
+                    errors?.[contestantKey]?.email ? "error" : ""
                   }`}
                   type="email"
-                  placeholder={errors.email?.message || "Unesite email"}
+                  placeholder={
+                    errors?.[contestantKey]?.email?.message || "Unesite email"
+                  }
                 />
               )}
             />
           </label>
-
           <label className="mobile-form-label">
             Koje tehnologije znate?
             <Controller
-              name="technologies"
+              name={fieldName("technologies")}
               control={control}
               render={({ field }) => (
                 <textarea
                   {...field}
                   className={`mobile-form-textbox mobile-form-tech ${
-                    errors.technologies ? "error" : ""
+                    errors?.[contestantKey]?.technologies ? "error" : ""
                   }`}
                   placeholder={
-                    errors.technologies?.message ||
+                    errors?.[contestantKey]?.technologies?.message ||
                     "Unesite poznate tehnologije"
                   }
                 />
               )}
             />
           </label>
-
           <div className="mobile-occupation-div">
             <p className="mobile-occupation-text">Zanimanje:</p>
             <div className="mobile-occupation-radio">
               <Controller
-                name="occupation"
+                name={fieldName("occupation")}
                 control={control}
                 render={({ field }) => (
                   <>
@@ -241,7 +234,6 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
               />
             </div>
           </div>
-
           {(occupation === Profession.HIGH_SCHOOL_STUDENT ||
             occupation === Profession.STUDENT) && (
             <>
@@ -250,7 +242,7 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                   ? "Srednja škola:"
                   : "Fakultet:"}
                 <Controller
-                  name="school"
+                  name={fieldName("school")}
                   control={control}
                   render={({ field }) => (
                     <MobileCustomSelect
@@ -260,18 +252,17 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                           ? [...schools]
                           : [...universities]
                       }
-                      className={errors.school ? "error" : ""}
+                      className={errors?.[contestantKey]?.school ? "error" : ""}
                     />
                   )}
                 />
               </label>
-
               <label className="mobile-grade-label">
                 {occupation === Profession.HIGH_SCHOOL_STUDENT
                   ? "Razred:"
                   : "Godina studija:"}
                 <Controller
-                  name="grade"
+                  name={fieldName("grade")}
                   control={control}
                   render={({ field }) => (
                     <MobileCustomSelect
@@ -281,34 +272,33 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
                           ? Object.keys(HighSchoolYear)
                           : Object.keys(UniversityYear)
                       }
-                      className={errors.grade ? "error" : ""}
+                      className={errors?.[contestantKey]?.grade ? "error" : ""}
                     />
                   )}
                 />
               </label>
             </>
           )}
-
           <label className="mobile-school-label">
             Link ka CV-ju:
             <Controller
-              name="cvLink"
+              name={fieldName("cvLink")}
               control={control}
               render={({ field }) => (
                 <input
                   {...field}
                   className={`mobile-form-textbox ${
-                    errors.cvLink ? "error" : ""
+                    errors?.[contestantKey]?.cvLink ? "error" : ""
                   }`}
                   type="url"
                   placeholder={
-                    errors.cvLink?.message || "Unesite link ka CV-ju"
+                    errors?.[contestantKey]?.cvLink?.message ||
+                    "Unesite link ka CV-ju"
                   }
                 />
               )}
             />
           </label>
-
           <div className="mobile-buttons">
             <button
               className="mobile-button-left-arrow"
@@ -326,10 +316,11 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
             )}
             <button
               className="mobile-button-right-arrow"
-              type="submit"
+              type="button"
+              onClick={handleLocalSubmit}
             ></button>
           </div>
-        </form>
+        </div>
       </div>
     </Section>
   );

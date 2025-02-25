@@ -1,62 +1,42 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import React from "react";
+import { useFormContext, Controller } from "react-hook-form";
+import { FullFormData } from "../Form";
 import "./TeamForm.scss";
 import Section from "../../-shared/Section/Section";
 import icons from "../../../assets/Form/icons.svg";
 import leftArrow from "../../../assets/Form/leftarrow.svg";
+import { z } from "zod";
 
-const formSchema = z.object({
+// Šema za timsku formu
+export const teamFormSchema = z.object({
   teamName: z.string().min(1, "Naziv tima je obavezan."),
   motivation: z.string().min(1, "Motivacija je obavezna."),
   roles: z.string().min(1, "Podela uloga je obavezna."),
   situations: z.string().min(1, "Situacije u timu su obavezne."),
 });
 
-type TeamData = z.infer<typeof formSchema>;
-
 interface TeamFormProps {
   prevForm: () => void;
-  onSaveTeamData: (teamData: TeamData) => void;
-  onSubmitFinalForm: () => void;
   isSubmitted: boolean;
+  isSubmitting: boolean;
 }
 
 const TeamForm: React.FC<TeamFormProps> = ({
   prevForm,
-  onSaveTeamData,
-  onSubmitFinalForm,
   isSubmitted,
+  isSubmitting,
 }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const {
     control,
-    handleSubmit,
     formState: { errors },
-  } = useForm<TeamData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      teamName: "",
-      motivation: "",
-      roles: "",
-      situations: "",
-    },
-  });
+  } = useFormContext<FullFormData>();
 
-  const onSubmit = async (data: TeamData) => {
-    setIsSubmitting(true);
-    onSaveTeamData(data);
-
-    console.log("Podaci o timu:", data);
-    try {
-      await onSubmitFinalForm();
-    } catch (error) {
-      console.error("Došlo je do greške:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
+  // Kastujemo errors.team na objekat sa očekivanim poljima
+  const teamErrors = (errors.team || {}) as {
+    teamName?: { message?: string };
+    motivation?: { message?: string };
+    roles?: { message?: string };
+    situations?: { message?: string };
   };
 
   return (
@@ -71,23 +51,23 @@ const TeamForm: React.FC<TeamFormProps> = ({
         {isSubmitted ? (
           <h1 className="success-message">Uspešna prijava</h1>
         ) : (
-          <form className="team-form-body" onSubmit={handleSubmit(onSubmit)}>
+          <div className="team-form-body">
             <div className="team-form-body-upper">
               <div className="team-form-body-upper-left">
                 <label className="team-form-label-name">
                   Naziv tima:
                   <Controller
-                    name="teamName"
+                    name="team.teamName"
                     control={control}
                     render={({ field }) => (
                       <input
                         {...field}
                         className={`team-form-textbox team-form-name ${
-                          errors.teamName ? "error" : ""
+                          teamErrors.teamName ? "error" : ""
                         }`}
                         type="text"
                         placeholder={
-                          errors.teamName?.message || "Unesite naziv tima"
+                          teamErrors.teamName?.message || "Unesite naziv tima"
                         }
                       />
                     )}
@@ -96,16 +76,16 @@ const TeamForm: React.FC<TeamFormProps> = ({
                 <label className="team-form-label">
                   Motivacija za FON Hakaton:
                   <Controller
-                    name="motivation"
+                    name="team.motivation"
                     control={control}
                     render={({ field }) => (
                       <textarea
                         {...field}
                         className={`team-form-textbox team-form-motivation ${
-                          errors.motivation ? "error" : ""
+                          teamErrors.motivation ? "error" : ""
                         }`}
                         placeholder={
-                          errors.motivation?.message ||
+                          teamErrors.motivation?.message ||
                           "Motivacija za FON Hakaton"
                         }
                       />
@@ -117,16 +97,16 @@ const TeamForm: React.FC<TeamFormProps> = ({
                 <label className="team-form-label">
                   Kako biste podelili uloge u timu?
                   <Controller
-                    name="roles"
+                    name="team.roles"
                     control={control}
                     render={({ field }) => (
                       <textarea
                         {...field}
                         className={`team-form-textbox team-form-roles ${
-                          errors.roles ? "error" : ""
+                          teamErrors.roles ? "error" : ""
                         }`}
                         placeholder={
-                          errors.roles?.message ||
+                          teamErrors.roles?.message ||
                           "Kako biste podelili uloge u timu?"
                         }
                       />
@@ -136,16 +116,16 @@ const TeamForm: React.FC<TeamFormProps> = ({
                 <label className="team-form-label team-form-label-situations">
                   Navedite pozitivne i negativne situacije u timu:
                   <Controller
-                    name="situations"
+                    name="team.situations"
                     control={control}
                     render={({ field }) => (
                       <textarea
                         {...field}
                         className={`team-form-textbox team-form-situations ${
-                          errors.situations ? "error" : ""
+                          teamErrors.situations ? "error" : ""
                         }`}
                         placeholder={
-                          errors.situations?.message ||
+                          teamErrors.situations?.message ||
                           "Navedite pozitivne i negativne situacije u timu"
                         }
                       />
@@ -172,7 +152,7 @@ const TeamForm: React.FC<TeamFormProps> = ({
                 </p>
               </button>
             </div>
-          </form>
+          </div>
         )}
       </div>
     </Section>

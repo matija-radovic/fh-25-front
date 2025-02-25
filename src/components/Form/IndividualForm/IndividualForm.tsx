@@ -1,6 +1,5 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useFormContext, Controller } from "react-hook-form";
 import { z } from "zod";
 import "./IndividualForm.scss";
 import Section from "../../-shared/Section/Section";
@@ -11,15 +10,14 @@ import CustomSelect from "../CustomSelect/CustomSelect";
 import { Profession } from "../../../utils/constants/form/professions";
 import { schools } from "../../../utils/constants/form/schools";
 import { universities } from "../../../utils/constants/form/universities";
-import { Contestant } from "../../../utils/api/models/contestant.model";
+import { FullFormData } from "../Form";
 import {
   HighSchoolYear,
   UniversityYear,
 } from "../../../utils/constants/form/schoolYears";
 
-type YearOfStudy = keyof typeof HighSchoolYear | keyof typeof UniversityYear;
-
-const formSchema = z
+// Shema za pojedinačnog učesnika (ostaje nepromenjena)
+export const individualFormSchema = z
   .object({
     name: z.string().min(1, "Ime i prezime su obavezni."),
     phone: z.string().min(1, "Broj telefona je obavezan."),
@@ -53,72 +51,65 @@ const formSchema = z
 interface IndividualFormProps {
   nextForm: () => void;
   prevForm: () => void;
-  indexIndividual: number;
-  onSaveContestant: (contestant: Contestant) => void;
-  onSkipFourthMember?: () => void; // Dodato za preskakanje
+  indexIndividual: 1 | 2 | 3 | 4;
+  onSkipFourthMember?: () => void;
 }
 
 const IndividualForm: React.FC<IndividualFormProps> = ({
   nextForm,
   prevForm,
   indexIndividual,
-  onSaveContestant,
   onSkipFourthMember,
 }) => {
   const {
     control,
-    handleSubmit,
     watch,
+    trigger,
     formState: { errors },
-  } = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      phone: "",
-      email: "",
-      technologies: "",
-      cvLink: "",
-      occupation: Profession.HIGH_SCHOOL_STUDENT,
-      school: "",
-      grade: "",
-    },
-  });
+  } = useFormContext<FullFormData>();
 
-  const occupation = watch("occupation");
+  const contestantKey = `contestant${indexIndividual}` as
+    | "contestant1"
+    | "contestant2"
+    | "contestant3"
+    | "contestant4";
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    let contestant: Contestant;
+  const currentContestant = watch(contestantKey) as FullFormData["contestant1"];
+  const occupation = currentContestant?.occupation;
 
-    if (data.occupation === Profession.EMPLOYED) {
-      contestant = {
-        email: data.email,
-        name: data.name,
-        phoneNumber: data.phone,
-        techDescription: data.technologies,
-        CVURL: data.cvLink,
-        profession: data.occupation,
-        educationalInstitution: undefined,
-        yearOfStudy: undefined,
-      };
-    } else {
-      const yearOfStudy = data.grade as YearOfStudy | undefined;
+  const fieldName = (
+    field:
+      | "name"
+      | "phone"
+      | "email"
+      | "technologies"
+      | "cvLink"
+      | "occupation"
+      | "school"
+      | "grade"
+  ) => {
+    return `${contestantKey}.${field}` as const;
+  };
 
-      contestant = {
-        email: data.email,
-        name: data.name,
-        phoneNumber: data.phone,
-        techDescription: data.technologies,
-        CVURL: data.cvLink,
-        profession: data.occupation,
-        educationalInstitution: data.school || undefined,
-        yearOfStudy: yearOfStudy,
-      };
+  const handleLocalSubmit = async () => {
+    const fieldsToValidate = [
+      fieldName("name"),
+      fieldName("phone"),
+      fieldName("email"),
+      fieldName("technologies"),
+      fieldName("cvLink"),
+      fieldName("occupation"),
+    ];
+    if (
+      occupation === Profession.STUDENT ||
+      occupation === Profession.HIGH_SCHOOL_STUDENT
+    ) {
+      fieldsToValidate.push(fieldName("school"), fieldName("grade"));
     }
-
-    onSaveContestant(contestant);
-
-    console.log("Podaci o učesniku:", contestant);
-    nextForm();
+    const valid = await trigger(fieldsToValidate as any);
+    if (valid) {
+      nextForm();
+    }
   };
 
   return (
@@ -130,7 +121,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
             <img src={icons} alt="ikonice" />
           </div>
         </div>
-        <form className="form-body" onSubmit={handleSubmit(onSubmit)}>
+        <div className="form-body">
           <div className="form-body-upper">
             <p className="form-upper-p">{indexIndividual}. ČLAN</p>
           </div>
@@ -140,17 +131,18 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                 <label className="form-label">
                   Ime i prezime:
                   <Controller
-                    name="name"
+                    name={fieldName("name")}
                     control={control}
                     render={({ field }) => (
                       <input
                         {...field}
                         className={`form-textbox form-name ${
-                          errors.name ? "error" : ""
+                          errors?.[contestantKey]?.name ? "error" : ""
                         }`}
                         type="text"
                         placeholder={
-                          errors.name?.message || "Unesite ime i prezime"
+                          errors?.[contestantKey]?.name?.message ||
+                          "Unesite ime i prezime"
                         }
                       />
                     )}
@@ -160,17 +152,18 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                 <label className="form-label">
                   Broj telefona:
                   <Controller
-                    name="phone"
+                    name={fieldName("phone")}
                     control={control}
                     render={({ field }) => (
                       <input
                         {...field}
                         className={`form-textbox form-phone ${
-                          errors.phone ? "error" : ""
+                          errors?.[contestantKey]?.phone ? "error" : ""
                         }`}
                         type="text"
                         placeholder={
-                          errors.phone?.message || "Unesite broj telefona"
+                          errors?.[contestantKey]?.phone?.message ||
+                          "Unesite broj telefona"
                         }
                       />
                     )}
@@ -180,16 +173,19 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                 <label className="form-label">
                   Mejl:
                   <Controller
-                    name="email"
+                    name={fieldName("email")}
                     control={control}
                     render={({ field }) => (
                       <input
                         {...field}
                         className={`form-textbox form-email ${
-                          errors.email ? "error" : ""
+                          errors?.[contestantKey]?.email ? "error" : ""
                         }`}
                         type="email"
-                        placeholder={errors.email?.message || "Unesite email"}
+                        placeholder={
+                          errors?.[contestantKey]?.email?.message ||
+                          "Unesite email"
+                        }
                       />
                     )}
                   />
@@ -198,16 +194,16 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                 <label className="form-tech-label">
                   Koje tehnologije znate?
                   <Controller
-                    name="technologies"
+                    name={fieldName("technologies")}
                     control={control}
                     render={({ field }) => (
                       <textarea
                         {...field}
                         className={`form-textbox form-tech ${
-                          errors.technologies ? "error" : ""
+                          errors?.[contestantKey]?.technologies ? "error" : ""
                         }`}
                         placeholder={
-                          errors.technologies?.message ||
+                          errors?.[contestantKey]?.technologies?.message ||
                           "Unesite poznate tehnologije"
                         }
                       />
@@ -221,7 +217,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                 <p className="occupation-text">Zanimanje:</p>
                 <div className="occupation-radio">
                   <Controller
-                    name="occupation"
+                    name={fieldName("occupation")}
                     control={control}
                     render={({ field }) => (
                       <>
@@ -268,7 +264,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                       ? "Srednja škola:"
                       : "Fakultet:"}
                     <Controller
-                      name="school"
+                      name={fieldName("school")}
                       control={control}
                       render={({ field }) => (
                         <CustomSelect
@@ -278,7 +274,9 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                               ? [...schools]
                               : [...universities]
                           }
-                          className={errors.school ? "error" : ""}
+                          className={
+                            errors?.[contestantKey]?.school ? "error" : ""
+                          }
                         />
                       )}
                     />
@@ -289,7 +287,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                       ? "Razred:"
                       : "Godina studija:"}
                     <Controller
-                      name="grade"
+                      name={fieldName("grade")}
                       control={control}
                       render={({ field }) => (
                         <CustomSelect
@@ -299,7 +297,9 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
                               ? Object.keys(HighSchoolYear)
                               : Object.keys(UniversityYear)
                           }
-                          className={errors.grade ? "error" : ""}
+                          className={
+                            errors?.[contestantKey]?.grade ? "error" : ""
+                          }
                         />
                       )}
                     />
@@ -311,24 +311,25 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
           <label className="center-cv">
             Link ka CV-ju:
             <Controller
-              name="cvLink"
+              name={fieldName("cvLink")}
               control={control}
               render={({ field }) => (
                 <input
                   {...field}
                   className={`form-textbox center-cv-textbox ${
-                    errors.cvLink ? "error" : ""
+                    errors?.[contestantKey]?.cvLink ? "error" : ""
                   }`}
                   type="url"
                   placeholder={
-                    errors.cvLink?.message || "Unesite link ka CV-ju"
+                    errors?.[contestantKey]?.cvLink?.message ||
+                    "Unesite link ka CV-ju"
                   }
                 />
               )}
             />
           </label>
           <div className="form-body-lower">
-            {indexIndividual === 4 && (
+            {indexIndividual === 4 && onSkipFourthMember && (
               <button
                 className="fourth"
                 type="button"
@@ -340,11 +341,15 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
             <button className="left-button" type="button" onClick={prevForm}>
               <img src={leftArrow} alt="<" />
             </button>
-            <button className="right-button" type="submit">
+            <button
+              className="right-button"
+              type="button"
+              onClick={handleLocalSubmit}
+            >
               <img src={rightArrow} alt=">" />
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </Section>
   );
