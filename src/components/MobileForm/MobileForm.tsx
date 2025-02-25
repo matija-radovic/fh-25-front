@@ -32,7 +32,7 @@ const MobileForm = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
-  const [hiddenForms, setHiddenForms] = useState<number[]>([]);
+  /*const [hiddenForms, setHiddenForms] = useState<number[]>([]);*/
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const methods = useForm<MobileFullFormData>({
@@ -91,16 +91,16 @@ const MobileForm = () => {
 
   // Funkcije za navigaciju između slajdova
   const handleNextForm = () => {
-    setHiddenForms((prev) => [...prev, currentIndex]);
+    /*setHiddenForms((prev) => [...prev, currentIndex]);*/
     setCurrentIndex((prev) => prev + 1);
   };
   const handlePrevForm = () => {
-    setHiddenForms((prev) => prev.filter((i) => i !== currentIndex - 1));
+    /*setHiddenForms((prev) => prev.filter((i) => i !== currentIndex - 1));*/
     setCurrentIndex((prev) => prev - 1);
   };
   const handleSkipFourthMember = () => {
     setValue("contestant4", undefined);
-    setHiddenForms((prev) => [...prev, 3]);
+    /*setHiddenForms((prev) => [...prev, 3]);*/
     setCurrentIndex(4);
   };
 
