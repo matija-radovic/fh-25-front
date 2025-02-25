@@ -96,7 +96,6 @@ const MobileForm = () => {
     setCurrentIndex((prev) => prev - 1);
   };
   const handleSkipFourthMember = () => {
-    // Ako se preskoči 4. član, postavljamo contestant4 na undefined
     setValue("contestant4", undefined);
     setHiddenForms((prev) => [...prev, 3]);
     setCurrentIndex(4);
@@ -104,7 +103,6 @@ const MobileForm = () => {
 
   const onSubmit = async (data: MobileFullFormData) => {
     setIsSubmitting(true);
-    // Funkcija za konverziju podataka o učesniku u tip Contestant
     const convertContestant = (d: any): Contestant => {
       if (d.occupation === Profession.EMPLOYED) {
         return {
@@ -174,7 +172,6 @@ const MobileForm = () => {
     }
   }, [isSubmitted]);
 
-  // Niz slajdova – raspored isti kao kod desktop verzije
   const forms = [
     <MobileIndividualForm
       key={0}
@@ -212,7 +209,6 @@ const MobileForm = () => {
   return (
     <FormProvider {...methods}>
       {isFormVisible && (
-        // Jedinstveni roditeljski <form> koji obuhvata celu mobilnu formu
         <form className="mobile-form-wrapper" onSubmit={handleSubmit(onSubmit)}>
           <div className="mobile-forms-container">
             {forms.map((form, index) => {

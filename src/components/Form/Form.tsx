@@ -12,7 +12,6 @@ import { applicationService } from "../../utils/api/services/application.service
 import { Contestant } from "../../utils/api/models/contestant.model";
 import { Profession } from "../../utils/constants/form/professions";
 
-// Kreiramo full form šemu
 const fullFormSchema = z.object({
   contestant1: individualFormSchema,
   contestant2: individualFormSchema,

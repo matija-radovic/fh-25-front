@@ -7,7 +7,6 @@ import icons from "../../../assets/Form/icons.svg";
 import leftArrow from "../../../assets/Form/leftarrow.svg";
 import { z } from "zod";
 
-// Šema za timsku formu
 export const teamFormSchema = z.object({
   teamName: z.string().min(1, "Naziv tima je obavezan."),
   motivation: z.string().min(1, "Motivacija je obavezna."),
@@ -31,7 +30,6 @@ const TeamForm: React.FC<TeamFormProps> = ({
     formState: { errors },
   } = useFormContext<FullFormData>();
 
-  // Kastujemo errors.team na objekat sa očekivanim poljima
   const teamErrors = (errors.team || {}) as {
     teamName?: { message?: string };
     motivation?: { message?: string };

@@ -64,7 +64,6 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
     formState: { errors },
   } = useFormContext<MobileFullFormData>();
 
-  // Ključ za trenutnog učesnika (contestant1, contestant2, …)
   const contestantKey = `contestant${indexIndividual}` as
     | "contestant1"
     | "contestant2"
@@ -73,7 +72,6 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
   const currentContestant = watch(contestantKey);
   const occupation = currentContestant?.occupation;
 
-  // Pomoćna funkcija za kreiranje imena polja
   const fieldName = (
     field:
       | "name"
@@ -103,7 +101,7 @@ const MobileIndividualForm: React.FC<MobileIndividualFormProps> = ({
     ) {
       fieldsToValidate.push(fieldName("school"), fieldName("grade"));
     }
-    const valid = await trigger(fieldsToValidate as any);
+    const valid = await trigger(fieldsToValidate);
     if (valid) {
       console.log("Podaci o učesniku:", currentContestant);
       nextForm();
