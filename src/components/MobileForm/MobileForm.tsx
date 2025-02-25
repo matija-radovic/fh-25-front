@@ -18,7 +18,6 @@ import {
   UniversityYearKey,
 } from "../../utils/api/models/contestant.model";
 
-// Full šema koja sadrži podatke za sve učesnike i tim
 const mobileFullFormSchema = z.object({
   contestant1: mobileIndividualFormSchema,
   contestant2: mobileIndividualFormSchema,
