@@ -3,6 +3,22 @@
   height: 100dvh;
   padding: 30px;
 
+  .mobile-team-form-wrapper-success-message {
+    font-family: "Orbitron";
+    height: 100%;
+    background: linear-gradient(to bottom, #24bdde, #136678);
+    border-radius: 17px;
+    padding: 20px 35px;
+    display: flex;
+    font-size: 48px;
+    font-weight: bold;
+    text-wrap: wrap;
+    text-align: center;
+    box-shadow: 9px 14px 6.3px 7px rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    align-items: center;
+  }
+
   .mobile-team-form-wrapper {
     background: linear-gradient(to bottom, #24bdde, #136678);
     border-radius: 17px;

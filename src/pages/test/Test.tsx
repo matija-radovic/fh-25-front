@@ -1,4 +1,3 @@
-import FinalForm from "../../components/FinalForm/FinalForm";
 import "./Test.scss";
 
 /**
@@ -10,9 +9,6 @@ const Test = () => {
     <>
       {/* Put your component here */}
       {/*<Form />*/}
-      <div style={{ height: "100%" }}>
-        <FinalForm />
-      </div>
     </>
   );
 };

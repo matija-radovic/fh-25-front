@@ -32,9 +32,11 @@ const MobileTeamForm: React.FC<MobileTeamFormProps> = ({
     <Section isContainer={false}>
       <div className="mobile-team-form-container">
         {isSubmitted ? (
-          <p className="mobile-form-success-message">
-            Uspešno ste poslali prijavu!
-          </p>
+          <div className="mobile-team-form-wrapper-success-message">
+            <p className="mobile-form-success-message">
+              Uspešno ste poslali prijavu!
+            </p>
+          </div>
         ) : (
           <div className="mobile-team-form-wrapper">
             <h1 className="mobile-form-prijave-text">PRIJAVA</h1>
