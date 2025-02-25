@@ -11,6 +11,10 @@ import { FHApplication } from "../../utils/api/models/application.model";
 import { applicationService } from "../../utils/api/services/application.service";
 import { Contestant } from "../../utils/api/models/contestant.model";
 import { Profession } from "../../utils/constants/form/professions";
+import {
+  HighSchoolYearKey,
+  UniversityYearKey,
+} from "../../utils/api/models/contestant.model";
 
 const fullFormSchema = z.object({
   contestant1: individualFormSchema,
@@ -81,7 +85,9 @@ const Form = () => {
     },
   });
 
-  const convertContestant = (data: any): Contestant => {
+  const convertContestant = (
+    data: z.infer<typeof individualFormSchema>
+  ): Contestant => {
     if (data.occupation === Profession.EMPLOYED) {
       return {
         email: data.email,
@@ -92,8 +98,8 @@ const Form = () => {
         profession: data.occupation,
         educationalInstitution: undefined,
         yearOfStudy: undefined,
-      };
-    } else {
+      } as Contestant;
+    } else if (data.occupation === Profession.STUDENT) {
       return {
         email: data.email,
         name: data.name,
@@ -101,9 +107,21 @@ const Form = () => {
         techDescription: data.technologies,
         CVURL: data.cvLink,
         profession: data.occupation,
-        educationalInstitution: data.school || undefined,
-        yearOfStudy: data.grade,
-      };
+        educationalInstitution: data.school!,
+        yearOfStudy: data.grade! as UniversityYearKey,
+      } as Contestant;
+    } else {
+      // Profession.HIGH_SCHOOL_STUDENT
+      return {
+        email: data.email,
+        name: data.name,
+        phoneNumber: data.phone,
+        techDescription: data.technologies,
+        CVURL: data.cvLink,
+        profession: data.occupation,
+        educationalInstitution: data.school!,
+        yearOfStudy: data.grade! as HighSchoolYearKey,
+      } as Contestant;
     }
   };
 
@@ -126,6 +144,7 @@ const Form = () => {
     };
 
     try {
+      console.log(teamApplication);
       const response = await applicationService.createApplication(
         teamApplication,
         "fh"

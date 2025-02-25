@@ -13,6 +13,10 @@ import { FHApplication } from "../../utils/api/models/application.model";
 import { applicationService } from "../../utils/api/services/application.service";
 import { Contestant } from "../../utils/api/models/contestant.model";
 import { Profession } from "../../utils/constants/form/professions";
+import {
+  HighSchoolYearKey,
+  UniversityYearKey,
+} from "../../utils/api/models/contestant.model";
 
 // Full šema koja sadrži podatke za sve učesnike i tim
 const mobileFullFormSchema = z.object({
@@ -103,7 +107,9 @@ const MobileForm = () => {
 
   const onSubmit = async (data: MobileFullFormData) => {
     setIsSubmitting(true);
-    const convertContestant = (d: any): Contestant => {
+    const convertContestant = (
+      d: z.infer<typeof mobileIndividualFormSchema>
+    ): Contestant => {
       if (d.occupation === Profession.EMPLOYED) {
         return {
           email: d.email,
@@ -114,8 +120,8 @@ const MobileForm = () => {
           profession: d.occupation,
           educationalInstitution: undefined,
           yearOfStudy: undefined,
-        };
-      } else {
+        } as Contestant;
+      } else if (d.occupation === Profession.STUDENT) {
         return {
           email: d.email,
           name: d.name,
@@ -123,9 +129,21 @@ const MobileForm = () => {
           techDescription: d.technologies,
           CVURL: d.cvLink,
           profession: d.occupation,
-          educationalInstitution: d.school || undefined,
-          yearOfStudy: d.grade,
-        };
+          educationalInstitution: d.school!,
+          yearOfStudy: d.grade! as UniversityYearKey,
+        } as Contestant;
+      } else {
+        // Profession.HIGH_SCHOOL_STUDENT
+        return {
+          email: d.email,
+          name: d.name,
+          phoneNumber: d.phone,
+          techDescription: d.technologies,
+          CVURL: d.cvLink,
+          profession: d.occupation,
+          educationalInstitution: d.school!,
+          yearOfStudy: d.grade! as HighSchoolYearKey,
+        } as Contestant;
       }
     };
 
@@ -146,6 +164,7 @@ const MobileForm = () => {
     };
 
     try {
+      console.log(teamApplication);
       const response = await applicationService.createApplication(
         teamApplication,
         "fh"

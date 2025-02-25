@@ -16,6 +16,8 @@ import {
   UniversityYear,
 } from "../../../utils/constants/form/schoolYears";
 
+import type { Path } from "react-hook-form";
+
 // Shema za pojedinačnog učesnika (ostaje nepromenjena)
 export const individualFormSchema = z
   .object({
@@ -92,7 +94,7 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
   };
 
   const handleLocalSubmit = async () => {
-    const fieldsToValidate = [
+    const fieldsToValidate: Path<FullFormData>[] = [
       fieldName("name"),
       fieldName("phone"),
       fieldName("email"),
@@ -106,8 +108,9 @@ const IndividualForm: React.FC<IndividualFormProps> = ({
     ) {
       fieldsToValidate.push(fieldName("school"), fieldName("grade"));
     }
-    const valid = await trigger(fieldsToValidate as any);
+    const valid = await trigger(fieldsToValidate);
     if (valid) {
+      console.log("Podaci o učesniku:", currentContestant);
       nextForm();
     }
   };
