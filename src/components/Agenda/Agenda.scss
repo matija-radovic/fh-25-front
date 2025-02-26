@@ -1,0 +1,72 @@
+@use '../../utils/css/colors';
+@use '../../utils/css/mediaqueries';
+
+.agenda-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 102px;
+
+
+    .agenda-container {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: start;
+        gap: clamp(7px, 4dvw, 50px);
+
+        svg {
+            width: 100%;
+            max-width: 411px;
+            height: auto;
+            display: block;
+        }
+
+        .agenda-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 78.26%;
+            position: relative;
+            top: calc(100% / 23);
+            text-align: right;
+
+            &>* {
+                height: calc(100% / 9);
+            }
+
+            & > *:last-child {
+                top: calc(100% / 18)
+            }
+        }
+
+        .agenda-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 43.47%;
+            position: relative;
+            top: calc(100% / 23 * 5);
+            text-align: left;
+
+            &>* {
+                height: calc(100% / 5);
+            }
+
+        }
+
+
+        .agenda-events {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            //position: absolute;
+            font-family: 'Orbitron';
+
+            @media #{mediaqueries.$sm-phone} {
+                font-size: 0.7rem;
+            }
+
+        }
+    }
+}

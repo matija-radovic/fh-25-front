@@ -1,3 +1,4 @@
+import Agenda from "../../components/Agenda/Agenda";
 import './Test.scss'
 
 /**
@@ -7,7 +8,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      {/* Put your component here */}
+      <Agenda/>
     </>
   )
 }
