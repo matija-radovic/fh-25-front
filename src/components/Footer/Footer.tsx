@@ -1,16 +1,15 @@
-import globeIcon from './../../assets/Globe.png'
-import fonisLogo from './../../assets/FONIS LOGO.png'
-import locationIcon from './../../assets/Location.png'
-import linkedInIcon from './../../assets/LinkedIn.png'
-import instagramIcon from './../../assets/Instagram.png'
-import tiktokIcon from './../../assets/TikTok.png'
-import mailIcon from './../../assets/Mail.png'
+import globeIcon from '../../assets/Footer/globe.svg'
+import fonisLogo from '../../assets/Footer/FONIS LOGO.png'
+import locationIcon from '../../assets/Footer/location.svg'
+import linkedInIcon from '../../assets/Footer/LinkedIn.svg'
+import instagramIcon from '../../assets/Footer/Instagram.svg'
+import tiktokIcon from '../../assets/Footer/TikTok.svg'
+import mailIcon from '../../assets/Footer/Mail.svg'
 import './Footer.scss'
 
 const Footer = () => {
-
     return (
-        <footer className="footer">
+        <footer className="orbitron">
             <div className="footer-wrapper">
                 <div className="footer-left">
                     <a href="https://www.fonis.rs" target="_blank">
