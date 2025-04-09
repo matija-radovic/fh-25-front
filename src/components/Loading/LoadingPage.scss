@@ -1,93 +1,75 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@use '../../utils/css/colors';
+@use '../../utils/css/mediaqueries';
+@use 'sass:string';
 
-/* Binary Background */
-.background {
-  width: 100%;
-  height: 100%;
+
+.loading-background {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0a374bb0;
-  background-image:
-    linear-gradient(to right, #002440 2px, transparent 1px),
-    linear-gradient(to bottom, #002440 1px, transparent 1px),
-    linear-gradient(to left, #002440 2px, transparent 1px),
-    linear-gradient(to top, #002440 1px, transparent 1px);
-  background-size: 15px 13px;
-  background-repeat: repeat;
-  position: fixed;
+  height: 100%;
+  padding: 0 30px;
 
-  &::before{
-    content: '';
-    position: absolute;
-    top: 150px;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 40px);
-    background-image: linear-gradient(to bottom, #064061 2px, transparent 1px);
-    background-size: 100% 180px;
-    background-repeat: repeat;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.8;
-  }
-  
-  &::after{
-    content: '';
+  $clr: string.slice("#{colors.$svetlo-plava}", 2); // Popravlja bug unutar bg-image jer svg element ne može kao znak da primi hashtag ("#")
+  $opacity: 13; // Opacity za kockice
+  background-image: url('data:image/svg+xml,<svg width="100" height="50" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="5" width="60" height="40" fill="%23#{$clr}#{$opacity}"/></svg>'),
+  radial-gradient(rgba(colors.$svetlo-plava, 0.05) 0 30%, rgba(colors.$crno-plava, 0.5) 70% 100%),
+  linear-gradient(to bottom, rgba(6, 64, 97, 0.8) 2px, transparent 2px),
+  linear-gradient(to right, rgba(6, 64, 97, 0.8) 2px, transparent 2px);
+  background-size:
+    19px 11px, // Trust me bro merke
+    100dvw 100dvh,
+    100% 160px,
+    140px 100%;
+  background-position: left top, left top, 0 calc(50% - 80px), calc(50% - 70px) 0;
+  background-repeat: repeat;
+
+  canvas {
     position: absolute;
     top: 0;
-    left: 180px;
-    width: calc(100% - 40px);
-    height: 100%;
-    background-image: linear-gradient(to right, #064061 2px, transparent 1px);
-    background-size: 180px 100%;
-    background-repeat: repeat;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.8;
+    left: 0;
+    opacity: 0.21;
+    width: 100dvw;
+    height: 100dvh;
   }
 }
 
-/*RESPONSITIVITY*/
 .loading-title {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 50px;
+  max-width: 100%; // force-svg to contain
 
-  width: 100%;
-  height: 100dvh;
+  svg {
+    height: auto;
+    width: auto;
+  }
 
-  margin: 0 30px;
-  width: calc(100% - 40px);
-  z-index: 1;
-
-  @media (max-width: 768px) {
+  @media #{mediaqueries.$phone} {
     flex-direction: column;
-    gap: 1px;
-      
+    gap: 2px;
+
     svg {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 762 / 102;
-      
-      .loading-title-fon {
-        aspect-ratio: 762 / 102;
-    }
+      aspect-ratio: 762 / 104; // longest svg dimension
     }
   }
 }
 
-canvas{
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100vw;
-  height: 100vh;
-  opacity: 0.7;
-}
+
+// Ovo je za razmatranje majke mi, black magic:
+// * The aspect-ratio CSS property sets a preferred aspect ratio for the box, 
+// which will be used in the calculation of auto sizes and some other layout functions.
+// * Note: As a geometric property, height also applies to the <svg>, <rect>, <image>, 
+// and <foreignObject> SVG elements, with auto resolving to 0 and percent values being 
+// relative to the SVG viewport height for <rect>. The CSS height property value 
+// overrides any SVG height attribute value set on the SVG element.
+// * Time što smo rekli "height: auto" ili "width: auto" override-ovali smo height 
+// property u svg-u, a pošto koristimo aspect-ratio, koji cilja 'veličine' koje su 
+// "auto", browser odlučuje njihovu vrednost. U našem slučaju to je visina i širina.
+// Roditelj title-a je flexbox sa popertijima za centriranje, zbog toga on (title)
+// će zauzeti širinu/visinu u zavisnosti od content-a. Predpostavljam da browser 
+// prilikom naletanja na "auto" vrednost uzima i SVG vrednost u obzir i ako je 
+// override-ovana, jer kada se skloni CSS za visinu i širinu nekako SVG-ovi znaju
+// koje dimenzije da uzmu (default-nu navedenu u okviru HTML-a). Stavljanjem 
+// "max-width: 100%" limitira da se SVG proširi više od dozvoljenog prostora 
+// ostavljenog od strane roditelja.
+// Ne vidim ni jedan drugi način da svi SVG elementi imaju istu visinu.
