@@ -30,8 +30,8 @@ const Loading = () => {
     let Y: number, X: number; // Character draw offset
     let fWidth: number, fHeight: number; // True width
     let rowGap: number, columnGap: number; // True space-between
-    let minRowGap: number = 17 * pixelDensity, minColumnGap: number = 8 * pixelDensity; // Floored gap distance, relative pixel number (original: 10 / 20)
-    let margin: number = 8 * pixelDensity;
+    const minRowGap: number = 17 * pixelDensity, minColumnGap: number = 8 * pixelDensity; // Floored gap distance, relative pixel number (original: 10 / 20)
+    const margin: number = 8 * pixelDensity;
 
     const initCanvas = () => {
       const width = window.innerWidth;
@@ -48,8 +48,8 @@ const Loading = () => {
       fWidth = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
       Y = metrics.actualBoundingBoxAscent;
       X = metrics.actualBoundingBoxLeft;
-      let cWidth = canvas.width - 2 * margin;
-      let cHeight = canvas.height - 2 * margin;
+      const cWidth = canvas.width - 2 * margin;
+      const cHeight = canvas.height - 2 * margin;
 
       columns = Math.floor((cWidth + minColumnGap) / (fWidth + minColumnGap));
       columnGap = (cWidth - (columns * (fWidth + minColumnGap) - minColumnGap)) / columns + minColumnGap;
