@@ -1,4 +1,3 @@
-import { LoadingPage } from '../../components'
 import './Test.scss'
 
 /**
@@ -8,7 +7,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      {<LoadingPage></LoadingPage>}
+      {/* Put your component here */}
     </>
   )
 }
