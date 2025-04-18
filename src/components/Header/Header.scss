@@ -1,188 +1,190 @@
 @use "../../utils/css/colors";
-@use"../../utils/css/mediaqueries";
+@use "../../utils/css/mediaqueries";
+@use "sass:math";
 
 header {
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
-  padding: 10px 15px;
+
   display: flex;
-  align-items: center; //to do:Matija ocd
+  align-items: center;
   justify-content: space-between;
-  background-color: colors.$svetlo-plava;
 
+  background-color: rgba(colors.$svetlo-plava, 0.1);
+  backdrop-filter: blur(5px);
+  //box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 
-  transition: .1s ease-out all;
+  padding: 0 12px 0 12px;
 
   a {
-    color: colors.$tamno-plava;
-    font-size: 0.9rem;
     position: relative;
-    margin: 0 1rem;
-    text-decoration: none;
     white-space: nowrap;
-    
+    text-decoration: none;
+    text-transform: uppercase;
     cursor: pointer;
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-    }
-
-    &::before {
-      left: -0.6rem;
-    }
-
-    &::after {
-      right: -0.6rem;
-    }
-
-
-    &:hover::before {
-      content: '<';
-    }
-
-    &:hover::after {
-      content: '>';
-    }
   }
 
-  .header-container {
-    display: flex;
-    &.h-open{
-      @media #{mediaqueries.$lt-desktop}{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding:0 12px;
-        
-        background-color:colors.$bela;
-        left:unset;
-        right: 50px;
-        opacity: 1;
-        
-        animation:sirenje .2s cubic-bezier(.53,.18,.43,1) forwards;
-
-        a{
-          color: colors.$tamno-plava;
-          font-weight: 700;
-          font-size: 1.2rem;
-          padding:12px 0;
-        }
-
-      }
-    }
-
-    .hamburger-sign-up {
-      display: none;
-
-      @media #{mediaqueries.$lt-desktop} {
-        display: block;
-      }
-    }
-
-    @media #{mediaqueries.$lt-desktop} {
-      position: absolute;
-      top: calc(100% + 20px);
-      left: 100%;
-      opacity: 0;
-
-    }
-  }
-
-  .header-logo {
-    width: 100px;
-    object-fit: contain;
-    @media #{mediaqueries.$phone}{
-      width: 60px;
-    }
-      
-    
-  }
-
-
-
-  .header-sign-up {
-    margin-left: 1rem;
-    margin-right: 0;
+  // U okviru Header-a, TODO: -> smart dodge
+  &>.header-sign-up-button {
     padding: 14px 20px;
     outline: 2px solid colors.$tamno-plava;
     outline-offset: -4px;
     background-color: colors.$svetlo-plava ;
     border-radius: 100px;
     color: colors.$tamno-plava;
-    transition: .1s ease-in all;
+    transition: .15s ease all;
 
-    &::after,
-    &::before {
-      content: none !important;
-    }
-
-    @media #{mediaqueries.$lt-desktop} {
-      display: none;
+    &:hover, &:focus {
+      outline-color: colors.$svetlo-plava;
+      color: colors.$svetlo-plava;
+      background-color: colors.$tamno-plava;
     }
   }
 
-  .header-sign-up:hover {
-    outline-color: colors.$svetlo-plava;
-    color: colors.$svetlo-plava;
-    background-color: colors.$tamno-plava;
-  }
+  img {
+    display: block;
+    user-select: none;
+    object-fit: contain;
+    aspect-ratio: 1;
+    height: 100px;
 
-  $razmak: 8px;
-  $razmak-mali: 5px;
-  $sirina: 56px;
-  $sirina-mala: 32px;
-
-  .hamburger {
-    display: none;
-    width: $sirina;
-    flex-direction: column;
-    gap: $razmak;
-    cursor: pointer;
-    &.h-open{
-      background-color: red;
-    }
-    @media #{mediaqueries.$lt-desktop} {
-      display: flex;
+    @media #{mediaqueries.$s-desktop} {
+      height: 90px;
     }
 
     @media #{mediaqueries.$phone} {
-      width: $sirina-mala;
-      gap: $razmak-mali ;
+      height: 60px;
     }
+    
+  }
+}
 
+.nav-container {
+  display: flex;
+  outline: none;
 
-    .hamburger-line {
-      height: $razmak;
-      width: 100%;
-      background-color: colors.$tamno-plava;
-      @media #{mediaqueries.$phone} {
-        height: $razmak-mali;
-      }
-    }
+  @media #{mediaqueries.$s-desktop} {
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+    top: calc(100% + 20px);
+    right: 20px;
+    overflow: hidden;
   }
 
-  &.header-dark {
-    background-color: colors.$tamno-plava;
+  $a-razmak: -0.7rem;
+
+  .nav-link {
+    position: relative;
+    font-size: 0.9rem;
+    margin: 0 math.abs($a-razmak);
+
+    @media #{mediaqueries.$s-desktop} {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0;
+      width: 100%;
+      $padding-thickness: 10px;
+      padding: $padding-thickness calc(2px + math.abs($a-razmak));
+      // Visual bug on OperaGX fix
+      padding-bottom: $padding-thickness + 1px;
+      margin-bottom: -1px; 
+
+      background-color: colors.$bela;
+    }
 
     a {
-      color: colors.$svetlo-plava;
+      display: block;
+      color: colors.$svetlo-plava; //TODO: smart color -> ssff folder index2
+
+      @media #{mediaqueries.$s-desktop} {
+        color: colors.$tamno-plava; // TODO ugasiti smart color za hamburger meni
+        font-weight: 600;
+      }
+
+      &::before,
+      &::after {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        transition: .1s opacity ease-out;
+        opacity: 0;
+
+        font-size: 1.1rem;
+        font-weight: 200;
+
+        @media #{mediaqueries.$s-desktop} {
+          font-weight: 400;
+        }
+      }
+
+      &::before {
+        content: '<';
+        left: $a-razmak;
+      }
+
+      &::after {
+        content: '>';
+        right: $a-razmak;
+      }
+    }
+
+    &:hover a, &:focus a{
+      &::before,
+      &::after {
+        opacity: 1;
+      }
     }
   }
 }
 
-@keyframes sirenje{
-  0%{
-    height: 0px;
+$razmak: 7px;
+$razmak-mali: 5px;
+$sirina: 50px;
+$sirina-mala: 35px;
+
+.hamburger {
+  user-select: none;
+  background-color: unset;
+  border: none;
+
+  display: block;
+  width: $sirina;
+  flex-direction: column;
+  gap: $razmak;
+  cursor: pointer;
+  transition: .2s rotate ease;
+
+  @media #{mediaqueries.$s-desktop} {
+    display: flex;
   }
-  99.9%{
-    height:472.2px ;
-    //472
+
+  @media #{mediaqueries.$phone} {
+    width: $sirina-mala;
+    gap: $razmak-mali ;
   }
-  100%{
-    height: auto;
+
+  &:active {
+    outline: none;
+  }
+
+  &.h-open {
+    rotate: -90deg; //TODO ovo https://www.youtube.com/watch?v=blUpQMJjObE
+  }
+
+  .hamburger-line {
+    height: $razmak;
+    width: 100%;
+    background-color: colors.$svetlo-plava; // TODO -> smart color dodge
+
+    @media #{mediaqueries.$phone} {
+      height: $razmak-mali;
+    }
   }
 }
