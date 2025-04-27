@@ -1,0 +1,41 @@
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hexagon-1 {
+  transform-origin: 94.5px 95px; /* Podesite prema potrebama */
+  animation: rotate 5s linear infinite;
+}
+
+.hexagon-2 {
+  transform-origin: 132.5px 166.5px; /* Podesite prema potrebama */
+  animation: rotate 5s linear infinite;
+}
+
+.hexagon-mobile-top-right {
+  top: -20px;
+  right: -120px;
+  width: 290px;
+  height: 310px;
+}
+
+.hexagon-mobile-bottom-left {
+  bottom: 0px;
+  left: -150px;
+  width: 290px;
+  height: 310px;
+}
+
+@media (max-width: 480px) {
+  .hexagon-mobile-top-right {
+    right: -150px;
+  }
+  .hexagon-mobile-bottom-left {
+    left: -180px;
+  }
+}
