@@ -4,7 +4,8 @@ export { Layout };
 import Section from "./-shared/Section/Section";
 import TextBox from "./-shared/TextBox/TextBox";
 import Slider from "./-shared/Slider/Slider";
-export { Section, Slider, TextBox };
+import Arrow from "./-shared/Arrow/Arrow";
+export { Section, Slider, TextBox, Arrow };
 
 import ExampleComponent from "./Example/Example";
 import LoadingPage from "./Loading/LoadingPage"
