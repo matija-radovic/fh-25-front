@@ -1,3 +1,6 @@
+
+import OrgTeam2 from "../../components/OrgTeam/OrgTeam2";
+import { orgTeams } from "../../utils/constants/orgteam/teams";
 import "./Test.scss";
 
 /**
@@ -8,7 +11,8 @@ import "./Test.scss";
 const Test = () => {
   return (
     <>
-      {/* Put your component here */}
+      <OrgTeam2 teams={orgTeams} />
+      
     </>
   );
 };

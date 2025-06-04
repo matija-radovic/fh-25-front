@@ -2,6 +2,7 @@ import { forwardRef, memo, SVGProps, useEffect, useImperativeHandle, useMemo, us
 import { paths } from '../../../utils/constants/arrow/path'
 import './Arrow.scss'
 import { useInView } from 'motion/react'
+import useVisibility from '../../../hooks/useVisibility'
 
 
 interface ArrowProps {
@@ -23,10 +24,11 @@ const Arrow: React.NamedExoticComponent<ArrowProps> = memo(({
     const pathsRef = useRef<(PathRef | null)[]>([]);
     const arrowRef = useRef<SVGSVGElement>(null);
     const isInView = useInView(arrowRef, { margin: "100% 0px" });
+    const isVisible = useVisibility();
     const classes = useMemo(() => Array.isArray(className) ? className.join(' ').trim() : className, [className]);
 
     useEffect(() => {
-        if (!isInView || !pathsRef.current) return;
+        if (!isInView || !isVisible || !pathsRef.current) return;
         const paths = pathsRef.current
         const interval = setInterval(() => {
             const amount = Math.floor(1 + Math.random() * 10);
@@ -35,7 +37,7 @@ const Arrow: React.NamedExoticComponent<ArrowProps> = memo(({
         }, LIGHT_UP_INTERVAL);
 
         return () => clearInterval(interval);
-    }, [isInView])
+    }, [isInView, isVisible])
 
     return (
         <svg ref={arrowRef} className={`big-arrow${flippedX ? " flipped-x" : ""}${flippedY ? " flipped-y" : ""}${classes ? " " + classes : ""}`}

@@ -1,58 +1,102 @@
-export const orgTeams = [
+export type OrganizationalTeam = {
+    coordinator: {
+        image: string;
+        firstName: string;
+        lastName: string;
+        role: string;
+    },
+    team: {
+        image: string;
+        name: string;
+    }
+}
+export const orgTeams: OrganizationalTeam[] = [
     {
-        coordinatorImage: "images/FILIP_LAZAREVIC.png",
-        coordinatorFirstName: "Filip",
-        coordinatorLastName: "Lazarević",
-        coordinatorRole: "Koordinator takmičenja",
-        teamImage: "images/CORE_TIM.jpg",
-        teamName: "Tim Koordinatora",
+        coordinator: {
+            image: "images/FILIP_LAZAREVIC.png",
+            firstName: "Filip",
+            lastName: "Lazarević",
+            role: "Koordinator takmičenja",
+        },
+        team: {
+            image: "images/CORE_TIM.jpg",
+            name: "Tim Koordinatora",
+        }
     },
     {
-        coordinatorImage: "images/MINA_VUKOVIC.png",
-        coordinatorFirstName: "Mina",
-        coordinatorLastName: "Vuković",
-        coordinatorRole: "Koordinator tima za odnose sa kompanijama",
-        teamImage: "images/CR_TIM.jpg",
-        teamName: "Tim za odnose sa kompanijama",
+        coordinator: {
+            image: "images/MINA_VUKOVIC.png",
+            firstName: "Mina",
+            lastName: "Vuković",
+            //role: "Koordinator tima za odnose sa kompanijama",
+            role: "Koordinator CR tima",
+        },
+        team: {
+            image: "images/CR_TIM.jpg",
+            name: "Tim za odnose sa kompanijama",
+        }
     },
     {
-        coordinatorImage: "images/ANASTASIJA_RUS.png",
-        coordinatorFirstName: "Anastasija",
-        coordinatorLastName: "Rus",
-        coordinatorRole: "Koordinator tima za odnose s javnošću",
-        teamImage: "images/PR_TIM.png",
-        teamName: "Tim za odnose s javnošću",
+        coordinator: {
+            image: "images/ANASTASIJA_RUS.png",
+            firstName: "Anastasija",
+            lastName: "Rus",
+            //role: "Koordinator tima za odnose s javnošću",
+            role: "Koordinator PR tima",
+        },
+        team: {
+            image: "images/PR_TIM.png",
+            name: "Tim za odnose s javnošću",
+        }
     },
     {
-        coordinatorImage: "images/MATIJA_VUJIC.png",
-        coordinatorFirstName: "Matija",
-        coordinatorLastName: "Vujić",
-        coordinatorRole: "Koordinator tima za ljudske resurse",
-        teamImage: "images/HR_TIM.jpg",
-        teamName: "Tim za ljudske resurse",
+        coordinator: {
+            image: "images/MATIJA_VUJIC.png",
+            firstName: "Matija",
+            lastName: "Vujić",
+            //role: "Koordinator tima za ljudske resurse",
+            role: "Koordinator HR tima",
+        },
+        team: {
+            image: "images/HR_TIM.jpg",
+            name: "Tim za ljudske resurse",
+        }
     },
     {
-        coordinatorImage: "images/DANICA_ZIVKOVIC.png",
-        coordinatorFirstName: "Danica",
-        coordinatorLastName: "Živković",
-        coordinatorRole: "Koordinator tima za dizajn",
-        teamImage: "images/DIZAJN_TIM.jpg",
-        teamName: "Tim za dizajn",
+        coordinator: {
+            image: "images/DANICA_ZIVKOVIC.png",
+            firstName: "Danica",
+            lastName: "Živković",
+            role: "Koordinator tima za DIZAJN",
+        },
+        team: {
+            image: "images/DIZAJN_TIM.jpg",
+            name: "Tim za dizajn",
+        }
     },
     {
-        coordinatorImage: "images/EMILIJA_SIMIC.png",
-        coordinatorFirstName: "Emilija",
-        coordinatorLastName: "Simić",
-        coordinatorRole: "Koordinator tima za logistiku",
-        teamImage: "images/LOGISTIKA_TIM.jpg",
-        teamName: "Tim za logistiku",
+        coordinator: {
+            image: "images/EMILIJA_SIMIC.png",
+            firstName: "Emilija",
+            lastName: "Simić",
+            role: "Koordinator tima za LOGISTIKU",
+        },
+        team: {
+            image: "images/LOGISTIKA_TIM.jpg",
+            name: "Tim za logistiku",
+        }
     },
     {
-        coordinatorImage: "images/MATIJA_RADOVIC.png",
-        coordinatorFirstName: "Matija",
-        coordinatorLastName: "Radović",
-        coordinatorRole: "Koordinator tima za informacione tehnologije",
-        teamImage: "images/IT_TIM.jpg",
-        teamName: "Tim za informacione tehnologije",
+        coordinator: {
+            image: "images/MATIJA_RADOVIC.png",
+            firstName: "Matija",
+            lastName: "Radović",
+            //role: "Koordinator tima za informacione tehnologije",
+            role: "Koordinator IT tima",
+        },
+        team: {
+            image: "images/IT_TIM.jpg",
+            name: "Tim za informacione tehnologije",
+        }
     },
 ];

@@ -1,0 +1,361 @@
+@use '../../utils/css/colors';
+@use '../../utils/css/mediaqueries';
+@use "sass:list";
+@use "sass:math";
+
+$shevron-width: max(15px, calc((45 / 1440) * min(1440px, 100dvw)));
+$shevron-width-phone: max(15px, calc((100 / 1440) * min(1440px, 100dvw)));
+$shevron-phone-horizontal-offset: 8.5dvw;
+$shevron-phone-vertical-offset: 35dvw;
+
+.org-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    gap: min(100px, 15dvw);
+
+    h1 {
+        text-align: center;
+    }
+
+    button {
+        display: block;
+        height: auto;
+        width: $shevron-width;
+        aspect-ratio: 0.866;
+
+        border: none;
+        cursor: pointer;
+        background-color: colors.$bela;
+
+        transition: scale .1s ease;
+
+        @media #{mediaqueries.$m-phone} {
+            width: $shevron-width-phone;
+            top: $shevron-phone-vertical-offset;
+            transform: translateY(-50%);
+            position: absolute;
+        }
+
+        &.next {
+            clip-path: polygon(100% 50%, 0 0, 0 100%);
+
+            @media #{mediaqueries.$m-phone} {
+                right: $shevron-phone-horizontal-offset;
+            }
+        }
+
+        &.prev {
+            clip-path: polygon(0 50%, 100% 100%, 100% 0);
+
+            @media #{mediaqueries.$m-phone} {
+                left: $shevron-phone-horizontal-offset;
+            }
+        }
+
+        &:active {
+            scale: 0.9;
+        }
+    }
+
+    .big-arrow {
+        translate: 0 60%;
+
+        &.flipped-x {
+            translate: 0 -17%;
+
+            @media #{mediaqueries.$tablet} {
+                translate: 0 14%;
+            }
+        }
+    }
+}
+
+.org-team-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    gap: 2dvw;
+
+    @media #{mediaqueries.$m-phone} {
+        flex-direction: column-reverse;
+        gap: 0;
+    }
+
+    .hexagon-group {
+        position: absolute;
+
+        .x-large {
+            width: clamp(125px, math.div(550, 1440) * 100dvw, 550px);
+        }
+
+        &.one {
+            transform: translateY(-50%);
+            top: 50%;
+            left: -15%;
+
+            @media #{mediaqueries.$m-phone} {
+                left: unset;
+                top: 1%;
+                right: -1%;
+
+            }
+
+            svg.hexagon:first-child {
+                @media #{mediaqueries.$m-phone} {
+                    width: clamp(125px, math.div(380, 1440) * 100dvw, 380px);
+                }
+            }
+
+            svg.hexagon:not(:first-child) {
+                display: none;
+
+                @media #{mediaqueries.$m-phone} {
+                    display: block;
+                }
+            }
+        }
+
+        &.two {
+            top: 105%;
+            left: 102%;
+
+            @media #{mediaqueries.$m-phone} {
+                top: 90%;
+                left: -3%;
+            }
+
+            svg.hexagon:first-child {
+                display: none;
+
+                @media #{mediaqueries.$m-phone} {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.org-team-controls {
+    display: flex;
+    gap: 4dvw;
+}
+
+$card-height-desktop: 400;
+$card-height-phone: 280;
+$coord-size-desktop: calc((270 / 1440) * min(1440px, 100dvw));
+$team-size-desktop: calc((620 / 1440) * min(1440px, 100dvw));
+$coord-size-phone: calc((185 / 402) * 100dvw);
+$team-size-phone: calc((335 / 402) * 100dvw);
+
+.org-team-cards {
+    display: flex;
+    position: relative;
+    gap: 7dvw;
+    perspective: 3000px;
+    transform-style: preserve-3d;
+
+    @media #{mediaqueries.$m-phone} {
+        align-items: center;
+        flex-direction: column;
+        gap: 4dvw;
+    }
+
+    .coord {
+        width: $coord-size-desktop;
+        aspect-ratio: list.slash(270, $card-height-desktop);
+
+        @media #{mediaqueries.$m-phone} {
+            width: $coord-size-phone;
+        }
+
+        .card-rotate {
+            background:
+                url('../../assets/OrgTeam/Clouds.svg'),
+                linear-gradient(to bottom, colors.$svetlo-plava 70%, colors.$tamno-plava 70% 100%);
+            background-repeat: no-repeat;
+            background-position: 100% -30%, 0 0;
+            background-size: 80%, 100%;
+        }
+
+        .card-content {
+            display: flex;
+            //TODO: font-size
+
+            .left {
+                height: 100%;
+                overflow: hidden;
+                flex: 1 0 auto;
+
+                * {
+                    overflow: hidden;
+                }
+
+                .name-box {
+                    position: absolute;
+                    top: 70%;
+                    width: 90%;
+                    padding: 0 5%;
+                    margin: 0 5%;
+                    font-weight: 900;
+                    color: #8cddea;
+                    text-shadow: -0.5px -0.5px 0 colors.$tamno-plava,
+                        0.5px -0.5px 0 colors.$tamno-plava,
+                        -0.5px 0.5px 0 colors.$tamno-plava,
+                        0.5px 0.5px 0 colors.$tamno-plava;
+                    font-size: min(1.2rem, 1.6dvw);
+
+                    border-bottom: 1px solid #8cddea;
+
+                    @media #{mediaqueries.$m-phone} {
+                        font-size: 4.5dvw;
+                    }
+                }
+
+                .vertical-name {
+                    position: absolute;
+                    display: inline-block;
+                    height: 70%;
+                    padding: 5px;
+
+                    writing-mode: vertical-lr;
+                    text-orientation: sideways;
+
+                    line-height: 0.75;
+
+                    font-size: min(70px, 4.70dvw);
+                    font-weight: bold;
+
+                    color: rgba(colors.$bela, 0.5);
+
+                    @media #{mediaqueries.$m-phone} {
+                        font-size: min(70px, 12dvw);
+                    }
+
+                    &.small {
+                        font-size: min(45px, 3.125dvw);
+
+                        @media #{mediaqueries.$m-phone} {
+                            font-size: 7.8dvw;
+                        }
+
+                    }
+                }
+
+                .coord-image {
+                    position: absolute;
+                    bottom: 15%;
+                    object-fit: contain;
+                    width: 100%;
+                    mask-image: linear-gradient(to bottom,
+                            rgba(0, 0, 0, 1) 83%,
+                            rgba(0, 0, 0, 0) 100%);
+                }
+
+            }
+
+
+            .right {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 3.5% 0;
+                gap: 2%;
+                width: 15%;
+                background: linear-gradient(to top, colors.$ljubičasta -5%, colors.$svetlo-plava);
+
+                * {
+                    display: block;
+                }
+
+                img {
+                    width: 80%;
+                    aspect-ratio: 1;
+                    object-fit: contain;
+                    margin: 10%;
+                }
+
+                span {
+                    text-align: center;
+                    flex: 1 0 auto;
+                    writing-mode: vertical-lr;
+                    text-orientation: sideways;
+                    font-weight: bold;
+                    //font-size: min(14.4px, 1dvw); // Dnica da se pita za veličinu teksta
+                    font-size: min(15px, 1.05dvw); // Dnica da se pita za veličinu teksta
+
+                    @media #{mediaqueries.$m-phone} {
+                        font-size: 2.6dvw;
+                    }
+                }
+
+                .star {
+                    padding: 10%;
+                }
+            }
+        }
+    }
+
+    .team {
+        position: relative;
+        width: $team-size-desktop;
+        aspect-ratio: list.slash(620, $card-height-desktop);
+
+        @media #{mediaqueries.$m-phone} {
+            width: $team-size-phone;
+        }
+
+        .card-shine {
+            z-index: 3;
+            opacity: min(var(--glare-o), 0.3);
+        }
+
+        img,
+        .card-glare,
+        .card-shine {
+            mask-image: url('../../assets/OrgTeam/trapezoid.svg'), linear-gradient(#000 0 0);
+            mask-size: 90% auto, 100%;
+            mask-position: center 101%, 0 0;
+            mask-repeat: no-repeat;
+            mask-composite: exclude;
+        }
+
+        .card-rotate {
+            border-radius: 30px;
+            background-color: colors.$svetlo-plava;
+            border: 3.5px solid colors.$svetlo-plava;
+
+            @media #{mediaqueries.$m-phone} {
+                border-radius: 25px;
+            }
+
+        }
+
+        img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+
+            @media #{mediaqueries.$m-phone} {
+                border-radius: 21.5px;
+            }
+        }
+
+        span {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: min(24.5px, 1.7dvw);
+
+            @media #{mediaqueries.$m-phone} {
+                font-size: 3.2dvw;
+            }
+        }
+    }
+}
