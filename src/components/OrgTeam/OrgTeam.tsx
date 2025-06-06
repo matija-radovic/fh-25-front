@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { AnimatePresence, useInView, wrap } from 'framer-motion'
 import { OrganizationalTeam } from "../../utils/constants/orgteam/teams";
 
-import "./OrgTeam2.scss";
+import "./OrgTeam.scss";
 import Section from "../-shared/Section/Section";
 import Card from "./Card/Card";
 
@@ -39,6 +39,7 @@ const OrgTeam2: React.FC<OrgTeamProps> = ({ teams }) => {
 
     // Cycle current index
     useEffect(() => {
+        return;
         if (!inView || !isVisible || isHovered) return;
 
         const iid = setInterval(() => {

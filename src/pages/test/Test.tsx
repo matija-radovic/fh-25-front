@@ -1,5 +1,5 @@
 
-import OrgTeam2 from "../../components/OrgTeam/OrgTeam2";
+import OrgTeam2 from "../../components/OrgTeam/OrgTeam";
 import { orgTeams } from "../../utils/constants/orgteam/teams";
 import "./Test.scss";
 

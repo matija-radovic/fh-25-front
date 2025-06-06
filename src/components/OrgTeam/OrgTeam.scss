@@ -337,15 +337,16 @@ $team-size-phone: calc((335 / 402) * 100dvw);
 
         }
 
+        picture {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
         img {
             object-fit: cover;
             width: 100%;
             height: 100%;
-            border-radius: 25px;
-
-            @media #{mediaqueries.$m-phone} {
-                border-radius: 21.5px;
-            }
         }
 
         span {
