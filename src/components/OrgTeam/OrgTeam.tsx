@@ -39,7 +39,6 @@ const OrgTeam2: React.FC<OrgTeamProps> = ({ teams }) => {
 
     // Cycle current index
     useEffect(() => {
-        return;
         if (!inView || !isVisible || isHovered) return;
 
         const iid = setInterval(() => {
