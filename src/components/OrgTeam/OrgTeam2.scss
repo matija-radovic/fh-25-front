@@ -183,7 +183,6 @@ $team-size-phone: calc((335 / 402) * 100dvw);
 
         .card-content {
             display: flex;
-            //TODO: font-size
 
             .left {
                 height: 100%;
@@ -250,6 +249,10 @@ $team-size-phone: calc((335 / 402) * 100dvw);
                     bottom: 15%;
                     object-fit: contain;
                     width: 100%;
+                    img {
+                        width: 100%;
+                    }
+
                     mask-image: linear-gradient(to bottom,
                             rgba(0, 0, 0, 1) 83%,
                             rgba(0, 0, 0, 0) 100%);
@@ -271,7 +274,7 @@ $team-size-phone: calc((335 / 402) * 100dvw);
                     display: block;
                 }
 
-                img {
+                img{
                     width: 80%;
                     aspect-ratio: 1;
                     object-fit: contain;

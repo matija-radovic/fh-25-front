@@ -12,19 +12,24 @@ import Hexagon from "../-shared/Hexagon/Hexagon";
 import Arrow from "../-shared/Arrow/Arrow";
 import useVisibility from "../../hooks/useVisibility";
 
+// TODO: async fetch images to prevent flash of invisible image
 
 interface OrgTeamProps {
     teams: OrganizationalTeam[]
 }
 
-const INTERVAL = 5000;
-
+const INTERVAL = 10000;
+const SIZES = `
+    (max-width: 768px) 33vw,
+    (min-width: 769px) and (max-width: 1024px) 40vw,
+    (min-width: 1025px) 45vw
+`
 const mqPhone = () => window.matchMedia("only screen and (max-width: 768px)").matches;
 
 const OrgTeam2: React.FC<OrgTeamProps> = ({ teams }) => {
     const wrapperRef = useRef<HTMLDivElement>(null); // Ref za observer
     const inView = useInView(wrapperRef); // Observer
-    const isVisible = useVisibility(); 
+    const isVisible = useVisibility();
     const [isHovered, setisHovered] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState<-1 | 1>(1);
@@ -49,11 +54,6 @@ const OrgTeam2: React.FC<OrgTeamProps> = ({ teams }) => {
     }, [])
 
     const navigate = (dir: -1 | 1) => {
-        console.log(
-            "currentIndex: " + currentIndex,
-            "direction: " + dir,
-            "newIndex: " + wrap(0, teams.length, currentIndex + dir)
-        )
         setCurrentIndex(prev => wrap(0, teams.length, prev + dir));
         setDirection(dir);
     };
@@ -80,7 +80,12 @@ const OrgTeam2: React.FC<OrgTeamProps> = ({ teams }) => {
                         <Card className="coord" key={currentIndex + 300} enterDirection={direction}>
                             <div className="left">
                                 <div className={`vertical-name${coordinator.firstName === "Anastasija" ? " small" : ""}`}>{coordinator.firstName}</div>
-                                {/*<img className="coord-image" src={coordinator.image} alt={coordinator.role} />*/}
+                                <picture className="coord-image">
+                                    {Object.entries(coordinator.image.sources).map(
+                                        ([format, images]) => <source srcSet={images} type={`image/${format}`} key={images} sizes={SIZES}/>
+                                    )}
+                                    <img src={coordinator.image.img.src} alt={coordinator.role} />
+                                </picture>
                                 <div className="name-box">
                                     <span>{coordinator.firstName}</span><br />
                                     <span>{coordinator.lastName}</span>
@@ -95,7 +100,12 @@ const OrgTeam2: React.FC<OrgTeamProps> = ({ teams }) => {
                     </AnimatePresence>
                     <AnimatePresence mode="wait" custom={direction} initial={false}>
                         <Card className="team" sensitivity={0.4} key={currentIndex + 200} enterDirection={direction}>
-                            {/*<img src={team.image} alt="team group photo" />*/}
+                            <picture>
+                                {Object.entries(team.image.sources).map(
+                                    ([format, images]) => <source srcSet={images} type={`image/${format}`} key={images} sizes={SIZES}/>
+                                )}
+                                <img src={team.image.img.src} alt="team group photo" />
+                            </picture>
                             <span>{team.name}</span>
                         </Card>
                     </AnimatePresence>

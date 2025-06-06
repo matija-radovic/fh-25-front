@@ -159,7 +159,7 @@ $border-radius: 10px;
             hsla(0, 0%, 0%, 0.25) 120%);
 
     background-blend-mode: screen, hue, hard-light;
-    background-size: var(--grain-size) 100%, 200% 700%, 300% 125%, 200% 100%; // TODO: fixate the size
+    background-size: var(--grain-size) 100%, 200% 700%, 300% 125%, 200% 100%;
     background-position: center, 0% var(--background-y), var(--background-x) var(--background-y), var(--background-x) var(--background-y);
 
     filter: brightness(.8) contrast(2.95) saturate(.65);

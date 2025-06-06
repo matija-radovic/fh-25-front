@@ -9,7 +9,6 @@ export { Section, Slider, TextBox, Arrow };
 
 import ExampleComponent from "./Example/Example";
 import LoadingPage from "./Loading/LoadingPage"
-import OrgTeam from "./OrgTeam/OrgTeam";
 import Footer from "./Footer/Footer";
-export { ExampleComponent, OrgTeam, LoadingPage, Footer };
+export { ExampleComponent, LoadingPage, Footer };
 
