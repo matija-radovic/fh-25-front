@@ -8,3 +8,8 @@ declare module '*.js' {
     var _: any;
     export default _;
 }*/
+
+declare module '*?orgteam' {
+    const _: import("vite-imagetools").Picture;
+    export default _;
+}
