@@ -1,256 +1,226 @@
-@use "../../utils/css/colors";
-@use "../../utils/css/mediaqueries";
+@use '../../utils/css/colors';
+@use '../../utils/css/mediaqueries';
+@use 'sass:math';
+@use 'sass:list';
 
-.pocetna-wrapper {
-  margin: 0;
-  width: 100%;
-  height: 115dvh; /* Koristi visinu ekrana, a ne '100dvh' */
-  background-color: colors.$svetlo-plava;
-  justify-content: center;
+$building-max-height: 870.4px;
+$building-min-height: 480.7px;
+
+@function strip-units($number) {
+  @return math.div($number, ($number * 0 + 1));
+}
+
+@function mapped($min-height, $max-height) {
+  $height-range: $max-height - $min-height;
+
+  @return clamp($min-height,
+    calc($min-height + ((clamp(402px, 100dvw, 1440px) - 402px) / (1440 - 402)) * strip-units($height-range)),
+    $max-height);
+}
+
+// max-height -> when 1440 max image height
+@mixin row ($min-h, $img-left-height, $img-right-height, $img-left-width, $img-right-width, $parallax-distance) {
+  @if $img-left-height ==0 or $img-right-height ==0 or $img-left-width ==0 or $img-right-width ==0 {
+    @error "Image width/height can't be 0";
+  }
+
+  $max-h: math.max($img-left-height, $img-right-height);
+  $max-w: math.max($img-left-width, $img-right-width);
+
+  //row settings
+  height: min(math.percentage(math.div(strip-units($max-h), strip-units($building-max-height))), mapped($min-h, $max-h));
+  width: auto;
+  aspect-ratio: list.slash(1440, strip-units($max-h));
+
+  //right image
+  img {
+    width: math.percentage(math.div(strip-units($img-right-width), 1440));
+    height: math.percentage(math.div($img-right-height, $max-h));
+    //transform: translateX(calc($parallax-distance * var(--v)));
+    transform: translateX(calc(min(50dvw, 100%) * $parallax-distance * var(--v)));
+
+  }
+
+  //left image
+  img:first-child {
+    width: math.percentage(math.div(strip-units($img-left-width), 1440));
+    height: math.percentage(math.div($img-left-height, $max-h));
+    //transform: translateX(calc(-1 * $parallax-distance * var(--v)));
+    transform: translateX(calc(-1 * min(50dvw, 100%) * $parallax-distance * var(--v)));
+  }
+}
+
+.home-section {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  overflow-x: hidden;
-}
-
-.prvi_red,
-.drugi_red,
-.treci_red {
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
   width: 100%;
-  height: 115%;
-  overflow-x: hidden;
-}
-
-.voda-slicica {
-  position: absolute;
-  width: 100%;
-  height: max-content;
-  top: 50px;
-  fill: #{colors.$svetlo-plava};
-  filter: drop-shadow(15px 15px rgb(0, 23, 12));
-  
-}
-.wave-path {
-  width: 100%;
-  position: absolute;
-  left: -5px;
-  top: 10px;
-  z-index: 4;
-}
-.wave-path path {
-  stroke: colors.$svetlo-plava;
-}
-.prvi_red {
-  z-index: 3;
-}
-.drugi_red {
-  z-index: 2;
-}
-.treci_red {
-  z-index: 1;
-}
-
-.prvi_red .slika1,
-.drugi_red .slika1,
-.treci_red .slika1 {
-  width: 47%; /* Postavljanje širine slika1 */
-}
-
-.prvi_red .slika2,
-.drugi_red .slika2,
-.treci_red .slika2 {
-  width: 50%; /* Postavljanje širine slika2 */
-}
-
-.countdown {
-  z-index: 10;
-  height: max-content;
-  width: 38rem;
-  margin: 1rem auto 0 auto;
-  text-align: center;
-  border-radius: 100px;
-  background: radial-gradient(
-    circle,
-    rgba(0, 36, 64, 0.57) 0%,
-    rgba(36, 189, 222, 0.57) 100%
-  );
-}
-.countdown {
-  background-color: colors.$tamno-plava;
-}
-
-.countdown h1 {
-  font-size: 5rem;
-  font-weight: 600;
-  -webkit-text-stroke: 0.5px colors.$svetlo-plava;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-}
-.slika1,
-.slika2 {
-  height: auto;
-  position: absolute;
-  transition: transform 0.3s ease-out;
-}
-
-.slika1 {
-  left: 0;
-}
-
-.slika2 {
-  right: 0;
-}
-.voda-wrapper{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  mask-image: linear-gradient(to top, transparent,black);
-}
-.voda {
-  position: absolute;
-  top: 114%;
-  bottom: 0;
-  z-index: 5;
   overflow: hidden;
-  display: flex;
+}
+
+.buildings {
+  position: relative;
   width: 100%;
-  height: 50%;
-  background-color: colors.$tamno-plava;
-  transition: transform 0.3s ease-out;
-}
-@media #{mediaqueries.$tablet} {
-  .wave-path {
-    top: 10px;
-    scale: 1.5;
-  }
-  .countdown {
-    width: 34rem;
-  }
-  .countdown h1 {
-    font-size: 4rem;
-  }
-  .prvi_red .slika1,
-  .drugi_red .slika1,
-  .treci_red .slika1 {
-    width: 75%;
-  }
-  .prvi_red .slika2,
-  .drugi_red .slika2,
-  .treci_red .slika2 {
-    width: 80%;
-  }
-  .voda-slicica {
-    top: 6rem;
-    scale: 1.5;
-  }
-  .slika1 {
-    transform: translateX(calc(-30vw));
+  height: min(90dvh, mapped($building-min-height, $building-max-height));
+  background-color: colors.$svetlo-plava;
+
+  @media only screen and (min-width: 1441px) {
+    mask-image: url("../../assets/pocetna/cloud-mask.svg"), linear-gradient(transparent 0 0);
+    mask-size: auto 100%, 100% 100%;
+    mask-position: center, center;
+    mask-repeat: no-repeat;
+    mask-composite: exclude;
   }
 
-  .slika2 {
-    transform: translateX(calc(30vw));
-  }
-  .prvi_red,
-  .drugi_red,
-  .treci_red {
-    height: 100%;
-  }
-  .voda {
-    top: 99%;
-  }
-}
+  .row {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 
-@media #{mediaqueries.$phone} {
-  .wave-path {
-    top: 15px;
-  }
-  
-  .voda-slicica {
-    top: 100px;
-  }
-  .countdown {
-    width: 32rem;
-  }
-  .countdown h1 {
-    font-size: 4rem;
-  }
-  .prvi_red .slika1,
-  .drugi_red .slika1,
-  .treci_red .slika1 {
-    width: 77%;
-  }
-  .prvi_red .slika2,
-  .drugi_red .slika2,
-  .treci_red .slika2 {
-    width: 82%;
-  }
-  .pocetna-wrapper {
-    height: 60dvh;
-  }
-  .prvi_red,
-  .drugi_red,
-  .treci_red {
-    height: 60%;
-  }
-  .voda {
-    top: 59%;
-  }
-  .slika1 {
-    transform: translateX(calc(-30vw));
-  }
+    display: flex;
+    align-items: flex-end;
 
-  .slika2 {
-    transform: translateX(calc(30vw));
+    img {
+      display: block;
+      object-fit: contain;
+      object-position: right bottom;
+      height: 100%;
+
+      &:first-child {
+        object-position: left bottom;
+      }
+    }
+
+    &.first {
+      @include row(182px, 376px, 381px, 709px, 731px, 0.5);
+    }
+
+    &.second {
+      @include row(282px, 592px, 575px, 720px, 720px, 0.75)
+    }
+
+    &.third {
+      @include row(319px, 670px, 636px, 720px, 720px, 0.9)
+    }
   }
 }
 
-@media (max-width: 500px) {
+.flag {
+  z-index: 4;
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(60dvw, min(calc(250px + (600 - 250) * (100dvw - 402px) / (1440 - 402)), 600px));
+  height: calc(0.45 * min(60dvw, min(calc(250px + (600 - 250) * (100dvw - 402px) / (1440 - 402)), 600px))); //?? izbrisati ili ne after fix
+  overflow: visible;
+
+  svg {
+    width: 100%;
+    height: auto;
+
+    path {
+      will-change: d;
+    }
+  }
+}
+
+.water-wrapper {
+  position: relative;
+  padding-top: clamp(20px, 5dvw, 40px);
+
+  width: mapped(700px, 1440px);
+  max-width: 1440px;
+
+  mask-image: radial-gradient(55% 110% at top center, black 60%, transparent 90%);
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .wave {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .water {
+    // fixes the flash of uncliped wave before useEffect runs
+    clip-path: polygon(0px 100%, 0% 8.60%, 2.5% 10.19%, 5% 11.72%, 7.5% 13.12%, 10% 14.34%, 12.5% 15.33%, 15% 16.06%, 17.5% 16.48%, 20% 16.60%, 22.5% 16.39%, 25% 15.87%, 27.5% 15.07%, 30% 14.00%, 32.5% 12.72%, 35% 11.28%, 37.5% 9.73%, 40% 8.13%, 42.5% 6.56%, 45% 5.06%, 47.5% 3.71%, 50% 2.55%, 52.5% 1.63%, 55% 0.99%, 57.5% 0.65%, 60% 0.63%, 62.5% 0.93%, 65% 1.53%, 67.5% 2.42%, 70% 3.55%, 72.5% 4.88%, 75% 6.36%, 77.5% 7.94%, 80% 9.53%, 82.5% 11.09%, 85% 12.55%, 87.5% 13.86%, 90% 14.95%, 92.5% 15.79%, 95% 16.34%, 97.5% 16.59%, 100% 16.51%, 100% 100%);
+    will-change: clip-path;
+  }
+
   .countdown {
-    width: 20rem;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
 
-  .wave-path {
-    top: 0px;
-    scale: 1.5;
-  }
-  .wave-path path {
-    stroke-width: 2px;
-  }
-  .voda-slicica {
-    top: 4rem;
-    scale: 1.5;
-  }
-  .countdown h1 {
-    font-size: 2.5rem;
-  }
-  .prvi_red .slika1,
-  .drugi_red .slika1,
-  .treci_red .slika1 {
-    width: 82%;
-  }
-  .prvi_red .slika2,
-  .drugi_red .slika2,
-  .treci_red .slika2 {
-    width: 85%;
-  }
+    background: radial-gradient(50% 250% at center,
+        rgba(#1d8eb1, .1) 0,
+        rgba(#1d8eb1, .2) 30%,
+        rgba(#1d8eb1, .45) 50%,
+        rgba(#1d8eb1, .9) 70%,
+        #1d8eb1 100%);
+    background-color: colors.$tamno-plava;
 
-  .slika1 {
-    transform: translateX(calc(-35vw));
-  }
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+      -1px -1px 0 colors.$svetlo-plava,
+      1px -1px 0 colors.$svetlo-plava,
+      -1px 1px 0 colors.$svetlo-plava,
+      1px 1px 0 colors.$svetlo-plava;
 
-  .slika2 {
-    transform: translateX(calc(35vw));
-  }
-  .pocetna-wrapper {
-    height: 58dvh;
-  }
-  .prvi_red,
-  .drugi_red,
-  .treci_red {
-    height: 58%;
-  }
-  .voda {
-    top: 57%;
+    min-width: mapped(330px, 700px);
+    aspect-ratio: 7 / 1;
+    border-radius: 200px;
+
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+
+    @media #{mediaqueries.$s-phone} {
+      left: 45%;
+      scale: 0.8;
+    }
+
+    .finished {
+      font-size: mapped(27px, 70px);
+      padding: 0 mapped(20px, 45px);
+    }
+
+    .timer {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -53%);
+
+      .digit-box {
+        display: block;
+        text-align: right;
+        min-width: mapped(32px, 66px);
+        max-width: mapped(32px, 66px);
+      }
+
+      .two-dots {
+        transform: translateY(-5%);
+        margin: 0 .5%;
+      }
+
+      * {
+        font-size: mapped(38px, 80px);
+        vertical-align: middle;
+      }
+    }
   }
 }

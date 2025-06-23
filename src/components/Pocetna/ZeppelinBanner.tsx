@@ -1,131 +1,86 @@
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import "./Zeppelin.scss";
 import Zeppelin from "../../assets/pocetna/zeppelin.svg";
 import { useInView } from "framer-motion";
 
+/**
+ * TO FIX:
+ * Hella optimize, paint lasts too long, layer slashing also.. maybe custom parses like 
+ * ZeppelinBanner2.tsx using warpjs or modify pathParser.ts to hold "type of point"
+ * data so it supports simultaneously "MoveTo" and "LineTo" path command
+ */
+
 const ZeppelinBanner = () => {
   const bannerRef = useRef<HTMLDivElement>(null);
   const zeppelinRef = useRef<HTMLImageElement>(null); // Ref za sliku
-  const [textPath, setTextPath] = useState("");
-  const [width, setWidth] = useState(500);
-  const isInView = useInView(bannerRef);
-  useEffect(() => {
-    const updateWidth = () => {
-      if (bannerRef.current) {
-        setWidth(bannerRef.current.offsetWidth);
-      }
-    };
+  const pathRef = useRef<SVGPathElement>(null);
+  const inView = useInView(bannerRef);
 
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
+  useLayoutEffect(() => {
+    if (!inView) return;
 
-  useEffect(() => {
-    const waveLength = width * 1.2;
-    const amplitude = 5;
-    const segments = 50;
+    const waveLength = 15;
+    const amplitude = 2;
+    const samples = 90;
     const speed = 0.035;
     let offset = 0;
-    let animationFrameId: number;
+    let af: number;
+    const halfHeight = 87;
 
-    const animate = () => {
+    const xaStep = 100 / samples;
+    const xpStep = xaStep * 6.8;
+    const phaseStep = 1 / waveLength;
+
+    const pathPoints = new Array<string>(samples + 1);
+    const topPoints = new Array<string>(samples + 1);
+    const bottomPoints = new Array<string>(samples + 1);
+
+    const deltaT = 1000 / 60;
+    let lastTime = 0;
+
+    const animate = (currentTime: number) => {
+      af = requestAnimationFrame(animate);
+      if (!pathRef.current || currentTime - lastTime < deltaT) return;
+      lastTime = currentTime;
+
+      for (let x = 0; x <= samples; x++) {
+        const yTop = Math.sin(x * phaseStep + offset) * amplitude;
+
+        const xa = x * xaStep;
+        const xp = x * xpStep;
+        pathPoints[x] = `${xp} ${2 * yTop + halfHeight + amplitude} `
+        topPoints[x] = `${xa}% ${yTop + amplitude}%`;
+        bottomPoints[x] = `${xa}% ${100 + yTop - 2 * amplitude}%`;
+      }
+
+      // setters
+      if (pathRef.current) pathRef.current.setAttribute('d', `M ${pathPoints.join("")}`);
+      if (zeppelinRef.current) zeppelinRef.current.style.translate = `0 ${-50 + 4 * Math.sin(offset) * amplitude}%`
+      if (bannerRef.current) bannerRef.current.style.clipPath =
+        `polygon(0 0, ${topPoints.join(", ")}, 100% 100%, ${bottomPoints.reverse().join(", ")}, 0 100%)`;
+
       offset += speed;
-
-      const generateSinPath = () => {
-        let d = `M 0 50`;
-        for (let i = 0; i <= segments; i++) {
-          const x = (i / segments) * width;
-          const y =
-            50 + Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
-          d += ` L ${x} ${y} `;
-        }
-        return d;
-      };
-
-      setTextPath(generateSinPath());
-
-      const topPoints = [];
-      const bottomPoints = [];
-
-      let firstY = 50; // Y koordinata levog početka sinusoide
-
-      for (let x = 0; x <= width; x += 10) {
-        const yTop =
-          Math.sin((x / waveLength) * 2 * Math.PI + offset) * amplitude;
-        if (x === 0) firstY = yTop + amplitude; // Čuvamo početni Y za Zeppelin
-
-        topPoints.push(`${x}px ${yTop + amplitude}px`);
-
-        const yBottom =
-          Math.sin((x / waveLength) * 2 * Math.PI + offset + Math.PI) *
-          amplitude;
-        bottomPoints.push(
-          `${x}px calc(100% - ${Math.abs(yBottom + amplitude)}px)`
-        );
-      }
-
-      if (bannerRef.current) {
-        bannerRef.current.style.clipPath = `polygon(0 0, ${topPoints.join(
-          ", "
-        )}, 100% calc(100%), ${bottomPoints
-          .reverse()
-          .join(", ")}, 0 calc(100%))`;
-      }
-
-      if (zeppelinRef.current) {
-        zeppelinRef.current.style.transform = `translateY(${firstY}px)`; // Zeppelin gore-dole
-      }
-
-      if (isInView) {
-        animationFrameId = requestAnimationFrame(animate);
-      }
     };
 
-    if (isInView) {
-      animationFrameId = requestAnimationFrame(animate);
-    }
+    af = requestAnimationFrame(animate);
 
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [width, isInView]);
+    return () => cancelAnimationFrame(af);
+  }, [inView]);
 
   return (
-    <div className="banner">
-      <img
-        ref={zeppelinRef}
-        src={Zeppelin}
-        alt="zeppelin"
-        className="zeppelin"
-      />
-      <div className="banner-text" ref={bannerRef}>
-        <svg
-          className="wave"
-          viewBox={`0 0 ${width} 140`}
-          xmlns="http://www.w3.org/2000/svg"
-          style={{
-            position: "absolute",
-            top: "57%",
-            left: 0,
-            transform: "translateY(-43%)",
-            zIndex: 2,
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <path id="textPath" d={textPath} fill="transparent" />
-          <text className="orbitron" fontWeight="bold" textAnchor="left">
-            <textPath href="#textPath" startOffset="5%" textAnchor="left">
+    <div className="banner" >
+      <img ref={zeppelinRef} src={Zeppelin} alt="zeppelin" className="zeppelin" />
+      <div ref={bannerRef} className="banner-flag">
+        <svg className="wave" viewBox="0 0 680 132">
+          <path ref={pathRef} id="textPath" d="M 0 87L680 87" fill="transparent" />
+          <text className="orbitron">
+            <textPath href="#textPath" textAnchor="left" startOffset="3%">
               <tspan className="banner-year">2025</tspan>
-              <tspan
-                className="banner-moto montserrat"
-                dy="1em"
-                x="0"
-                fontSize="18"
-              >
+              <tspan className="banner-moto montserrat" dy="1em" x="0">
                 &lt;Use your code to change the road&gt;
               </tspan>
             </textPath>
-            <textPath href="#textPath" startOffset="56%" textAnchor="left">
+            <textPath href="#textPath" startOffset="58.5%" textAnchor="left">
               <tspan className="banner-side-text" x="0" dy="-1em">
                 FON
               </tspan>

@@ -10,5 +10,5 @@ export { Section, Slider, TextBox, Arrow };
 import ExampleComponent from "./Example/Example";
 import LoadingPage from "./Loading/LoadingPage"
 import Footer from "./Footer/Footer";
-export { ExampleComponent, LoadingPage, Footer };
-
+import Pocetna from "./Pocetna/Pocetna";
+export { ExampleComponent, LoadingPage, Footer, Pocetna };

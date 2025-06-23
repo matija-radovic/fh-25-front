@@ -8,7 +8,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      <Pocetna />
+      <Pocetna/>
     </>
   )
 }
