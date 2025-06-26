@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Agenda.scss";
-import { Section } from "../"
+import { Arrow, Section } from "../"
 import { motion } from "motion/react";
 import { useInView } from "motion/react"
 
@@ -18,15 +18,28 @@ const triangleVariants = {
     visible: { opacity: 1, transition: { duration: 0.5 }, scale: 1 },
 };
 
+const mqPhone = () => window.matchMedia("only screen and (max-width: 768px)").matches;
 const Agenda = () => {
+    const [mqMatches, setMqMatches] = useState(mqPhone);
     const svgRef = useRef<SVGSVGElement | null>(null);
     const isInView = useInView(svgRef, {
         amount: 0.5,
         once: true
     });
 
+    useEffect(() => {
+        const handleResize = () => setMqMatches(mqPhone());
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     return (
         <Section heading="AGENDA" className="agenda-section">
+            {mqMatches ? null :
+                <>
+                    <Arrow className="half-offset" flippedY />
+                    <Arrow className="half-offset" flippedX flippedY />
+                </>
+            }
             <div className="agenda-container orbitron">
                 <div className="agenda-left">
                     <p className="agenda-events">Otvaranje prijava <br /> 28.02.2025.</p>

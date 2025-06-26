@@ -2,11 +2,15 @@
 @use '../../utils/css/mediaqueries';
 
 .agenda-section {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 102px;
 
+    .big-arrow {
+        top: 98%;
+    }
 
     .agenda-container {
         display: grid;
