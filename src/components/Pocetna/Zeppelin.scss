@@ -1,0 +1,60 @@
+@use "../../utils/css/colors";
+@use "../../utils/css/mediaqueries";
+
+.banner {
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  .banner-flag {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: colors.$tamno-plava;
+  }
+
+  svg {
+    position: absolute;
+    top: 50%; // padding 1%
+    left: 50%; // padding 1%
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+    overflow: visible;
+
+    .orbitron {
+      font-weight: bold;
+    }
+  }
+
+  .zeppelin {
+    position: absolute;
+    width: auto;
+    height: 25%;
+    right: 99%; // inset
+    //translate: 0 -50%
+  }
+}
+
+.banner-year {
+  fill: colors.$svetlo-plava;
+  font-size: calc(110px - 0.001 * min(60dvw, min(calc(250px + (600 - 250) * (100dvw - 402px) / (1440 - 402)), 600px)));
+}
+
+.banner-side-text {
+  font-size: calc(45px - 0.001 * min(60dvw, min(calc(250px + (600 - 250) * (100dvw - 402px) / (1440 - 402)), 600px)));
+  fill: colors.$bela;
+}
+
+.banner-moto {
+  display: block;
+  font-size: calc(37px - 0.001 * min(60dvw, min(calc(250px + (600 - 250) * (100dvw - 402px) / (1440 - 402)), 600px)));
+  width: 100%;
+  font-weight: 100;
+  fill: colors.$bela;
+}
+
+textPath {
+  width: 100%;
+}

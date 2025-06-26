@@ -1,0 +1,65 @@
+@use '../../../utils/css/colors';
+@use '../../../utils/css/mediaqueries';
+@use 'sass:math';
+
+.hexagon {
+    stroke: colors.$svetlo-plava;
+    position: absolute;
+    height: auto;
+    animation: spin linear infinite;
+
+    &.small {
+        width: clamp(50px, math.div(150, 1440) * 100dvw, 150px);
+    }
+
+    &.medium {
+        width: clamp(90px, math.div(260, 1440) * 100dvw, 260px);
+    }
+
+    &.large {
+        width: clamp(125px, math.div(380, 1440) * 100dvw, 380px);
+    }
+
+    &.bottom-left {
+        translate: -75% -12.5%;
+        top: 87.5%;
+        left: 25%;
+    }
+
+    &.bottom-right {
+        translate: 75% -12.5%;
+        top: 87.5%;
+        right: 25%;
+    }
+
+    &.top-left {
+        translate: -75% -87.5%;
+        top: 12.5%;
+        left: 25%;
+    }
+
+    &.top-right {
+        translate: 75% -87.5%;
+        top: 12.5%;
+        right: 25%;
+    }
+}
+
+.hexagon-group {
+    position: relative;
+
+    svg.hexagon:first-child {
+        display: block; //fix line-height
+        position: static;
+    }
+}
+
+@keyframes spin {
+    from {
+        rotate: 0deg;
+    }
+
+    to {
+        rotate: 360deg;
+    }
+}
