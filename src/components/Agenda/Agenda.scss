@@ -54,17 +54,14 @@
 
         }
 
-
         .agenda-events {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            //position: absolute;
-            font-family: 'Orbitron';
 
             @media #{mediaqueries.$sm-phone} {
-                font-size: 0.7rem;
+                font-size: 0.9rem;
             }
 
         }

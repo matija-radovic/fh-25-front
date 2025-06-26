@@ -4,7 +4,6 @@ import { Section } from "../"
 import { motion } from "motion/react";
 import { useInView } from "motion/react"
 
-
 const SVGContainerVariants = {
     visible: {
         transition: {
@@ -19,26 +18,16 @@ const triangleVariants = {
     visible: { opacity: 1, transition: { duration: 0.5 }, scale: 1 },
 };
 
-
-
 const Agenda = () => {
-
     const svgRef = useRef<SVGSVGElement | null>(null);
     const isInView = useInView(svgRef, {
         amount: 0.5,
         once: true
     });
 
-    /* useEffect(() => {
-         console.log(isInView);
-     }, [isInView])*/
-
-
-
     return (
         <Section heading="AGENDA" className="agenda-section">
-            <div className="agenda-container">
-
+            <div className="agenda-container orbitron">
                 <div className="agenda-left">
                     <p className="agenda-events">Otvaranje prijava <br /> 28.02.2025.</p>
                     <p className="agenda-events">Moodle test <br /> 17.03.2025.</p>
@@ -47,15 +36,14 @@ const Agenda = () => {
                 <motion.svg
                     ref={svgRef}
                     xmlns="http://www.w3.org/2000/svg"
-                    width={411}
-                    height={681}
+                    width="411"
+                    height="681"
                     fill="none"
                     viewBox="0 0 411 681"
                     variants={SVGContainerVariants}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
                 >
-
                     <g id="Kvadrati">
                         <g fill="#F3F2FF">
                             <path d="M409.762 384.5 358.668 355l-51.095 29.5v59l51.094 29.5.001-.001 51.094-29.499v-59Z" />
@@ -127,16 +115,13 @@ const Agenda = () => {
                         <motion.path variants={triangleVariants} d="m103.191 89.5 51.095 29.5-51.095 29.5v-59Z" />
                         <motion.path variants={triangleVariants} d="M103.191 89.5v59L52.095 119l51.096-29.5Z" />
                     </g>
-
                     <path
                         stroke="#24BDDE"
                         strokeLinejoin="bevel"
                         strokeWidth="1.53"
                         d="M409.764 561.5 1 325.5l408.764-236L256.477 1m153.287 560.5-204.382 118m204.382-118-.001-531M1 561.5l408.764-236L1 89.5 154.286 1M1 561.5l204.382 118M1 561.5v-531m204.382 649v-649M256.477 1v649L1 502.5l408.764-236L1 30.5M256.477 1 1 148.5l408.764 236L52.095 591V1m255.478 29.5v590L1 443.5l408.763-236L52.095 1m306.573 0v590L1 384.5l408.763-236L154.286 1m204.382 0L1 207.5l408.764 236-306.573 177v-590M358.668 1l51.095 29.5M154.286 1v649l255.478-147.5L1 266.5l408.763-236M52.095 1 1 30.5"
                     />
-
                 </motion.svg>
-
                 <div className="agenda-right">
                     <p className="agenda-events">Zatvaranje prijava <br /> 13.03.2025.</p>
                     <p className="agenda-events">Tehnički intervju <br /> 21.03.2025.</p>
@@ -147,26 +132,3 @@ const Agenda = () => {
 };
 
 export default Agenda;
-
-/** 
- <g id="Okvir">
-<path d="M307.574 561.497L256.479 531.997L307.574 502.497L307.574 561.497Z" />
-<path d="M256.479 531.997L256.479 590.997L307.574 561.497L256.479 531.997Z" />
-<path d="M307.574 620.497L256.479 590.997L307.574 561.497L307.574 620.497Z" />
-<path d="M256.479 650L256.479 591L307.574 620.5L256.479 650Z" />
-<path d="M256.478 591L205.383 620.5L256.478 650L256.478 591Z" />
-<path d="M256.478 650L205.383 679.5L205.383 620.5L256.478 650Z" />
-<path d="M154.287 650L205.383 679.5L205.383 620.5L154.287 650Z" />
-<path d="M154.287 591L205.383 620.5L154.287 650L154.287 591Z" />
-<path d="M154.287 650L154.287 591L103.191 620.5L154.287 650Z" />
-<path d="M103.19 620.497L154.285 590.997L103.191 561.497L103.19 620.497Z" />
-<path d="M154.285 531.997L154.285 590.997L103.19 561.497L154.285 531.997Z" />
-<path d="M103.19 561.497L154.285 531.997L103.191 502.497L103.19 561.497Z" />
-<path d="M154.287 473L154.287 532L103.191 502.5L154.287 473Z" />
-<path d="M154.287 532L205.383 502.5L154.287 473L154.287 532Z" />
-<path d="M154.287 473L205.383 443.5L205.383 502.5L154.287 473Z" />
-<path d="M256.478 473L205.383 443.5L205.383 502.5L256.478 473Z" />
-<path d="M256.478 532L205.383 502.5L256.478 473L256.478 532Z" />
-<path d="M256.479 473L256.479 532L307.574 502.5L256.479 473Z" />
-</g>
-*/
