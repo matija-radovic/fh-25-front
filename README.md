@@ -2,7 +2,7 @@
 
 ## Link dizajna i sajta
 
-• [link](https://www.figma.com/design/04t0PjaRAH6blLcFC0FnyQ/ФОН-Хакатон-2024.?node-id=0-1&p=f&t=dkQHHYrSItKvXoFE-0) do figme
+• [link](https://www.figma.com/design/Oo6Wc3wnnCZ4T6NJ7kGAQq/FON-HAKATON-2025?node-id=0-1&t=VBwUWzA67E3dRG33-1) do figme
 
 • [link](https://youtu.be/xvFZjo5PgG0) do glavnog sajta (vercel master)
 

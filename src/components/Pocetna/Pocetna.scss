@@ -1,0 +1,226 @@
+@use '../../utils/css/colors';
+@use '../../utils/css/mediaqueries';
+@use 'sass:math';
+@use 'sass:list';
+
+$building-max-height: 870.4px;
+$building-min-height: 480.7px;
+
+@function strip-units($number) {
+  @return math.div($number, ($number * 0 + 1));
+}
+
+@function mapped($min-height, $max-height) {
+  $height-range: $max-height - $min-height;
+
+  @return clamp($min-height,
+    calc($min-height + ((clamp(402px, 100dvw, 1440px) - 402px) / (1440 - 402)) * strip-units($height-range)),
+    $max-height);
+}
+
+// max-height -> when 1440 max image height
+@mixin row ($min-h, $img-left-height, $img-right-height, $img-left-width, $img-right-width, $parallax-distance) {
+  @if $img-left-height ==0 or $img-right-height ==0 or $img-left-width ==0 or $img-right-width ==0 {
+    @error "Image width/height can't be 0";
+  }
+
+  $max-h: math.max($img-left-height, $img-right-height);
+  $max-w: math.max($img-left-width, $img-right-width);
+
+  //row settings
+  height: min(math.percentage(math.div(strip-units($max-h), strip-units($building-max-height))), mapped($min-h, $max-h));
+  width: auto;
+  aspect-ratio: list.slash(1440, strip-units($max-h));
+
+  //right image
+  img {
+    width: math.percentage(math.div(strip-units($img-right-width), 1440));
+    height: math.percentage(math.div($img-right-height, $max-h));
+    //transform: translateX(calc($parallax-distance * var(--v)));
+    transform: translateX(calc(min(50dvw, 100%) * $parallax-distance * var(--v)));
+
+  }
+
+  //left image
+  img:first-child {
+    width: math.percentage(math.div(strip-units($img-left-width), 1440));
+    height: math.percentage(math.div($img-left-height, $max-h));
+    //transform: translateX(calc(-1 * $parallax-distance * var(--v)));
+    transform: translateX(calc(-1 * min(50dvw, 100%) * $parallax-distance * var(--v)));
+  }
+}
+
+.home-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.buildings {
+  position: relative;
+  width: 100%;
+  height: min(90dvh, mapped($building-min-height, $building-max-height));
+  background-color: colors.$svetlo-plava;
+
+  @media only screen and (min-width: 1441px) {
+    mask-image: url("../../assets/pocetna/cloud-mask.svg"), linear-gradient(transparent 0 0);
+    mask-size: auto 100%, 100% 100%;
+    mask-position: center, center;
+    mask-repeat: no-repeat;
+    mask-composite: exclude;
+  }
+
+  .row {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: flex-end;
+
+    img {
+      display: block;
+      object-fit: contain;
+      object-position: right bottom;
+      height: 100%;
+
+      &:first-child {
+        object-position: left bottom;
+      }
+    }
+
+    &.first {
+      @include row(182px, 376px, 381px, 709px, 731px, 0.5);
+    }
+
+    &.second {
+      @include row(282px, 592px, 575px, 720px, 720px, 0.75)
+    }
+
+    &.third {
+      @include row(319px, 670px, 636px, 720px, 720px, 0.9)
+    }
+  }
+}
+
+.flag {
+  z-index: 4;
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(60dvw, min(calc(250px + (600 - 250) * (100dvw - 402px) / (1440 - 402)), 600px));
+  height: calc(0.45 * min(60dvw, min(calc(250px + (600 - 250) * (100dvw - 402px) / (1440 - 402)), 600px))); //?? izbrisati ili ne after fix
+  overflow: visible;
+
+  svg {
+    width: 100%;
+    height: auto;
+
+    path {
+      will-change: d;
+    }
+  }
+}
+
+.water-wrapper {
+  position: relative;
+  padding-top: clamp(20px, 5dvw, 40px);
+
+  width: mapped(700px, 1440px);
+  max-width: 1440px;
+
+  mask-image: radial-gradient(55% 110% at top center, black 60%, transparent 90%);
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .wave {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .water {
+    // fixes the flash of uncliped wave before useEffect runs
+    clip-path: polygon(0px 100%, 0% 8.60%, 2.5% 10.19%, 5% 11.72%, 7.5% 13.12%, 10% 14.34%, 12.5% 15.33%, 15% 16.06%, 17.5% 16.48%, 20% 16.60%, 22.5% 16.39%, 25% 15.87%, 27.5% 15.07%, 30% 14.00%, 32.5% 12.72%, 35% 11.28%, 37.5% 9.73%, 40% 8.13%, 42.5% 6.56%, 45% 5.06%, 47.5% 3.71%, 50% 2.55%, 52.5% 1.63%, 55% 0.99%, 57.5% 0.65%, 60% 0.63%, 62.5% 0.93%, 65% 1.53%, 67.5% 2.42%, 70% 3.55%, 72.5% 4.88%, 75% 6.36%, 77.5% 7.94%, 80% 9.53%, 82.5% 11.09%, 85% 12.55%, 87.5% 13.86%, 90% 14.95%, 92.5% 15.79%, 95% 16.34%, 97.5% 16.59%, 100% 16.51%, 100% 100%);
+    will-change: clip-path;
+  }
+
+  .countdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+
+    background: radial-gradient(50% 250% at center,
+        rgba(#1d8eb1, .1) 0,
+        rgba(#1d8eb1, .2) 30%,
+        rgba(#1d8eb1, .45) 50%,
+        rgba(#1d8eb1, .9) 70%,
+        #1d8eb1 100%);
+    background-color: colors.$tamno-plava;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+      -1px -1px 0 colors.$svetlo-plava,
+      1px -1px 0 colors.$svetlo-plava,
+      -1px 1px 0 colors.$svetlo-plava,
+      1px 1px 0 colors.$svetlo-plava;
+
+    min-width: mapped(330px, 700px);
+    aspect-ratio: 7 / 1;
+    border-radius: 200px;
+
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+
+    @media #{mediaqueries.$s-phone} {
+      left: 45%;
+      scale: 0.8;
+    }
+
+    .finished {
+      font-size: mapped(27px, 70px);
+      padding: 0 mapped(20px, 45px);
+    }
+
+    .timer {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -53%);
+
+      .digit-box {
+        display: block;
+        text-align: right;
+        min-width: mapped(32px, 66px);
+        max-width: mapped(32px, 66px);
+      }
+
+      .two-dots {
+        transform: translateY(-5%);
+        margin: 0 .5%;
+      }
+
+      * {
+        font-size: mapped(38px, 80px);
+        vertical-align: middle;
+      }
+    }
+  }
+}
