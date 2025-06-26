@@ -37,13 +37,7 @@ const Faq = () => {
         ? containerRect.width / 2
         : containerRect.width / 2;
 
-      // fix second "V"
-      const path = `
-                M ${startX} ${startY} 
-                V ${startY + gap} 
-                H ${midX}
-                V ${endY}
-                `;
+      const path = `M${startX} ${startY}V${startY + gap}H${midX}V${endY}`;
 
       setSvgPath(path);
 
@@ -95,21 +89,8 @@ const Faq = () => {
           </div>
         ))}
         <div className="faq-answers" ref={answerRef}>
-          <svg
-            className="answer-circle"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <circle
-              cx="10"
-              cy="10"
-              r="8.5"
-              stroke="#F3F2FF"
-              strokeWidth="3"
-              fill="none"
-            />
+          <svg className="answer-circle" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8.5" stroke="#F3F2FF" strokeWidth="3" fill="none" />
           </svg>
           <h3 className="montserrat">{faq[selectedQuestionIndex].question}</h3>
           <hr />
