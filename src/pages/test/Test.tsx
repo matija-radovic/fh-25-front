@@ -1,4 +1,4 @@
-import { Pocetna } from '../../components'
+import Faq from '../../components/Faq/Faq'
 import './Test.scss'
 
 /**
@@ -8,7 +8,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      <Pocetna/>
+      <Faq/>
     </>
   )
 }

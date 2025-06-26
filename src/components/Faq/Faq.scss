@@ -4,11 +4,23 @@
 
 $phone-gap: 40px;
 
+.faq {
+  position: relative;
+
+  .big-arrow {
+    top: 90%;
+
+    @media #{mediaqueries.$tablet} {
+      top: 97.5%;
+    }
+  }
+}
+
 .faq-container {
   position: relative;
   display: grid;
 
-  margin: 4rem 4rem;
+  margin: 4rem;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 3rem;
@@ -78,7 +90,7 @@ $phone-gap: 40px;
   font-size: .9rem;
   padding: 0 1.2rem;
   border-radius: 8px;
-  background-color: rgba(217, 217, 217, 0.5);
+  background-color: rgba(colors.$bela, 0.4);
   transition: background-color 0.3s ease;
 
   @media #{mediaqueries.$phone} {
@@ -87,7 +99,7 @@ $phone-gap: 40px;
   }
 
   &:hover {
-    background-color: rgba(217, 217, 217, 0.396);
+    background-color: rgba(colors.$bela, 0.33);
   }
 
   img {
@@ -134,6 +146,7 @@ $phone-gap: 40px;
   background: linear-gradient(0deg,
       rgba(0, 95, 116, 0.7),
       rgba(36, 189, 222, 0.7));
+  background-color: colors.$tamno-plava;
 
   @media #{mediaqueries.$xs-desktop} {
     margin-top: 1rem;

@@ -3,6 +3,7 @@ import "./Faq.scss";
 import Section from "../-shared/Section/Section";
 import { FaqItem, faq } from "../../utils/constants/faq/questions";
 import qmark from "../../assets/faq/questionmark.svg"
+import { Arrow } from "../";
 
 const Faq = () => {
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<number>(0);
@@ -67,7 +68,9 @@ const Faq = () => {
   };
 
   return (
-    <Section heading="ČESTO POSTAVLJENA PITANJA">
+    <Section heading="ČESTO POSTAVLJENA PITANJA" className="faq">
+      <Arrow className="half-offset" flippedY />
+      <Arrow className="half-offset" flippedY flippedX />
       <div className="faq-container" ref={containerRef}>
         {/* SVG linija */}
         <svg className="faq-line-svg" ref={svgRef}>
