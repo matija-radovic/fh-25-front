@@ -1,12 +1,31 @@
 @use "../../utils/css/colors";
 @use "../../utils/css/mediaqueries";
+@use "sass:math";
+
+$phone-gap: 40px;
 
 .faq-container {
-  display: grid;
-  margin: 6rem 4rem;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
   position: relative;
+  display: grid;
+
+  margin: 4rem 4rem;
+  grid-template-columns: repeat(4, 1fr);
+  //grid-template-rows: repeat(2, auto);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3rem;
+  align-items: stretch;
+
+  @media #{mediaqueries.$xs-desktop} {
+    grid-template-columns: repeat(2, 1fr);
+    //grid-template-rows: repeat(4, auto);
+    grid-template-rows: repeat(4, 1fr);
+    gap: $phone-gap;
+    margin: 2rem 5rem;
+  }
+
+  @media #{mediaqueries.$phone} {
+    margin: 2rem 0;
+  }
 }
 
 .faq-line-svg {
@@ -27,80 +46,124 @@
   }
 }
 
-.left-column,
-.right-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem 1.5rem;
-}
-
 .faq-circle,
 .answer-circle {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+
+  @media #{mediaqueries.$phone} {
+    width: 15px;
+    height: 15px;
+  }
 }
 
 .faq-circle {
-  bottom: -10px;
+  bottom: 0;
+  transform: translate(-50%, 50%);
 }
 
 .answer-circle {
-  top: -10px;
+  top: 0;
+  transform: translate(-50%, -50%);
 }
 
 .faq-item {
-    cursor: pointer;
-    position: relative;
-    text-align: center;
-    &:hover {
-        background-color: rgba(217, 217, 217, 0.396);
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  min-height: 80px;
+
+  gap: 1rem;
+  font-size: .9rem;
+  padding: 0 1.2rem;
+  border-radius: 8px;
+  background-color: rgba(217, 217, 217, 0.5);
+  transition: background-color 0.3s ease;
+
+  @media #{mediaqueries.$phone} {
+    padding: 0 0.6rem;
+    gap: 0.6rem;
+  }
+
+  &:hover {
+    background-color: rgba(217, 217, 217, 0.396);
+  }
+
+  img {
+    display: block;
+    max-height: 70px;
+    height: 100%;
+    padding: .5rem 0;
+
+    object-fit: contain;
+    font-weight: 700;
+
+    @media only screen and (max-width: 400px) {
+      position: absolute;
+      opacity: 0.2;
+      width: 100%;
+      margin: 0;
+      left: 50%;
+      transform: translateX(-50%);
     }
-    display: flex;
-    align-items: center;
-    gap: 0 16px;
+  }
+
+  p {
     width: 100%;
-    font-size: 16px;
-    padding: 0 1.2rem;
-    border-radius: 8px;
-    background-color: rgba(217, 217, 217, 0.5);
-    transition: background-color 0.3s ease;
+    padding: .5rem 0;
+    white-space: wrap;
+    text-align: center;
+
+    @media only screen and (max-width: 400px) {
+      font-size: 0.9rem;
+    }
+  }
 }
 
-.question-mark {
-  font-size: 96px;
-  font-weight: 700;
-}
 
 .faq-answers {
   position: relative;
   border-radius: 34px;
-  margin: 5rem auto 0 auto;
-  grid-column: 1 / 3;
-  width: 36rem;
-  padding: 1rem 0.5rem;
-  background: linear-gradient(
-    0deg,
-    rgba(0, 95, 116, 0.7),
-    rgba(36, 189, 222, 0.7)
-  );
-}
+  margin: 3rem auto 0 auto;
+  justify-self: stretch;
+  grid-column: 1 / -1;
+  max-width: min(33rem, calc(100% - 3rem));
+  height: 250px;
+  padding: 0 0.5rem;
+  background: linear-gradient(0deg,
+      rgba(0, 95, 116, 0.7),
+      rgba(36, 189, 222, 0.7));
 
-.faq-answers hr {
-  border: 2px solid #fff;
-}
+  @media #{mediaqueries.$xs-desktop} {
+    margin-top: 1rem;
+  }
 
-.faq-answers h1 {
-  font-size: 24px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 1rem;
-}
+  @media #{mediaqueries.$phone} {
+    margin-top: 0;
+  }
 
-.faq-answers p {
-  font-size: 24px;
-  text-align: center;
-  height: 200px;
-  width: 100%;
-  margin-top: 1rem;
+  @media #{mediaqueries.$phone} {
+    height: 220px;
+  }
+
+  hr {
+    border: 2px solid #fff;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    margin: .8rem .2rem;
+  }
+
+  p {
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+    padding: .8rem .2rem;
+  }
 }
