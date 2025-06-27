@@ -29,6 +29,7 @@
     "./src/**/*",
     "src/**/*",
     "src/**/*.jsx",
-    "src/**/*.tsx"
-, "src/components/-layout"  ]
+    "src/**/*.tsx",
+    "src/components/-layout",
+  ]
 }

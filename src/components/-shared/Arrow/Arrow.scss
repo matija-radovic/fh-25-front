@@ -1,0 +1,85 @@
+@use "sass:math";
+@use "sass:list";
+
+$view-box-width: 597;
+$view-box-height: 330;
+$minimum-width: 200;
+$end-offset: 188;
+$tip-offset: 308;
+$relative-size: math.div($view-box-width, 1440);
+
+// 185px -- degrade offset
+$my-offsets: (
+    "begin": 185,
+    "half": 308,
+    "no": 0,
+    "quarter": 248,
+);
+
+@function get-offset($s) {
+    $i: math.div($s, $view-box-width) * (-1);
+    @return calc($i * clamp(#{$minimum-width}px, 100dvw * $relative-size, #{$view-box-width}px));
+}
+
+@mixin generate-offset-classes($offsets) {
+    @each $name, $value in $offsets {
+        &.#{$name}-offset {
+            left: get-offset($value);
+
+            &.flipped-x {
+                left: unset;
+                right: get-offset($value);
+            }
+        }
+    }
+}
+
+.big-arrow {
+    position: absolute;
+    display: block;
+
+    width: clamp(#{$minimum-width}px, 100dvw * $relative-size, #{$view-box-width}px);
+    height: auto;
+    aspect-ratio: list.slash($view-box-width, $view-box-height);
+
+    @include generate-offset-classes($my-offsets);
+
+    &.top {
+        top: 0;
+    }
+
+    &.bottom {
+        bottom: 0;
+    }
+
+    &.r {
+        left: unset;
+        right: 0;
+    }
+
+    &.flipped-x {
+        transform: scaleX(-1);
+    }
+
+    &.flipped-y {
+        transform: scaleY(-1);
+    }
+
+    &.flipped-y.flipped-x {
+        transform: scaleY(-1) scaleX(-1);
+    }
+
+    path {
+        transition: fill .4s linear;
+        fill: transparent;
+        will-change: fill;
+
+        &.active {
+            fill: var(--fill-color);
+        }
+    }
+}
+
+body {
+    overflow-x: hidden;
+}

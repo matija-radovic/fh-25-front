@@ -1,9 +1,14 @@
 import Layout from "./-layout/Layout";
-export { Layout }
+export { Layout };
 
 import Section from "./-shared/Section/Section";
 import TextBox from "./-shared/TextBox/TextBox";
-export { Section, TextBox }
+import Slider from "./-shared/Slider/Slider";
+import Arrow from "./-shared/Arrow/Arrow";
+export { Section, Slider, TextBox, Arrow };
 
 import ExampleComponent from "./Example/Example";
-export { ExampleComponent }
+import LoadingPage from "./Loading/LoadingPage"
+import Footer from "./Footer/Footer";
+import Pocetna from "./Pocetna/Pocetna";
+export { ExampleComponent, LoadingPage, Footer, Pocetna };
