@@ -1,23 +1,55 @@
 @use '../../utils/css/colors';
 @use '../../utils/css/mediaqueries';
+@use 'sass:math';
 
 
 .signup-section {
   display: flex;
   justify-content: center;
+  position: relative;
 
+  .hexagon-group {
+    position: absolute;
 
-  /*.text-box {
-    background: rgba(243, 242, 255, 0.5);
-    padding: 20px;
-    border-radius: 34px;
-    max-width: 633px;
-    min-height: 230px;
-    color: #FFFFFF;
-    font-family: "Arial", sans-serif;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    margin-bottom: 42px;
-  }*/
+    &.one {
+      bottom: 82%;
+      left: -2%;
+
+      @media #{mediaqueries.$except-phone} {
+        top: 1%;
+        right: 80%;
+        bottom: unset;
+        left: unset;
+
+        .medium {
+          width: clamp(125px, math.div(380, 1440) * 100dvw, 380px);
+        }
+
+        .small {
+          display: none;
+        }
+      }
+
+    }
+
+    &.two {
+      top: 82%;
+      right: -2%;
+
+      @media #{mediaqueries.$except-phone} {
+        bottom: 30%;
+        left: 90%;
+        top: unset;
+        right: unset;
+
+        .small {
+          translate: 75% -12.5%;
+          top: 87.5%;
+          right: 25%;
+        }
+      }
+    }
+  }
 
   .signup-text-box {
     position: relative;
@@ -26,14 +58,14 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
+    backdrop-filter: blur(1.5px); // todo: maybe change for all textboxes??
 
     @media #{mediaqueries.$except-phone} {
-      margin-bottom: 100px; //TODO
-
+      margin-bottom: 100px;
     }
 
-    p {
-      z-index: 99; //TODO
+    & > :not(.hexagon-group) {
+      z-index: 1;
     }
   }
 
@@ -44,7 +76,6 @@
     left: 50%;
     bottom: -40px;
     background-color: colors.$bela;
-    //padding: 10px 24px;
     padding: 5px 12px;
     color: colors.$tamno-plava;
     font-size: 1.5rem;
@@ -54,7 +85,7 @@
     text-decoration: none;
     outline: 5px solid colors.$bela;
     outline-offset: 1.5px;
-    transition: 0.2s ease-in-out background-color, 0.1s ease-in-out scale; //3 vrednosti
+    transition: 0.2s ease-in-out background-color, 0.1s ease-in-out scale;
 
     @media #{mediaqueries.$phone} {
       position: static;
@@ -62,9 +93,7 @@
       left: unset;
       bottom: unset;
       margin: 5px 0;
-
     }
-
 
     &:hover {
       background-color: rgba(colors.$bela, 0.5);
@@ -76,100 +105,4 @@
 
   }
 
-
-}
-
-.hexagon {
-  position: absolute;
-  object-fit: contain;
-  aspect-ratio: 1;
-  animation: rotateHexagon 10s infinite linear;
-
-  &.hex1 {
-    width: 375px;
-    top: 18px;
-    left: -300px;
-
-    @media #{mediaqueries.$s-desktop} {
-      width: 130px;
-      top: -100px;
-      left: -20px;
-    }
-
-    @media #{mediaqueries.$phone} {
-      width: 90px;
-      top: -60px;
-      left: 0px;
-    }
-  }
-
-  &.hex2 {
-    width: 250px;
-    top: -60px;
-    right: -220px;
-
-    @media #{mediaqueries.$s-desktop} {
-      width: 140px;
-      top: unset;
-      bottom: -110px;
-      right: -30px;
-    }
-
-    @media #{mediaqueries.$phone} {
-      width: 110px;
-      top: unset;
-      bottom: -85px;
-      right: 0;
-    }
-  }
-
-  &.hex3 {
-    width: 150px;
-    top: 130px;
-    right: -250px;
-
-    @media #{mediaqueries.$s-desktop} {
-      width: 70px;
-      top: unset;
-      bottom: -147.5px;
-      right: 45px;
-    }
-
-    @media #{mediaqueries.$phone} {
-      width: 60px;
-      top: unset;
-      bottom: -110px;
-      right: 70px;
-    }
-  }
-
-  &.hex4 {
-    display: none;
-    width: 375px;
-    top: 0;
-    left: -200px;
-
-    @media #{mediaqueries.$s-desktop} {
-      display: block;
-      width: 70px;
-      top: -125.5px;
-      left: 60px;
-    }
-
-    @media #{mediaqueries.$phone} {
-      width: 60px;
-      top: -90px;
-      left: 55px;
-    }
-  }
-}
-
-@keyframes rotateHexagon {
-  from {
-    rotate: 0deg;
-  }
-
-  to {
-    rotate: 360deg;
-  }
 }
