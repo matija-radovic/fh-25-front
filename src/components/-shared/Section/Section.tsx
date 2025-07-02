@@ -8,7 +8,7 @@ type SectionProps = {
 };
 
 /**
- * Uokviruje vašu komponentu i dodaje joj automatski stil container, ukoliko ne želite container klasu samo proslediti komponenti parametar `cotainer={false}`
+ * Uokviruje vašu komponentu i dodaje joj automatski stil container, ukoliko ne želite container klasu samo proslediti komponenti parametar `container={false}`
  */
 const Section = forwardRef<HTMLElement, SectionProps>(
   ({ heading, className = "", isContainer = true, children }, ref) => {
