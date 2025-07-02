@@ -1,85 +1,184 @@
-.about-competition, .heksagoni{
+@use '../../utils/css/colors';
+@use '../../utils/css/mediaqueries';
+@use 'sass:math';
+
+//860px - breaks symtery
+.about {
     width: 100%;
-}
-
-.comp{
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 225px;
-}
+    align-items: flex-end;
+    flex-direction: column;
+    gap: clamp(80px, 100dvw * 332/1440, 332px);
+    margin: 0 max(0px, (100% - var(--max-container-size)) / 2);
+    margin-top: 5.2rem;
 
-.about-hackathon{
-    margin-top: 103px;
-    margin-left: 11%;
-}
+    .about-segment-wrapper {
+        position: relative;
+        width: calc(100% - 100px);
 
-.web3-challenge{
-    margin-right: 10.2%;
-    flex-direction: row-reverse;
-}
+        &:nth-of-type(2n) {
+            align-self: flex-start;
 
-.why-to-join{
-    margin-left: 9.5%;
-}
+            .about-segment {
+                margin-right: 0;
+                margin-left: auto;
 
-.text-box-about-competition {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Montserrat';
-    font-size: 20px;
-    line-height: 24px;
-    padding: 20px;
-    position: relative;
-}
-.txt1{
-    width: 593px;
-    height: 371px;
-}
+                .text-box {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: space-between;
+                }
 
-.txt2{
-    width: 664px;
-    height: 365px;
-}
+                a {
+                    cursor: pointer;
+                    background-color: colors.$tamno-plava;
+                    padding: 13px;
+                    text-decoration: none;
+                    color: colors.$bela;
+                    border-radius: 100px;
+                    border: 3px solid colors.$svetlo-plava;
+                    transition: .1s ease color;
 
-.txt3{
-    width: 637.41px;
-    height: 335px;
-}
+                    &:hover {
+                        color: colors.$svetlo-plava
+                    }
+                }
+            }
+        }
 
+        .about-segment {
+            margin: 0 auto 0 0;
+            width: 660px;
+            text-align: center;
 
-.about-hachathon-arrows, .web3-challenge-arrows, .why-to-join-arrows {
-    width: 725px;
-    height: 324px;
-    //background-color: white;
-    display: flex;
-    align-items: center;
-}
+            @media #{mediaqueries.$phone} {
+                width: 100%;
+            }
 
-.heksagoni{
-    position: absolute;
-}
+            .text-box {
+                position: relative;
+            }
 
-h2{
-    text-align: center;
-    font-family: 'Orbitron'; // Font za h2
-    font-size: 50px; // Veličina naslova
-    font-weight: bold; // Deblji font za naslov
-    margin-bottom: 36px; // Razmak između h2 i teksta
+            h1 {
+                position: absolute;
+                bottom: calc(100% + 10px);
+                left: 50%;
+                transform: translateX(-50%);
+                white-space: nowrap;
 
-}
+                @media #{mediaqueries.$m-phone} {
+                    // TODO: for all h1 in whole site
+                    font-size: 1.9rem;
+                }
 
-@keyframes rotate {
-    from {
-      transform: rotate(0deg);
+                @media only screen and (max-width: 430px) {
+                    font-size: 1.6rem;
+                }
+            }
+
+            .hexagon-group {
+                position: absolute;
+                width: 92%;
+                top: 50%;
+                left: 50%;
+                translate: -50% -50%;
+                z-index: -1;
+
+                .x-large {
+                    width: 100%;
+                }
+
+                @media #{mediaqueries.$xs-desktop} {
+
+                    .x-large {
+                        width: clamp(90px, math.div(260, 1440) * 100dvw, 260px) !important; // medium
+                    }
+
+                    &.one {
+                        width: fit-content;
+                        left: unset;
+                        top: 0px;
+                        right: 0px;
+                        translate: 50% -50%;
+
+                        .small {
+                            bottom: unset;
+                            left: unset;
+                            translate: 75% -12.5%; //bottom-right
+                            top: 87.5%;
+                            right: 25%;
+                        }
+                    }
+
+                    &.two {
+                        height: 100%;
+                        width: 100%;
+                        top: 0;
+                        left: 0;
+                        translate: none;
+
+                        .x-large {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            translate: -60% -60%;
+                        }
+
+                        .small {
+                            top: unset;
+                            right: unset;
+                            bottom: 0;
+                            left: 100%;
+                            translate: -50% -15%;
+                        }
+                    }
+
+                    &.three {
+                        height: 100%;
+                        width: 100%;
+                        top: 0;
+                        left: 0;
+                        translate: none;
+
+                        .x-large {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            translate: 60% -60%;
+                        }
+
+                        .small {
+                            top: unset;
+                            left: unset;
+                            bottom: 0;
+                            right: 100%;
+                            translate: 42% 58%;
+                        }
+                    }
+                }
+            }
+        }
+
+        .big-arrow {
+            top: 50%;
+            translate: 0 -50%;
+        }
     }
-    to {
-      transform: rotate(360deg);
+
+
+    // disables alternating positioned boxes
+    @media #{mediaqueries.$tablet} {
+        align-items: center;
+
+        .about-segment-wrapper {
+            width: 100% !important;
+        }
+
+        .about-segment {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
     }
-  }
-  
-.heksagoni g {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: rotate 45s linear infinite;
 }

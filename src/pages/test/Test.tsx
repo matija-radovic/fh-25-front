@@ -1,4 +1,4 @@
-import SignupSection from '../../components/Signup/SignupSection'
+import AboutCompetition from '../../components/AboutCompetition/AboutCompetition'
 import './Test.scss'
 
 /**
@@ -8,8 +8,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-    <SignupSection/>
-
+      <AboutCompetition />
     </>
   )
 }
