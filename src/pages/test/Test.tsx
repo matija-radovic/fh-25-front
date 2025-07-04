@@ -1,4 +1,4 @@
-import Partners from '../../components/Partners/Partners'
+import Expiriences from '@/components/Expiriences/Expiriences'
 import './Test.scss'
 
 /**
@@ -8,7 +8,7 @@ import './Test.scss'
 const Test = () => {
   return (
     <>
-      <Partners />
+      <Expiriences />
     </>
   )
 }
