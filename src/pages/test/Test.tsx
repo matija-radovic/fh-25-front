@@ -1,6 +1,4 @@
-import { Header } from '../../components'
 import './Test.scss'
-import Rewards from '@/components/Rewards/Rewards'
 
 /**
  * This component should be used to test your components, shared components or pages.
