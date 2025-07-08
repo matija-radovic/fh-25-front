@@ -1,9 +1,11 @@
 import './LoadingPage.scss';
 import { motion, Variants } from "motion/react";
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, useContext } from 'react';
 import { svgPathFills, svgPaths } from "../../utils/constants/loading/paths.ts";
 import { animationStates, fillVariants, StrokePart, strokeVariants } from "../../utils/constants/loading/variants.ts";
+import LoadingContext from '@/contexts/LoadingContext/LoadingContext.tsx';
 
+const totalPaths = (svgPaths.fon.length + svgPathFills.fon.length + svgPaths.hakaton.length + svgPathFills.hakaton.length);
 const motionFillSetup = { ...animationStates, variants: fillVariants };
 const motionStrokeSetup: Record<StrokePart, typeof animationStates & { variants: Variants }> = {
   start: { ...animationStates, variants: strokeVariants.start },
@@ -11,9 +13,19 @@ const motionStrokeSetup: Record<StrokePart, typeof animationStates & { variants:
   full: { ...animationStates, variants: strokeVariants.full }
 }
 const Loading = () => {
+  const { completeLoading } = useContext(LoadingContext);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
+  const numOfElementsCompletedAnimating = useRef<number>(0);
   const fontSize = 35;
+
+  const handleAnimationComplete = () => {
+    console.log(numOfElementsCompletedAnimating.current, totalPaths)
+    if (numOfElementsCompletedAnimating.current >= totalPaths - 1)
+      completeLoading();
+    else
+      numOfElementsCompletedAnimating.current++;
+  }
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current;
@@ -93,29 +105,34 @@ const Loading = () => {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    document.body.style.overflowY = "hidden"
+    return () => { document.body.style.overflowY = "auto" }
+  }, [])
+
   return (
-    <div className="loading-background">
+    <motion.div className="loading-background" animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: .2, duration: 1, ease: [0, 1, 0, 1] }}>
       <canvas ref={canvasRef} />
       <div className="loading-title">
         <svg width="319" height="104" viewBox="0 0 319 104" className="loading-title-fon">
           <g fill="none" stroke="#24BDDE" strokeWidth={6} strokeLinecap="square">
-            {svgPaths.fon.map((v, i) => <motion.path key={i} {...motionStrokeSetup[v.type]} d={v.d} />)}
+            {svgPaths.fon.map((v, i) => <motion.path key={i} {...motionStrokeSetup[v.type]} d={v.d} onAnimationComplete={handleAnimationComplete} />)}
           </g>
 
           <g fill="#24BDDE">
-            {svgPathFills.fon.map((v, i) => <motion.path key={i} {...motionFillSetup} d={v} />)}
+            {svgPathFills.fon.map((v, i) => <motion.path key={i} {...motionFillSetup} d={v} onAnimationComplete={handleAnimationComplete} />)}
           </g>
         </svg>
         <svg width="762" height="104" viewBox="0 0 762 104">
           <g fill="none" stroke="#24BDDE" strokeWidth={6} strokeLinecap="square">
-            {svgPaths.hakaton.map((v, i) => <motion.path key={i} {...motionStrokeSetup[v.type]} d={v.d} />)}
+            {svgPaths.hakaton.map((v, i) => <motion.path key={i} {...motionStrokeSetup[v.type]} d={v.d} onAnimationComplete={handleAnimationComplete} />)}
           </g>
           <g fill="#24BDDE"> {/* Fill */}
-            {svgPathFills.hakaton.map((v, i) => <motion.path key={i} {...motionFillSetup} d={v} />)}
+            {svgPathFills.hakaton.map((v, i) => <motion.path key={i} {...motionFillSetup} d={v} onAnimationComplete={handleAnimationComplete} />)}
           </g>
         </svg>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -4,10 +4,14 @@
 
 
 .loading-background {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 100%;
   padding: 0 30px;
 
   $clr: string.slice("#{colors.$svetlo-plava}", 2); // Popravlja bug unutar bg-image jer svg element ne može kao znak da primi hashtag ("#")
@@ -23,6 +27,7 @@
     140px 100%;
   background-position: left top, left top, 0 calc(50% - 80px), calc(50% - 70px) 0;
   background-repeat: repeat;
+  background-color: colors.$tamno-plava;
 
   canvas {
     position: absolute;
