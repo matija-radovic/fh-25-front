@@ -3,11 +3,12 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import { Layout } from './components'
 import Main from './pages/main'
 import Test from './pages/test'
+import Error from './pages/error/Error'
 
 // TODO: promeniti ruter po dogovoru za formu
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<Layout />}>
+    <Route path='/' element={<Layout />} errorElement={<Error/>}>
       <Route index element={<Main />} />
       {
         //*

@@ -16,6 +16,7 @@ export default defineConfig({
   plugins: [
     react(),
     imagetools({
+      exclude: ['**/assets/random/*'],
       cache: {
         enabled: true,
         dir: './node_modules/.cache/imagetools',

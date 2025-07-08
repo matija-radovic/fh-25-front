@@ -1,0 +1,2 @@
+const cats: string[] = Object.values(import.meta.glob('@/assets/random/*', { eager: true, query: '?url', import: 'default' }))
+export const getRandomCat = () => cats[Math.floor(Math.random() * cats.length)];
