@@ -1,0 +1,114 @@
+@use 'sass:math';
+@use '../../utils/css/mediaqueries';
+@use '../../utils/css/functions';
+
+.rewards {
+    text-align: center;
+    position: relative;
+
+    .pillars,
+    h1 {
+        z-index: 2;
+    }
+
+    h1 {
+        margin-bottom: functions.mapped(120px, 160px);
+    }
+
+    .pillars {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: functions.mapped(30px, 70px);
+
+        .pillar:nth-of-type(1) {
+            order: 2;
+            width: functions.mapped(82.7px, 175.33px);
+
+            .money {
+                font-size: functions.mapped(24px, 46px);
+            }
+
+            @media #{mediaqueries.$figma-phone} {
+                width: 23%;
+            }
+        }
+
+        .pillar:nth-of-type(2) {
+            order: 1;
+            width: functions.mapped(75.06px, 158.12px);
+
+            .money {
+                font-size: functions.mapped(22px, 42px);
+            }
+
+            @media #{mediaqueries.$figma-phone} {
+                width: 20.5%;
+            }
+        }
+
+        .pillar:nth-of-type(3) {
+            order: 3;
+            width: functions.mapped(68.51px, 143.14px);
+
+            .money {
+                font-size: functions.mapped(20px, 36px);
+            }
+
+            svg text {
+                translate: 5% 0; // alingment issues with font
+            }
+
+            @media #{mediaqueries.$figma-phone} {
+                width: 19%;
+            }
+        }
+    }
+
+    .stand {
+        position: absolute;
+        max-width: 90dvw;
+        width: functions.mapped(384px, 1036px);
+        top: 100%;
+        left: 50%;
+        translate: -50% -30%;
+    }
+
+    .arrows-wrapper {
+        @media #{mediaqueries.$m-phone} {
+            // 204/37 is the stand aspect ratio. Margin top should be half the image 
+            // height (".stand"), it hits the 90dvw width cap before it "finishied" 
+            // the linear mapping defined. Plus some magic number to push away a bit 
+            // more.
+            position: relative;
+            margin-top: calc(math.div(math.div(37, 2) + 30, 204) * 90dvw);
+        }
+    }
+
+    .big-arrow {
+        z-index: 1;
+        top: 0;
+        translate: 0 -10%;
+
+        @media #{mediaqueries.$m-phone} {
+            left: unset;
+            right: unset;
+            bottom: unset;
+
+            translate: 0 0;
+            left: -25%;
+            position: relative;
+
+            width: 65%;
+
+            &.flipped-x {
+                position: absolute;
+                left: auto;
+                right: -25% !important;
+                transform: scaleY(-1) scaleX(-1);
+            }
+        }
+    }
+
+}

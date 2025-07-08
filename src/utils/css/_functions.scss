@@ -1,0 +1,13 @@
+@use 'sass:math';
+
+@function mapped($min-value, $max-value) {
+    $min-numeric: math.div($min-value, ($min-value * 0 + 1));
+    $max-numeric: math.div($max-value, ($max-value * 0 + 1));
+
+    $value-range: $max-numeric - $min-numeric;
+    $viewport-range: 1440 - 402;
+
+    $slope: math.div($value-range, $viewport-range);
+
+    @return calc(#{$min-numeric}px + (min(100dvw, 1440px) - 402px) * #{$slope});
+}
