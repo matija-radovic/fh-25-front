@@ -20,7 +20,6 @@ const Loading = () => {
   const fontSize = 35;
 
   const handleAnimationComplete = () => {
-    console.log(numOfElementsCompletedAnimating.current, totalPaths)
     if (numOfElementsCompletedAnimating.current >= totalPaths - 1)
       completeLoading();
     else

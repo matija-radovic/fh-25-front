@@ -35,7 +35,6 @@ const Pocetna: React.FC = () => {
       requestAnimationFrame(set);
     }
     const handleResize = () => {
-      console.log("first")
       h = parralaxRef.current?.offsetHeight ?? 0;
       handleScroll();
     }

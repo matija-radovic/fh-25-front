@@ -20,7 +20,6 @@ const Pillar: React.FC<PillarProps> = ({ no, prize, inView, animationDuration = 
     const rounded = useTransform(() => formatter.format(count.get()));
 
     useEffect(() => {
-        console.log(inView)
         if (inView === undefined) return;
         if (inView === false) return;
         count.set(0);
