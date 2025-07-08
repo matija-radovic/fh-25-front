@@ -24,11 +24,17 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
   },
   "include": [
     "./src/**/*",
     "src/**/*",
     "src/**/*.jsx",
-    "src/**/*.tsx"
-, "src/components/-layout"  ]
+    "src/**/*.tsx",
+    "src/components/-layout",
+  ]
 }

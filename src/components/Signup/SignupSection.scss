@@ -1,0 +1,108 @@
+@use '../../utils/css/colors';
+@use '../../utils/css/mediaqueries';
+@use 'sass:math';
+
+
+.signup-section {
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  .hexagon-group {
+    position: absolute;
+
+    &.one {
+      bottom: 82%;
+      left: -2%;
+
+      @media #{mediaqueries.$except-phone} {
+        top: 1%;
+        right: 80%;
+        bottom: unset;
+        left: unset;
+
+        .medium {
+          width: clamp(125px, math.div(380, 1440) * 100dvw, 380px);
+        }
+
+        .small {
+          display: none;
+        }
+      }
+
+    }
+
+    &.two {
+      top: 82%;
+      right: -2%;
+
+      @media #{mediaqueries.$except-phone} {
+        bottom: 30%;
+        left: 90%;
+        top: unset;
+        right: unset;
+
+        .small {
+          translate: 75% -12.5%;
+          top: 87.5%;
+          right: 25%;
+        }
+      }
+    }
+  }
+
+  .signup-text-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    backdrop-filter: blur(1.5px); // todo: maybe change for all textboxes??
+
+    @media #{mediaqueries.$except-phone} {
+      margin-bottom: 100px;
+    }
+
+    & > :not(.hexagon-group) {
+      z-index: 1;
+    }
+  }
+
+
+  .signup-button {
+    position: absolute;
+    transform: translate(-50%, 100%);
+    left: 50%;
+    bottom: -40px;
+    background-color: colors.$bela;
+    padding: 5px 12px;
+    color: colors.$tamno-plava;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    text-decoration: none;
+    outline: 5px solid colors.$bela;
+    outline-offset: 1.5px;
+    transition: 0.2s ease-in-out background-color, 0.1s ease-in-out scale;
+
+    @media #{mediaqueries.$phone} {
+      position: static;
+      transform: none;
+      left: unset;
+      bottom: unset;
+      margin: 5px 0;
+    }
+
+    &:hover {
+      background-color: rgba(colors.$bela, 0.5);
+    }
+
+    &:active {
+      scale: 0.96;
+    }
+
+  }
+
+}

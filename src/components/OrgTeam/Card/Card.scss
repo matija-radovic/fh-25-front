@@ -1,0 +1,176 @@
+@use '../../../utils/css/colors';
+$border-radius: 10px;
+
+.card {
+    perspective: 800px;
+    position: relative;
+}
+
+.card-rotate {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    border-radius: $border-radius;
+    //background-color: rgba(0, 128, 0, 0.189) !important;
+
+    -webkit-transform-origin: center;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: translate3d(0px, 0px, 0.01px);
+    transform-origin: center;
+    transform-style: preserve-3d;
+    transform: translate3d(0px, 0px, 0.01px);
+    overflow: hidden;
+
+    will-change: transform, background-position;
+
+    transition: box-shadow 0.4s ease, opacity .33s ease-out;
+    transition-delay: .5s, 0s;
+
+    box-shadow:
+        0 -2px 15px -5px colors.$crno-plava,
+        0 2px 15px -5px colors.$crno-plava;
+
+    &:hover {
+        transition-delay: 0s;
+        box-shadow:
+            0 0 15px -12px colors.$svetlo-plava,
+            0 0 15px -12px colors.$svetlo-plava,
+    }
+}
+
+.card-shine,
+.card-glare {
+    will-change: transform, opacity, background-image, background-size,
+        background-position, background-blend-mode, filter;
+}
+
+.card-shine,
+.card-shine::after,
+.card-glare,
+.card-content {
+    grid-area: 1/1;
+    z-index: 1;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+
+    //padding: 1.5rem; debug
+
+    & * {
+        pointer-events: auto; // Text selection
+        position: relative;
+        image-rendering: optimizeQuality;
+    }
+}
+
+.card-glare {
+    transform: translateZ(1px);
+    overflow: hidden;
+    z-index: 4;
+
+    background-image: radial-gradient(farthest-corner circle at var(--glare-x) var(--glare-y),
+            hsla(0, 0%, 100%, 0.4) 10%,
+            hsla(0, 0%, 100%, 0.25) 20%,
+            hsla(0, 0%, 0%, 0.2) 90%);
+
+    opacity: var(--glare-o);
+    mix-blend-mode: overlay;
+}
+
+.card-shine {
+    display: grid;
+    transform: translateZ(1px);
+    z-index: 1;
+
+    // Bring out the reds and blues -> default transparent
+    background-color: rgba(255, 0, 255, 0.2);
+    //background-color: transparent;
+    mix-blend-mode: color-dodge;
+}
+
+// Small bug exists when offseting the background image. It appears when background repeats
+// but the diagonal lines don't align properly, thus creating a border for the image. To
+// prevent this we need to first look how "background-position" works with percentages. 
+// Example for the fix is at the "::after" element, 3rd background, X offset. Position is
+// calculated with this formula (container.width - image.width) * (percentage [*100%]). So
+// when the image is bigger then the container it self, giving it a negative percentage 
+// value will offset it into right, instead of left. For example (container width is 1 and
+// percentages are viewed as 100% -> 1, 50% -> 0.5): (1-3) * (-0.5) = 1. So the left edge of
+// the image is now aligned with containers right edge. Making the percentage value positive
+// (0.5) will result into a shift in opposite direction. Solution to this problem is making 
+// the image width bigger then container and only offseting it to left by at max how much 
+// its bigger then the container (while working with percentages and avoiding absolute 
+// values you need to worry less) and to offset background only to left, thus keeping the 
+// percentage value always positive. This can be done by halfening the offset (may speed-up 
+// or slow-down the animation), or subtracting some random arbitrary value ((in "::after" 
+// element case) to not match the original background position) but being careful not to 
+// exceed image width. But none of these solve it when your animation range is defined by spring 
+// physics and the values aren't clamped or adjusted. If the spring is "heavy" and not so 
+// "stiff" there is a chance, when values are not capped/adjusted for min/max range, to 
+// fling very hard and reach the end of the bg image thus meeting the join line between
+// repeated images. Either clamp the spring values or adjust lines to be "tile"-able.
+// 1. no-solution/prev:     (bgX * (-1))
+// 2. half but positive:    (bgX * 0.5)
+// 3. adding offset:        (bgX - offset) and (offset + bgX <= image.width) 
+//                                         and (offset > bgX_max + spring_max_recoil)
+// 4. zeroing and (3.)      (bgX * (-1) - (bgX_max + spring_max_recoil + offset))
+//                                         and (offset <= image.width)
+.card-shine,
+.card-shine::after {
+    --clr-1: hsl(2, 100%, 73%);
+    --clr-2: hsl(53, 100%, 69%);
+    --clr-3: hsl(93, 100%, 69%);
+    --clr-4: hsl(176, 100%, 76%);
+    --clr-5: hsl(228, 100%, 74%);
+    --clr-6: hsl(283, 100%, 73%);
+
+    --space: 5%;
+    --angle: 130deg;
+    --grain-size: 500px;
+
+    opacity: var(--glare-o);
+
+    background-image:
+        url('../../../assets/OrgTeam/grain.webp'),
+        repeating-linear-gradient(0deg,
+            var(--clr-1) calc(var(--space)*1),
+            var(--clr-2) calc(var(--space)*2),
+            var(--clr-3) calc(var(--space)*3),
+            var(--clr-4) calc(var(--space)*4),
+            var(--clr-5) calc(var(--space)*5),
+            var(--clr-6) calc(var(--space)*6),
+            var(--clr-1) calc(var(--space)*7)),
+        repeating-linear-gradient(var(--angle),
+            #0e152e 0%,
+            hsl(180, 10%, 60%) 3.8%,
+            hsl(180, 29%, 66%) 4.5%,
+            hsl(180, 10%, 60%) 5.2%,
+            #0e152e 10%,
+            #0e152e 12%),
+        radial-gradient(farthest-corner circle at var(--glare-x) var(--glare-y),
+            hsla(0, 0%, 0%, 0.1) 12%,
+            hsla(0, 0%, 0%, 0.15) 20%,
+            hsla(0, 0%, 0%, 0.25) 120%);
+
+    background-blend-mode: screen, hue, hard-light;
+    background-size: var(--grain-size) 100%, 200% 700%, 300% 125%, 200% 100%;
+    background-position: center, 0% var(--background-y), var(--background-x) var(--background-y), var(--background-x) var(--background-y);
+
+    filter: brightness(.8) contrast(2.95) saturate(.65);
+}
+
+.card-shine::after {
+    content: "";
+
+    background-position: center, 0% var(--background-y), calc(var(--background-x) - 30%) calc(var(--background-y) * -1), var(--background-x) var(--background-y);
+    background-size: var(--grain-size) 100%, 200% 400%, 195% 100%, 200% 100%;
+
+    filter: brightness(1) contrast(2.5) saturate(1.75);
+    mix-blend-mode: soft-light;
+}

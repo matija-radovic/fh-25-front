@@ -1,0 +1,127 @@
+@use '../../utils/css/mediaqueries';
+@use '../../utils/css/colors';
+
+$mq-specific: 'only screen and (max-width: 700px)';
+
+footer {
+    border-top: 4px solid colors.$bela;
+    margin: 0 var(--container-spacing);
+    font-size: 0.9rem;
+
+    @media #{mediaqueries.$s-tablet} {
+        font-size: 0.8rem;
+    }
+
+    & * {
+        font-size: inherit;
+    }
+}
+
+.footer-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 10px;
+    gap: 15px;
+
+    @media #{$mq-specific} {
+        flex-direction: column;
+        gap: 25px;
+        padding-top: 25px;
+    }
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55em;
+
+    a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        justify-content: flex-start;
+        color: white;
+        gap: 0.55em;
+
+        @media #{$mq-specific} {
+            justify-content: center;
+        }
+    }
+
+    img {
+        width: 1.5em;
+        height: auto;
+
+        @media #{$mq-specific} {
+            display: none;
+        }
+    }
+}
+
+.footer-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        display: block;
+        aspect-ratio: 55 / 14;
+
+        @media #{mediaqueries.$tablet} {
+            width: 8em;
+        }
+
+        @media #{$mq-specific} {
+            width: 160px;
+        }
+    }
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.55em;
+
+
+    @media #{$mq-specific} {
+     align-items: center;       
+    }
+
+    .footer-location {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.8em;
+        text-align: right;
+        white-space: nowrap;
+
+        @media #{$mq-specific} {
+            text-align: center;
+        }
+
+        img {
+            aspect-ratio: 31 / 42;
+            width: 1.6em;
+        }
+    }
+
+    .footer-icons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.8rem;
+
+        img {
+            aspect-ratio: 1;
+            height: 2em;
+        }
+    }
+
+}
+
+.footer-left,
+.footer-right {
+    flex: 1;
+}
