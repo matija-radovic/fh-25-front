@@ -26,7 +26,7 @@ const SIZES = `
 `
 const mqPhone = () => window.matchMedia("only screen and (max-width: 768px)").matches;
 
-const OrgTeam2: React.FC<OrgTeamProps> = ({ teams }) => {
+const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
     const wrapperRef = useRef<HTMLDivElement>(null); // Ref za observer
     const inView = useInView(wrapperRef); // Observer
     const isVisible = useVisibility();
@@ -119,4 +119,4 @@ const OrgTeam2: React.FC<OrgTeamProps> = ({ teams }) => {
     );
 };
 
-export default OrgTeam2;
+export default OrgTeam;
