@@ -4,6 +4,7 @@ import { useRef, useLayoutEffect, useContext } from 'react';
 import { svgPathFills, svgPaths } from "../../utils/constants/loading/paths.ts";
 import { animationStates, fillVariants, StrokePart, strokeVariants } from "../../utils/constants/loading/variants.ts";
 import LoadingContext from '@/contexts/LoadingContext/LoadingContext.tsx';
+import { createPortal } from 'react-dom';
 
 const totalPaths = (svgPaths.fon.length + svgPathFills.fon.length + svgPaths.hakaton.length + svgPathFills.hakaton.length);
 const motionFillSetup = { ...animationStates, variants: fillVariants };
@@ -20,8 +21,10 @@ const Loading = () => {
   const fontSize = 35;
 
   const handleAnimationComplete = () => {
-    if (numOfElementsCompletedAnimating.current >= totalPaths - 1)
+    if (numOfElementsCompletedAnimating.current >= totalPaths - 1) {
       completeLoading();
+      setTimeout(() => document.body.style.overflowY = "auto", 200)
+    }
     else
       numOfElementsCompletedAnimating.current++;
   }
@@ -106,11 +109,10 @@ const Loading = () => {
 
   useLayoutEffect(() => {
     document.body.style.overflowY = "hidden"
-    return () => { document.body.style.overflowY = "auto" }
   }, [])
 
-  return (
-    <motion.div className="loading-background" animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: .2, duration: 1, ease: [0, 1, 0, 1] }}>
+  return createPortal(
+    <motion.div className="loading-background" animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: .2, duration: .2, ease: 'easeOut' }}>
       <canvas ref={canvasRef} />
       <div className="loading-title">
         <svg width="319" height="104" viewBox="0 0 319 104" className="loading-title-fon">
@@ -131,7 +133,8 @@ const Loading = () => {
           </g>
         </svg>
       </div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 };
 
