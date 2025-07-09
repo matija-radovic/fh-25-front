@@ -1,0 +1,25 @@
+@use '../../utils/css/colors';
+
+.application-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.application {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    background-color: colors.$crno-plava;
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px;
+    margin: var(--container-spacing);
+
+    img {
+        max-height: 100px;
+        max-width: 260px;
+    }
+}
