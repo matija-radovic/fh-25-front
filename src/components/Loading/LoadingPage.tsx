@@ -5,6 +5,7 @@ import { svgPathFills, svgPaths } from "../../utils/constants/loading/paths.ts";
 import { animationStates, fillVariants, StrokePart, strokeVariants } from "../../utils/constants/loading/variants.ts";
 import LoadingContext from '@/contexts/LoadingContext/LoadingContext.tsx';
 import { createPortal } from 'react-dom';
+import { documentManager, Lock } from '@/utils/dom/documentManager.ts';
 
 const totalPaths = (svgPaths.fon.length + svgPathFills.fon.length + svgPaths.hakaton.length + svgPathFills.hakaton.length);
 const motionFillSetup = { ...animationStates, variants: fillVariants };
@@ -16,6 +17,7 @@ const motionStrokeSetup: Record<StrokePart, typeof animationStates & { variants:
 const Loading = () => {
   const { completeLoading } = useContext(LoadingContext);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const lock = useRef<Lock | null>(null);
   const animationRef = useRef<number>();
   const numOfElementsCompletedAnimating = useRef<number>(0);
   const fontSize = 35;
@@ -23,7 +25,7 @@ const Loading = () => {
   const handleAnimationComplete = () => {
     if (numOfElementsCompletedAnimating.current >= totalPaths - 1) {
       completeLoading();
-      setTimeout(() => document.body.style.overflowY = "auto", 200)
+      setTimeout(() => lock.current?.release(), 200)
     }
     else
       numOfElementsCompletedAnimating.current++;
@@ -108,7 +110,8 @@ const Loading = () => {
   }, []);
 
   useLayoutEffect(() => {
-    document.body.style.overflowY = "hidden"
+    lock.current = documentManager.lockScroll("hidden");
+    return () => lock.current?.release();
   }, [])
 
   return createPortal(

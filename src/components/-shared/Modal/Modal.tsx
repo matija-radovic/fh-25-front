@@ -2,11 +2,13 @@ import React, { MouseEventHandler, useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimationDefinition, motion } from 'motion/react'
 import './Modal.scss'
+import { documentManager } from '@/utils/dom/documentManager'
+import { getScrollbarWidth } from '@/utils/dom/getScrollBarWidth'
+import debounce from 'lodash.debounce'
 
 interface ModalProps {
     className?: string | undefined,
     children?: React.ReactNode | undefined,
-    disableScroll?: boolean | undefined,
     animateInitial?: boolean | undefined,
     onBackgroundClick?: (() => void) | undefined,
     onAnimationComplete?: ((definition: AnimationDefinition) => void) | undefined,
@@ -18,10 +20,18 @@ const Modal: React.FC<ModalProps> = ({ className, children, onBackgroundClick, a
     }
 
     useLayoutEffect(() => {
-        document.body.style.overflowY = "hidden"
-        return () => { document.body.style.overflowY = "auto" }
+        const handleResize = debounce(() => (document.body.style.width = `calc(100% - ${getScrollbarWidth()}px)`), 1000, { leading: true })
+
+        const lock = documentManager.lockScroll('hidden')
+        document.body.style.width = `calc(100% - ${getScrollbarWidth()}px)`
+
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize)
+            lock.release();
+            document.body.style.width = ''
+        }
     }, [])
-    console.log('asd')
 
     return createPortal(
         <motion.div className={`modal${className ? ` ${className}` : ''}`} onClick={handleClick}
