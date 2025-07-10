@@ -38,7 +38,7 @@ $building-min-height: 480.7px;
     height: math.percentage(math.div($img-right-height, $max-h));
     //transform: translateX(calc($parallax-distance * var(--v)));
     transform: translateX(calc(min(50dvw, 100%) * $parallax-distance * var(--v)));
-
+    transition: .2s cubic-bezier(0.075, 0.82, 0.165, 1) transform;
   }
 
   //left image
@@ -56,12 +56,16 @@ $building-min-height: 480.7px;
   align-items: center;
   width: 100%;
   overflow: hidden;
+  
+  position: relative;
+  left: 50%;
+  translate: -50% 0;
 }
 
 .buildings {
   position: relative;
   width: 100%;
-  height: min(90dvh, mapped($building-min-height, $building-max-height));
+  height: min(85dvh, mapped($building-min-height, $building-max-height));
   background-color: colors.$svetlo-plava;
 
   @media only screen and (min-width: 1441px) {
@@ -95,6 +99,7 @@ $building-min-height: 480.7px;
 
     &.first {
       @include row(182px, 376px, 381px, 709px, 731px, 0.5);
+      transform: translate(-50%, 2px);
     }
 
     &.second {
@@ -135,6 +140,7 @@ $building-min-height: 480.7px;
   max-width: 1440px;
 
   mask-image: radial-gradient(55% 110% at top center, black 60%, transparent 90%);
+  contain: content;
 
   svg {
     display: block;

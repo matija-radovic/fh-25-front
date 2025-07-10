@@ -11,10 +11,6 @@ $header-gap: 20px;
     text-align: center;
     white-space: nowrap;
 
-    h1 {
-        margin-bottom: $header-gap * 3;
-    }
-
     .competition-sponsor {
         display: flex;
         flex-direction: column;
@@ -65,10 +61,6 @@ $header-gap: 20px;
 
     //gap and width adjustment
     @media #{mediaqueries.$phone} {
-        h1 {
-            margin-bottom: $header-gap * 1.5;
-        }
-
         h3 {
             font-size: 1.3rem;
         }
@@ -100,6 +92,10 @@ $header-gap: 20px;
             margin-bottom: 40px;
             white-space: wrap;
         }
+    }
+
+    .big-arrow.half-offset {
+        translate: 0 calc(-25% + 1.56rem);
     }
 
     // arrow adjustment

@@ -7,6 +7,7 @@ header {
   width: 100%;
   top: 0;
   left: 0;
+  z-index: 8888;
 
   display: flex;
   align-items: center;
@@ -14,9 +15,8 @@ header {
 
   background-color: rgba(colors.$svetlo-plava, 0.1);
   backdrop-filter: blur(5px);
-  //box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 
-  padding: 0 12px 0 12px;
+  padding: 0 calc(12px + var(--scrollbar-width)) 0 12px;
 
   a {
     position: relative;
@@ -26,7 +26,6 @@ header {
     cursor: pointer;
   }
 
-  // U okviru Header-a, TODO: -> smart dodge
   &>.header-sign-up-button {
     padding: 14px 20px;
     outline: 2px solid colors.$tamno-plava;
@@ -36,7 +35,8 @@ header {
     color: colors.$tamno-plava;
     transition: .15s ease all;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       outline-color: colors.$svetlo-plava;
       color: colors.$svetlo-plava;
       background-color: colors.$tamno-plava;
@@ -57,7 +57,7 @@ header {
     @media #{mediaqueries.$phone} {
       height: 60px;
     }
-    
+
   }
 }
 
@@ -100,10 +100,12 @@ header {
 
     a {
       display: block;
-      color: colors.$svetlo-plava; //TODO: smart color -> ssff folder index2
+      color: colors.$svetlo-plava;
+      transition: .2s ease-out color;
+      font-weight: 500;
 
       @media #{mediaqueries.$s-desktop} {
-        color: colors.$tamno-plava; // TODO ugasiti smart color za hamburger meni
+        color: colors.$tamno-plava;
         font-weight: 600;
       }
 
@@ -135,12 +137,18 @@ header {
       }
     }
 
-    &:hover a, &:focus a{
+    &:hover a,
+    &:focus a {
+
       &::before,
       &::after {
         opacity: 1;
       }
     }
+  }
+
+  &.h-dark .nav-link a {
+    color: colors.$tamno-plava;
   }
 }
 
@@ -181,7 +189,8 @@ $sirina-mala: 35px;
   .hamburger-line {
     height: $razmak;
     width: 100%;
-    background-color: colors.$svetlo-plava; // TODO -> smart color dodge
+    background-color: colors.$svetlo-plava;
+    filter: drop-shadow(0 0 2px colors.$tamno-plava);
 
     @media #{mediaqueries.$phone} {
       height: $razmak-mali;

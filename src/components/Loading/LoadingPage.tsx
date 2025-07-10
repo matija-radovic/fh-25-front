@@ -25,7 +25,7 @@ const Loading = () => {
   const handleAnimationComplete = () => {
     if (numOfElementsCompletedAnimating.current >= totalPaths - 1) {
       completeLoading();
-      setTimeout(() => lock.current?.release(), 200)
+      setTimeout(() => lock.current?.release(), 150)
     }
     else
       numOfElementsCompletedAnimating.current++;

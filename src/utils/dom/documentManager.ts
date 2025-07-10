@@ -30,7 +30,6 @@ class D {
                 if (index === -1) return; // Already released
                 this.#locks.splice(index, 1);
                 if (index === 0) this.#updateBodyOverflow();
-                console.log(this.#locks);
             }
         };
 

@@ -16,7 +16,7 @@ const AboutCompetition = () => {
     }, [])
 
     return (
-        <Section className="about" isContainer={true}>
+        <Section className="about" isContainer={true} id="o-takmicenju">
             <div className="about-segment-wrapper">
                 {matches ? null : <Arrow className="half-offset" flippedX flippedY />}
                 <div className="about-segment">

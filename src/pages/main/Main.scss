@@ -1,0 +1,150 @@
+@use '../../utils/css/mediaqueries';
+@use 'sass:list';
+@use 'sass:math';
+
+$margin-desktop: 120px;
+$margin-xs-desktop: 100px;
+$margin-tablet: 90px;
+$margin-phone: 80px;
+$margin-figma: 70px;
+
+// Mixin for margin by side and media
+@mixin responsive-margins($items) {
+  @each $item in $items {
+    $selector: list.nth($item, 1);
+    $top: list.nth($item, 2);
+    $right: list.nth($item, 3);
+    $bottom: list.nth($item, 4);
+    $left: list.nth($item, 5);
+
+    #{$selector} {
+      @if $top {
+        margin-top: $margin-desktop;
+      }
+
+      @if $right {
+        margin-right: $margin-desktop;
+      }
+
+      @if $bottom {
+        margin-bottom: $margin-desktop;
+      }
+
+      @if $left {
+        margin-left: $margin-desktop;
+      }
+
+      @media #{mediaqueries.$xs-desktop} {
+        @if $top {
+          margin-top: $margin-xs-desktop;
+        }
+
+        @if $right {
+          margin-right: $margin-xs-desktop;
+        }
+
+        @if $bottom {
+          margin-bottom: $margin-xs-desktop;
+        }
+
+        @if $left {
+          margin-left: $margin-xs-desktop;
+        }
+      }
+
+      @media #{mediaqueries.$tablet} {
+        @if $top {
+          margin-top: $margin-tablet;
+        }
+
+        @if $right {
+          margin-right: $margin-tablet;
+        }
+
+        @if $bottom {
+          margin-bottom: $margin-tablet;
+        }
+
+        @if $left {
+          margin-left: $margin-tablet;
+        }
+      }
+
+      @media #{mediaqueries.$phone} {
+        @if $top {
+          margin-top: $margin-phone;
+        }
+
+        @if $right {
+          margin-right: $margin-phone;
+        }
+
+        @if $bottom {
+          margin-bottom: $margin-phone;
+        }
+
+        @if $left {
+          margin-left: $margin-phone;
+        }
+      }
+
+      @media #{mediaqueries.$figma-phone} {
+        @if $top {
+          margin-top: $margin-figma;
+        }
+
+        @if $right {
+          margin-right: $margin-figma;
+        }
+
+        @if $bottom {
+          margin-bottom: $margin-figma;
+        }
+
+        @if $left {
+          margin-left: $margin-figma;
+        }
+      }
+    }
+  }
+}
+
+@include responsive-margins((
+  ("section>h1", true, false, true, false),
+  ("section.partners", false, false, true, false),
+));
+
+section>h1 {
+  text-align: center;
+}
+
+section.about {
+  $additional: 100px;
+  padding-top: $margin-desktop + $additional;
+
+  @media #{mediaqueries.$xs-desktop} {
+    padding-top: $margin-xs-desktop + $additional;
+  }
+
+  @media #{mediaqueries.$tablet} {
+    padding-top: $margin-tablet + $additional;
+  }
+
+  @media #{mediaqueries.$phone} {
+    padding-top: $margin-phone + $additional;
+  }
+
+  @media #{mediaqueries.$figma-phone} {
+    padding-top: $margin-figma + $additional;
+  }
+}
+
+section.rewards .arrows-wrapper {
+  @media #{mediaqueries.$m-phone} {
+    padding-top: calc(math.div(math.div(37, 2), 204) * 90dvw + $margin-phone);
+  }
+
+  @media #{mediaqueries.$figma-phone} {
+    padding-top: calc(math.div(math.div(37, 2), 204) * 90dvw + $margin-figma);
+  }
+}

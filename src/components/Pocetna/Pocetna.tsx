@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useLayoutEffect, useRef } from "react";
 import "./Pocetna.scss";
-import { motion, MotionStyle, SpringOptions, useInView, useSpring } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import left1 from "../../assets/pocetna/left1.svg";
 import left2 from "../../assets/pocetna/left2.svg";
 import left3 from "../../assets/pocetna/left3.svg";
@@ -10,28 +10,27 @@ import right3 from "../../assets/pocetna/right3.svg";
 import Section from "../-shared/Section/Section";
 import ZeppelinBanner from "./ZeppelinBanner";
 import Water from "./Water";
+import { BackgroundContext } from "@/contexts/BackgroundContext";
 
-const springSettings: SpringOptions = { stiffness: 400, damping: 50 };
+//const springSettings: SpringOptions = { stiffness: 400, damping: 50 };
 
 const Pocetna: React.FC = () => {
+  const { setIsDark } = useContext(BackgroundContext);
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef);
   const parralaxRef = useRef<HTMLDivElement>(null);
-  const v = useSpring(0, springSettings);
+  const inViewBuildings = useInView(parralaxRef);
 
   // Zgrade
   useEffect(() => {
     if (!inView) return;
 
     let h: number;
-    let ticking = false;
     const set = () => {
-      v.set(1 - Math.min(Math.max(1 - window.scrollY / h, 0), 1))
-      ticking = false;
+      const value = 1 - Math.min(Math.max(1 - window.scrollY / h, 0), 1);
+      if (parralaxRef.current) parralaxRef.current.style.setProperty('--v', value.toString());
     }
     const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
       requestAnimationFrame(set);
     }
     const handleResize = () => {
@@ -46,16 +45,15 @@ const Pocetna: React.FC = () => {
       window.removeEventListener("scroll", handleScroll)
       window.removeEventListener("resize", handleResize)
     }
-  }, [v, inView])
+  }, [inView])
 
-
-  const parallaxVariables = {
-    "--v": v
-  } as MotionStyle
+  useLayoutEffect(() => {
+    setIsDark(!inViewBuildings);
+  }, [inViewBuildings, setIsDark])
 
   return (
     <Section isContainer={false} className="home-section" ref={sectionRef}>
-      <motion.div className="buildings" ref={parralaxRef} style={parallaxVariables}>
+      <div className="buildings" ref={parralaxRef}>
         <div className="third row">
           <img src={left3} alt="" />
           <img src={right3} alt="" />
@@ -71,7 +69,7 @@ const Pocetna: React.FC = () => {
         <div className="flag">
           <ZeppelinBanner />
         </div>
-      </motion.div>
+      </div>
       <Water />
     </Section>
   );

@@ -1,9 +1,10 @@
 import "./Main.scss";
-import { LoadingPage, Section } from "../../components";
+import { AboutCompetition, Agenda, Expiriences, Faq, Footer, Header, LoadingPage, OrgTeam, Partners, Pocetna, Rewards } from "@/components";
 import React, { useContext } from "react";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { AnimatePresence } from "motion/react";
 import { useLocation, useOutlet } from "react-router-dom";
+import { orgTeams } from "@/utils/constants/orgteam/teams";
 /**
  * This is the main component and all of the index page components/logic should inside of it
  */
@@ -14,9 +15,17 @@ const Main = () => {
 
   return (
     <>
-      <Section heading="Example section">
-        <div>Hello world</div>
-      </Section>
+      <Header />
+      <Pocetna />
+      <AboutCompetition />
+      <Agenda />
+      <Rewards />
+      <Expiriences />
+      <Faq />
+      <OrgTeam teams={orgTeams} />
+      <Partners />
+      <Footer />
+      
       <AnimatePresence>
         {isLoading && <LoadingPage />}
       </AnimatePresence>

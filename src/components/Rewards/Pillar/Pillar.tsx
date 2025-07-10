@@ -23,7 +23,7 @@ const Pillar: React.FC<PillarProps> = ({ no, prize, inView, animationDuration = 
         if (inView === undefined) return;
         if (inView === false) return;
         count.set(0);
-        const controls = animate(count, prize, { duration: animationDuration, ease: [0, 1, 0, 1] });
+        const controls = animate(count, prize, { duration: animationDuration, ease: [1, 0, 0, 1] });
         return () => controls.stop();
     }, [count, inView, prize, animationDuration]);
 

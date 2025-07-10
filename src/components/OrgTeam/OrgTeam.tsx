@@ -9,8 +9,8 @@ import Card from "./Card/Card";
 import star from "../../assets/OrgTeam/star.svg";
 import logo from "../../assets/OrgTeam/fhlogo.svg";
 import Hexagon from "../-shared/Hexagon/Hexagon";
-import Arrow from "../-shared/Arrow/Arrow";
 import useVisibility from "../../hooks/useVisibility";
+import Arrow from "../-shared/Arrow/Arrow";
 
 // TODO: async fetch images to prevent flash of invisible image
 
@@ -24,7 +24,7 @@ const SIZES = `
     (min-width: 769px) and (max-width: 1024px) 40vw,
     (min-width: 1025px) 45vw
 `
-const mqPhone = () => window.matchMedia("only screen and (max-width: 768px)").matches;
+const mqTablet = () => window.matchMedia("only screen and (max-width: 1024px)").matches;
 
 const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
     const wrapperRef = useRef<HTMLDivElement>(null); // Ref za observer
@@ -33,7 +33,7 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
     const [isHovered, setisHovered] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState<-1 | 1>(1);
-    const [mqMatches, setMqMatches] = useState(mqPhone);
+    const [mqMatches, setMqMatches] = useState(mqTablet);
 
     const { coordinator, team } = teams[currentIndex];
 
@@ -48,7 +48,7 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
     }, [inView, isHovered, isVisible, teams]);
 
     useEffect(() => {
-        const handleResize = () => setMqMatches(mqPhone);
+        const handleResize = () => setMqMatches(mqTablet);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [])
@@ -59,13 +59,13 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
     };
 
     return (
-        <Section className="org-team orbitron" heading="ORGANIZACIONI TIM" ref={wrapperRef}>
-            {!mqMatches ? (
+        <Section className="org-team orbitron" heading="ORGANIZACIONI TIM" ref={wrapperRef} id="organizacioni-tim">
+            {mqMatches ? null : (
                 <>
-                    <Arrow className={"flipped-x top half-offset"} />
-                    <Arrow className={"flipped-y bottom half-offset"} />
+                    <Arrow className="half-offset top" flippedY />
+                    <Arrow className="half-offset top" flippedY flippedX />
                 </>
-            ) : null}
+            )}
             <div className="org-team-wrap" onMouseEnter={() => setisHovered(true)} onMouseLeave={() => setisHovered(false)}>
                 <div className="org-team-cards">
                     <div className="hexagon-group one">
@@ -82,7 +82,7 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
                                 <div className={`vertical-name${coordinator.firstName === "Anastasija" ? " small" : ""}`}>{coordinator.firstName}</div>
                                 <picture className="coord-image">
                                     {Object.entries(coordinator.image.sources).map(
-                                        ([format, images]) => <source srcSet={images} type={`image/${format}`} key={images} sizes={SIZES}/>
+                                        ([format, images]) => <source srcSet={images} type={`image/${format}`} key={images} sizes={SIZES} />
                                     )}
                                     <img src={coordinator.image.img.src} alt={coordinator.role} />
                                 </picture>
@@ -102,7 +102,7 @@ const OrgTeam: React.FC<OrgTeamProps> = ({ teams }) => {
                         <Card className="team" sensitivity={0.4} key={currentIndex + 200} enterDirection={direction}>
                             <picture>
                                 {Object.entries(team.image.sources).map(
-                                    ([format, images]) => <source srcSet={images} type={`image/${format}`} key={images} sizes={SIZES}/>
+                                    ([format, images]) => <source srcSet={images} type={`image/${format}`} key={images} sizes={SIZES} />
                                 )}
                                 <img src={team.image.img.src} alt="team group photo" />
                             </picture>

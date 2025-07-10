@@ -14,20 +14,22 @@ const Expiriences = () => {
     const [currentIndex, setCurrentIndex] = useState(INITIAL_INDEX);
 
     return (
-        <Section className="expiriences" heading="ISKUSTVA">
-            <Slider values={imagesonly} initial={INITIAL_INDEX} onChange={setCurrentIndex} />
-            <TextBox>
-                <Hexagon className="small hex1" />
-                <div className="hexagon-group">
-                    <Hexagon className="small" />
-                    <Hexagon className="x-small speedy bottom-right" />
-                </div>
-                <h2>{expiriences[currentIndex].name}</h2>
-                <div className="expiriences-content">
-                    <img src={expiriences[currentIndex].image} alt={expiriences[currentIndex].name} />
-                    <p>{expiriences[currentIndex].description}</p>
-                </div>
-            </TextBox>
+        <Section className="expiriences" heading="ISKUSTVA" id="iskustva">
+            <div className="expiriences-wrapper">
+                <Slider values={imagesonly} initial={INITIAL_INDEX} onChange={setCurrentIndex} />
+                <TextBox>
+                    <Hexagon className="small hex1" />
+                    <div className="hexagon-group">
+                        <Hexagon className="small" />
+                        <Hexagon className="x-small speedy bottom-right" />
+                    </div>
+                    <h2>{expiriences[currentIndex].name}</h2>
+                    <div className="expiriences-content">
+                        <img src={expiriences[currentIndex].image} alt={expiriences[currentIndex].name} />
+                        <p>{expiriences[currentIndex].description}</p>
+                    </div>
+                </TextBox>
+            </div>
         </Section>
     )
 }

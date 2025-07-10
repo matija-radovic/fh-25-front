@@ -10,7 +10,7 @@ const media: string[] = Object.values(import.meta.glob('@/assets/partners/medijs
 
 const Partners = () => {
     return (
-        <Section heading='PARTNERI' className="partners">
+        <Section heading='PARTNERI' className="partners" id='partneri'>
             <Arrow className="top half-offset" />
             <Arrow className="top half-offset" flippedX/>
             <div className='competition-sponsor'>

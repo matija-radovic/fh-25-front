@@ -53,7 +53,7 @@ const ZeppelinBanner = () => {
         bottomPoints[x] = `${xa}% ${100 + yTop - 2 * amplitude}%`;
       }
 
-      // setters
+      // setters -> causes massive layout computation up to 8ms on 4x slow
       if (pathRef.current) pathRef.current.setAttribute('d', `M ${pathPoints.join("")}`);
       if (zeppelinRef.current) zeppelinRef.current.style.translate = `0 ${-50 + 4 * Math.sin(offset) * amplitude}%`
       if (bannerRef.current) bannerRef.current.style.clipPath =

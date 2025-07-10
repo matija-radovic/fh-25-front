@@ -1,10 +1,10 @@
 import "./Header.scss";
 import logo from "../../assets/Header/fh-logo.svg"
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import { navHashes } from "../../utils/constants/header/navigation";
-
+import { BackgroundContext } from "@/contexts/BackgroundContext";
 
 const navLinksVariants: Variants = {
   hidden: {
@@ -34,6 +34,7 @@ const formatLinkText = (text: string) => text.replace(/-/g, " ");
 const mqDesktop = () => window.matchMedia("only screen and (max-width: 1366px)").matches;
 
 function Header() {
+  const { isDark } = useContext(BackgroundContext);
   const [isOpen, setIsOpen] = useState(false);
   const [mqMatches, setMqMatches] = useState(mqDesktop);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -90,11 +91,16 @@ function Header() {
   const closeBurger = () => setIsOpen(false);
 
   const renderSimpleLinks = () => (
-    navHashes.map(v => (
-      <div key={v} className="nav-link">
-        <Link to={`#${v}`} onClick={closeBurger}>{formatLinkText(v)}</Link>
+    <>
+      {navHashes.map(v => (
+        <div key={v} className="nav-link">
+          <Link to={`/#${v}`} onClick={closeBurger}>{formatLinkText(v)}</Link>
+        </div>
+      ))}
+      <div className="nav-link">
+        <Link to="/documents/pravilnik.pdf" target="_blank" rel="noopener noreferrer" onClick={closeBurger}>pravilnik</Link>
       </div>
-    ))
+    </>
   );
 
   const renderAnimatedLinks = () => (
@@ -105,10 +111,15 @@ function Header() {
             <motion.div key={v} className="nav-link" {...navLinkMotionVariantsSetup} custom={i}
               ref={(el) => itemsRef.current[i] = el}
             >
-              <Link to={`#${v}`} onClick={closeBurger}>{formatLinkText(v)}</Link>
+              <Link to={`/#${v}`} onClick={closeBurger}>{formatLinkText(v)}</Link>
             </motion.div>
           ))}
-          <motion.div key="prijava" className="nav-link" {...navLinkMotionVariantsSetup} custom={navHashes.length}
+          <motion.div className="nav-link" {...navLinkMotionVariantsSetup} custom={navHashes.length}
+            ref={(el) => itemsRef.current[navHashes.length] = el}
+          >
+            <Link to="/documents/pravilnik.pdf" target="_blank" rel="noopener noreferrer" onClick={closeBurger}>pravilnik</Link>
+          </motion.div>
+          <motion.div className="nav-link" {...navLinkMotionVariantsSetup} custom={navHashes.length}
             ref={(el) => itemsRef.current[navHashes.length] = el}
           >
             <Link to="/prijava" onClick={closeBurger}>PRIJAVI SE</Link>
@@ -121,7 +132,7 @@ function Header() {
   return (
     <header>
       <img className="header-logo" src={logo} alt="fonis logo" />
-      <div className={"nav-container" + (isOpen ? " h-open" : "")} ref={menuRef}>
+      <div className={"nav-container" + (isOpen ? " h-open" : "") + (!isDark ? " h-dark" : "")} ref={menuRef}>
         {mqMatches ? renderAnimatedLinks() : renderSimpleLinks()}
       </div>
 

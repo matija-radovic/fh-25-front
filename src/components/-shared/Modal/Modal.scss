@@ -1,8 +1,22 @@
 .modal {
     position: fixed;
+    z-index: 9988;
     height: 100dvh;
     width: 100dvw;
     top: 0;
     left: 0;
     backdrop-filter: blur(4px);
+}
+
+// TODO: clean this up
+.modal-open #root {
+    padding-right: var(--scrollbar-width);
+}
+
+.modal-open .home-section {
+    overflow: visible;
+    .buildings {
+        width: 120dvw;
+        padding-right: var(--scrollbar-width);
+    }
 }

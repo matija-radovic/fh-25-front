@@ -11,10 +11,6 @@
         z-index: 2;
     }
 
-    h1 {
-        margin-bottom: functions.mapped(120px, 160px);
-    }
-
     .pillars {
         position: relative;
         display: flex;
@@ -76,13 +72,15 @@
     }
 
     .arrows-wrapper {
+        padding-bottom: calc(math.div(math.div(37, 2), 204) * min(90dvw, 1440px * .9));
+
         @media #{mediaqueries.$m-phone} {
             // 204/37 is the stand aspect ratio. Margin top should be half the image 
             // height (".stand"), it hits the 90dvw width cap before it "finishied" 
             // the linear mapping defined. Plus some magic number to push away a bit 
             // more.
             position: relative;
-            margin-top: calc(math.div(math.div(37, 2) + 30, 204) * 90dvw);
+            padding-bottom: 0;
         }
     }
 
@@ -92,9 +90,10 @@
         translate: 0 -10%;
 
         @media #{mediaqueries.$m-phone} {
+            top: unset;
             left: unset;
             right: unset;
-            bottom: unset;
+            bottom: 0;
 
             translate: 0 0;
             left: -25%;

@@ -10,7 +10,6 @@
     flex-direction: column;
     gap: clamp(80px, 100dvw * 332/1440, 332px);
     margin: 0 max(0px, (100% - var(--max-container-size)) / 2);
-    margin-top: 5.2rem;
 
     .about-segment-wrapper {
         position: relative;

@@ -58,7 +58,6 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
-    backdrop-filter: blur(1.5px); // todo: maybe change for all textboxes??
 
     @media #{mediaqueries.$except-phone} {
       margin-bottom: 100px;

@@ -37,6 +37,7 @@ $my-offsets: (
 .big-arrow {
     position: absolute;
     display: block;
+    contain: strict;
 
     width: clamp(#{$minimum-width}px, 100dvw * $relative-size, #{$view-box-width}px);
     height: auto;
@@ -72,14 +73,9 @@ $my-offsets: (
     path {
         transition: fill .4s linear;
         fill: transparent;
-        will-change: fill;
 
         &.active {
             fill: var(--fill-color);
         }
     }
-}
-
-body {
-    overflow-x: hidden;
 }

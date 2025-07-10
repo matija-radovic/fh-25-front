@@ -20,18 +20,23 @@ const Modal: React.FC<ModalProps> = ({ className, children, onBackgroundClick, a
     }
 
     useLayoutEffect(() => {
-        const handleResize = debounce(() => (document.body.style.width = `calc(100% - ${getScrollbarWidth()}px)`), 1000, { leading: true })
+        const width = getScrollbarWidth();
+        const handleResize = debounce(() => {
+            document.body.classList.add('modal-open');
+            document.body.style.setProperty('--scrollbar-width', `${width}px`);
+        }, 300, { leading: true });
 
-        const lock = documentManager.lockScroll('hidden')
-        document.body.style.width = `calc(100% - ${getScrollbarWidth()}px)`
+        const lock = documentManager.lockScroll('hidden');
+        handleResize();
 
         window.addEventListener('resize', handleResize)
         return () => {
-            window.removeEventListener('resize', handleResize)
             lock.release();
-            document.body.style.width = ''
-        }
-    }, [])
+            window.removeEventListener('resize', handleResize);
+            document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('--scrollbar-width');
+        };
+    }, []);
 
     return createPortal(
         <motion.div className={`modal${className ? ` ${className}` : ''}`} onClick={handleClick}

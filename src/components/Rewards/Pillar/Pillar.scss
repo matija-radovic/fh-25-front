@@ -17,10 +17,12 @@
     .pillar-image {
         position: relative;
         height: auto;
+        width: 100%;
 
         img {
             display: block;
             width: 100%;
+            aspect-ratio: 347/1093;
         }
 
         svg {

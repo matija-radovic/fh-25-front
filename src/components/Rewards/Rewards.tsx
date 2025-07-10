@@ -11,12 +11,12 @@ const Rewards = () => {
     const inView = useInView(pillarsRef, { once: true });
 
     return (
-        <Section heading='NAGRADE' className='rewards'>
-            <div className='pillars'>
+        <Section heading='NAGRADE' className='rewards' id='nagrade'>
+            <div className='pillars' ref={pillarsRef}>
                 <img className='stand' src={stand} alt='' />
                 <Pillar no={1} prize={1000} inView={inView} animationDuration={2.6} />
-                <Pillar no={2} prize={800} inView={inView} animationDuration={1.9} />
-                <Pillar no={3} prize={500} inView={inView} animationDuration={1} />
+                <Pillar no={2} prize={800} inView={inView} animationDuration={1.8} />
+                <Pillar no={3} prize={500} inView={inView} animationDuration={1.1} />
             </div>
             <div className='arrows-wrapper'>
                 <Arrow className="half-offset" />

@@ -9,11 +9,7 @@ $shevron-phone-horizontal-offset: 8.5dvw;
 $shevron-phone-vertical-offset: 35dvw;
 
 .org-team {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     position: relative;
-    gap: min(100px, 15dvw);
 
     h1 {
         text-align: center;
@@ -60,15 +56,7 @@ $shevron-phone-vertical-offset: 35dvw;
     }
 
     .big-arrow {
-        translate: 0 60%;
-
-        &.flipped-x {
-            translate: 0 -17%;
-
-            @media #{mediaqueries.$tablet} {
-                translate: 0 14%;
-            }
-        }
+        translate: 0 calc(-75% + 1.56rem);
     }
 }
 
