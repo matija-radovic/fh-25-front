@@ -80,7 +80,7 @@ const Card: React.FC<CardProps> = forwardRef(({ children, className, sensitivity
     const handleMouseLeave = () => {
         if (timeout.current != null) clearTimeout(timeout.current);
 
-        timeout.current = setTimeout(() => {
+        timeout.current = window.setTimeout(() => {
             rotateX.set(0);
             rotateY.set(0);
             backgroundX.set(50);

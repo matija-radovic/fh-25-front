@@ -69,7 +69,7 @@ const Path = memo(forwardRef<PathRef, PathProps>(({ d, ...props }, ref) => {
         turnOn: () => {
             pathRef.current?.classList.add('active');
             clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(() => {
+            timeoutRef.current = window.setTimeout(() => {
                 pathRef.current?.classList.remove('active');
             }, 1000);
         }
