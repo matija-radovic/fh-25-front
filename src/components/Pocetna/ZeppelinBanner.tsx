@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import "./Zeppelin.scss";
 import Zeppelin from "../../assets/pocetna/zeppelin.svg";
 import { useInView } from "framer-motion";
@@ -9,12 +9,20 @@ import { useInView } from "framer-motion";
  * ZeppelinBanner2.tsx using warpjs or modify pathParser.ts to hold "type of point"
  * data so it supports simultaneously "MoveTo" and "LineTo" path command
  */
+const mqPhone = () => window.matchMedia("only screen and (max-width: 768px)").matches;
 
 const ZeppelinBanner = () => {
+  const [mqMatches, setMqMatches] = useState(mqPhone);
   const bannerRef = useRef<HTMLDivElement>(null);
   const zeppelinRef = useRef<HTMLImageElement>(null); // Ref za sliku
   const pathRef = useRef<SVGPathElement>(null);
   const inView = useInView(bannerRef);
+
+  useEffect(() => {
+    const handleResize = () => setMqMatches(mqPhone)
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [])
 
   useLayoutEffect(() => {
     if (!inView) return;
@@ -39,7 +47,7 @@ const ZeppelinBanner = () => {
     let lastTime = 0;
 
     const animate = (currentTime: number) => {
-      af = requestAnimationFrame(animate);
+      if (!mqMatches) af = requestAnimationFrame(animate);
       if (!pathRef.current || currentTime - lastTime < deltaT) return;
       lastTime = currentTime;
 
@@ -65,7 +73,7 @@ const ZeppelinBanner = () => {
     af = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(af);
-  }, [inView]);
+  }, [inView, mqMatches]);
 
   return (
     <div className="banner" >

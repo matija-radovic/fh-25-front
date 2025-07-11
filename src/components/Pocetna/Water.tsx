@@ -46,7 +46,6 @@ const Water = () => {
   const inView = useInView(waterRef, { margin: "10px 0px" })
 
   useEffect(() => {
-    console.log(mqPhone());
     const handleResize = () => setMqMatches(mqPhone)
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -95,7 +94,7 @@ const Water = () => {
     const amplitude = 8;
     const samples = 80;
     const speed = 0.01;
-    const halfHeight = 32;  // magic
+    const halfHeight = 37;  // magic
     const yBase = amplitude + 0.6; // magic
     const pathMultiplier = 5; // magic
 

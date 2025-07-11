@@ -109,10 +109,9 @@ $margin-figma: 70px;
   }
 }
 
-@include responsive-margins((
-  ("section>h1", true, false, true, false),
-  ("section.signup-section", true, false, true, false),
-));
+@include responsive-margins((("section>h1", true, false, true, false),
+    ("section.signup-section", true, false, true, false),
+  ));
 
 section>h1 {
   text-align: center;
@@ -146,5 +145,11 @@ section.rewards .arrows-wrapper {
 
   @media #{mediaqueries.$figma-phone} {
     padding-top: calc(math.div(math.div(37, 2), 204) * 90dvw + $margin-figma);
+  }
+}
+
+section.signup-section {
+  @media #{mediaqueries.$phone} {
+    margin-bottom: $margin-tablet;
   }
 }
