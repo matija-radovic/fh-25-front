@@ -1,5 +1,5 @@
 import "./Main.scss";
-import { AboutCompetition, Agenda, Expiriences, Faq, Footer, Header, LoadingPage, OrgTeam, Partners, Pocetna, Rewards } from "@/components";
+import { AboutCompetition, Agenda, Expiriences, Faq, Footer, Header, LoadingPage, OrgTeam, Partners, Pocetna, Rewards, SignupSection } from "@/components";
 import React, { useContext } from "react";
 import { LoadingContext } from "@/contexts/LoadingContext";
 import { AnimatePresence } from "motion/react";
@@ -24,6 +24,7 @@ const Main = () => {
       <Faq />
       <OrgTeam teams={orgTeams} />
       <Partners />
+      <SignupSection />
       <Footer />
       
       <AnimatePresence>

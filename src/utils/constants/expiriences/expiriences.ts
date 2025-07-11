@@ -6,28 +6,28 @@ type Expirience = {
 
 export const expiriences: Expirience[] = [
     {
-        name: "Andjelko",
+        name: "Ime Prezime",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur nihil harum debitis illo corporis earum suscipit cumque non consequatur magnam?",
-        image: "/images/expiriences/orange-orange-cat.gif"
+        image: "/images/expiriences/unknown-user.svg"
     },
     {
-        name: "Dragan",
+        name: "Ime Prezime",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur nihil harum debitis illo corporis earum suscipit cumque non consequatur magnam?",
-        image: "/images/expiriences/cat-crying-cat.gif"
+        image: "/images/expiriences/unknown-user.svg"
     },
     {
-        name: "Zorica",
+        name: "Ime Prezime",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur nihil harum debitis illo corporis earum suscipit cumque non consequatur magnam?",
-        image: "/images/expiriences/sadhamstergirl.gif"
+        image: "/images/expiriences/unknown-user.svg"
     },
     {
-        name: "Hvalimir",
+        name: "Ime Prezime",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur nihil harum debitis illo corporis earum suscipit cumque non consequatur magnam?",
-        image: "/images/expiriences/cat-funny.gif"
+        image: "/images/expiriences/unknown-user.svg"
     },
     {
-        name: "Čedomirka",
+        name: "Ime Prezime",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur nihil harum debitis illo corporis earum suscipit cumque non consequatur magnam?",
-        image: "/images/expiriences/happy-happy-happy.gif"
+        image: "/images/expiriences/unknown-user.svg"
     }
 ]

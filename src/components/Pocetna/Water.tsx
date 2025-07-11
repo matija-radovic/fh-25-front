@@ -1,5 +1,5 @@
 import { useInView } from "motion/react";
-import { useEffect, useLayoutEffect, useRef } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { encodePath, parsePath } from "../../utils/parsers/pathParser";
 import Countdown, { CountdownRendererFn } from "react-countdown";
 import { d } from "../../utils/constants/water/waterPath";
@@ -13,7 +13,7 @@ const smoothNoise = (
   const p = (x + y) * 2 + time;
   return Math.sin(p) * scale;
 };
-
+const mqPhone = () => window.matchMedia("only screen and (max-width: 768px)").matches;
 const digits = (number: number) => Math.abs(number).toString().padStart(2, "0").split('');
 const countdownRenderer: CountdownRendererFn = ({ completed, days, hours, minutes, seconds }) => {
   if (completed) {
@@ -39,14 +39,22 @@ const countdownRenderer: CountdownRendererFn = ({ completed, days, hours, minute
 }
 
 const Water = () => {
+  const [mqMatches, setMqMatches] = useState(mqPhone);
   const pathRef = useRef<SVGPathElement | null>(null);
   const waveRef = useRef<SVGPathElement | null>(null);
   const waterRef = useRef<SVGSVGElement | null>(null);
   const inView = useInView(waterRef, { margin: "10px 0px" })
 
+  useEffect(() => {
+    console.log(mqPhone());
+    const handleResize = () => setMqMatches(mqPhone)
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [])
+
   // Water
   useEffect(() => {
-    if (!inView) return;
+    if (!inView || mqMatches) return;
     let af: number;
     let lastTime = 0;
     const points = parsePath(d);
@@ -78,7 +86,7 @@ const Water = () => {
 
     af = requestAnimationFrame(updatePath);
     return () => cancelAnimationFrame(af);
-  }, [inView]);
+  }, [inView, mqMatches]);
 
   // Waves
   useLayoutEffect(() => {
@@ -87,7 +95,7 @@ const Water = () => {
     const amplitude = 8;
     const samples = 80;
     const speed = 0.01;
-    const halfHeight = 38;  // magic
+    const halfHeight = 32;  // magic
     const yBase = amplitude + 0.6; // magic
     const pathMultiplier = 5; // magic
 

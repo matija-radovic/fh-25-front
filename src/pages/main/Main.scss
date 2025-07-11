@@ -111,7 +111,7 @@ $margin-figma: 70px;
 
 @include responsive-margins((
   ("section>h1", true, false, true, false),
-  ("section.partners", false, false, true, false),
+  ("section.signup-section", true, false, true, false),
 ));
 
 section>h1 {
