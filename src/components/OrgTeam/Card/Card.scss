@@ -41,7 +41,7 @@ $border-radius: 10px;
 .card-shine,
 .card-glare {
     will-change: transform, opacity, background-image, background-size,
-        background-position, background-blend-mode, filter;
+        background-position, filter;
 }
 
 .card-shine,
@@ -161,6 +161,7 @@ $border-radius: 10px;
     background-blend-mode: screen, hue, hard-light;
     background-size: var(--grain-size) 100%, 200% 700%, 300% 125%, 200% 100%;
     background-position: center, 0% var(--background-y), var(--background-x) var(--background-y), var(--background-x) var(--background-y);
+    backface-visibility: hidden;
 
     filter: brightness(.8) contrast(2.95) saturate(.65);
 }

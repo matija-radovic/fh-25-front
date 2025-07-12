@@ -16,93 +16,94 @@ $margin-figma: 70px;
     $right: list.nth($item, 3);
     $bottom: list.nth($item, 4);
     $left: list.nth($item, 5);
+    $a: if(list.length($item) >=6, list.nth($item, 6), 0);
 
     #{$selector} {
       @if $top {
-        margin-top: $margin-desktop;
+        margin-top: $margin-desktop + $a;
       }
 
       @if $right {
-        margin-right: $margin-desktop;
+        margin-right: $margin-desktop + $a;
       }
 
       @if $bottom {
-        margin-bottom: $margin-desktop;
+        margin-bottom: $margin-desktop + $a;
       }
 
       @if $left {
-        margin-left: $margin-desktop;
+        margin-left: $margin-desktop + $a;
       }
 
       @media #{mediaqueries.$xs-desktop} {
         @if $top {
-          margin-top: $margin-xs-desktop;
+          margin-top: $margin-xs-desktop + $a;
         }
 
         @if $right {
-          margin-right: $margin-xs-desktop;
+          margin-right: $margin-xs-desktop + $a;
         }
 
         @if $bottom {
-          margin-bottom: $margin-xs-desktop;
+          margin-bottom: $margin-xs-desktop + $a;
         }
 
         @if $left {
-          margin-left: $margin-xs-desktop;
+          margin-left: $margin-xs-desktop + $a;
         }
       }
 
       @media #{mediaqueries.$tablet} {
         @if $top {
-          margin-top: $margin-tablet;
+          margin-top: $margin-tablet + $a;
         }
 
         @if $right {
-          margin-right: $margin-tablet;
+          margin-right: $margin-tablet + $a;
         }
 
         @if $bottom {
-          margin-bottom: $margin-tablet;
+          margin-bottom: $margin-tablet + $a;
         }
 
         @if $left {
-          margin-left: $margin-tablet;
+          margin-left: $margin-tablet + $a;
         }
       }
 
       @media #{mediaqueries.$phone} {
         @if $top {
-          margin-top: $margin-phone;
+          margin-top: $margin-phone + $a;
         }
 
         @if $right {
-          margin-right: $margin-phone;
+          margin-right: $margin-phone + $a;
         }
 
         @if $bottom {
-          margin-bottom: $margin-phone;
+          margin-bottom: $margin-phone + $a;
         }
 
         @if $left {
-          margin-left: $margin-phone;
+          margin-left: $margin-phone + $a;
         }
       }
 
       @media #{mediaqueries.$figma-phone} {
         @if $top {
-          margin-top: $margin-figma;
+          margin-top: $margin-figma + $a;
         }
 
         @if $right {
-          margin-right: $margin-figma;
+          margin-right: $margin-figma + $a;
         }
 
         @if $bottom {
-          margin-bottom: $margin-figma;
+          margin-bottom: $margin-figma + $a;
         }
 
         @if $left {
-          margin-left: $margin-figma;
+          margin-left: $margin-figma + $a;
         }
       }
     }
@@ -111,6 +112,7 @@ $margin-figma: 70px;
 
 @include responsive-margins((("section>h1", true, false, true, false),
     ("section.signup-section", true, false, true, false),
+    ("section.home-section", false, false, true, false, 80px),
   ));
 
 section>h1 {
@@ -118,24 +120,7 @@ section>h1 {
 }
 
 section.about {
-  $additional: 100px;
-  padding-top: $margin-desktop + $additional;
-
-  @media #{mediaqueries.$xs-desktop} {
-    padding-top: $margin-xs-desktop + $additional;
-  }
-
-  @media #{mediaqueries.$tablet} {
-    padding-top: $margin-tablet + $additional;
-  }
-
-  @media #{mediaqueries.$phone} {
-    padding-top: $margin-phone + $additional;
-  }
-
-  @media #{mediaqueries.$figma-phone} {
-    padding-top: $margin-figma + $additional;
-  }
+  padding-top: calc(10px + 2.56rem);
 }
 
 section.rewards .arrows-wrapper {

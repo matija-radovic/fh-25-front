@@ -160,7 +160,7 @@ const Water = () => {
         <path ref={pathRef} d={d} filter="url(#gradientShadow)" fillRule="evenodd" clipRule="evenodd" fill="#24BDDE" />
       </svg>
       <div className="countdown orbitron">
-        <Countdown date={new Date("2025-08-31T24:00:00")} renderer={countdownRenderer} />
+        <Countdown date={new Date("2025-04-26T00:00:00")} renderer={countdownRenderer} />
       </div>
     </div>
   )

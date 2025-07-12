@@ -27,7 +27,7 @@ const Pocetna: React.FC = () => {
 
     let h: number;
     const set = () => {
-      const value = 1 - Math.min(Math.max(1 - window.scrollY / h, 0), 1);
+      const value = Math.floor(100 * (1 - Math.min(Math.max(1 - window.scrollY / h, 0), 1))) * 0.01;
       if (parralaxRef.current) parralaxRef.current.style.setProperty('--v', value.toString());
     }
     const handleScroll = () => {
@@ -53,7 +53,7 @@ const Pocetna: React.FC = () => {
 
   return (
     <Section isContainer={false} className="home-section" ref={sectionRef}>
-      <div className="buildings" ref={parralaxRef}>
+      <div className={`buildings${!inView ? " in-view" : ""}`} ref={parralaxRef}>
         <div className="third row">
           <img src={left3} alt="" />
           <img src={right3} alt="" />

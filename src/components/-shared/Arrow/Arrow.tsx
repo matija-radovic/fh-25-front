@@ -12,7 +12,9 @@ interface ArrowProps {
     className?: string | string[]
 }
 
-const LIGHT_UP_INTERVAL = 300
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const LIGHT_UP_INTERVAL = isMobile ? 900 : 300 
+const LIGHT_OFF_INTERVAL = isMobile ? 3000 : 1000 
 
 const Arrow: React.NamedExoticComponent<ArrowProps> = memo(({
     className,
@@ -71,7 +73,7 @@ const Path = memo(forwardRef<PathRef, PathProps>(({ d, ...props }, ref) => {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = window.setTimeout(() => {
                 pathRef.current?.classList.remove('active');
-            }, 1000);
+            }, LIGHT_OFF_INTERVAL);
         }
     }), []);
 

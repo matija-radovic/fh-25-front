@@ -38,7 +38,6 @@ $building-min-height: 480.7px;
     height: math.percentage(math.div($img-right-height, $max-h));
     //transform: translateX(calc($parallax-distance * var(--v)));
     transform: translateX(calc(min(50dvw, 100%) * $parallax-distance * var(--v)));
-    transition: .2s cubic-bezier(0.075, 0.82, 0.165, 1) transform;
   }
 
   //left image
@@ -92,6 +91,9 @@ $building-min-height: 480.7px;
       object-position: right bottom;
       height: 100%;
 
+      will-change: transform;
+      transition: .2s cubic-bezier(0.075, 0.82, 0.165, 1) transform;
+
       &:first-child {
         object-position: left bottom;
       }
@@ -112,6 +114,10 @@ $building-min-height: 480.7px;
   }
 }
 
+.home-section .buildings.in-view .row img {
+  will-change: auto !important;
+}
+
 .flag {
   z-index: 4;
   position: absolute;
@@ -125,10 +131,6 @@ $building-min-height: 480.7px;
   svg {
     width: 100%;
     height: auto;
-
-    path {
-      will-change: d;
-    }
   }
 }
 
@@ -156,7 +158,6 @@ $building-min-height: 480.7px;
   .water {
     // fixes the flash of uncliped wave before useEffect runs
     clip-path: polygon(0px 100%, 0% 8.60%, 2.5% 10.19%, 5% 11.72%, 7.5% 13.12%, 10% 14.34%, 12.5% 15.33%, 15% 16.06%, 17.5% 16.48%, 20% 16.60%, 22.5% 16.39%, 25% 15.87%, 27.5% 15.07%, 30% 14.00%, 32.5% 12.72%, 35% 11.28%, 37.5% 9.73%, 40% 8.13%, 42.5% 6.56%, 45% 5.06%, 47.5% 3.71%, 50% 2.55%, 52.5% 1.63%, 55% 0.99%, 57.5% 0.65%, 60% 0.63%, 62.5% 0.93%, 65% 1.53%, 67.5% 2.42%, 70% 3.55%, 72.5% 4.88%, 75% 6.36%, 77.5% 7.94%, 80% 9.53%, 82.5% 11.09%, 85% 12.55%, 87.5% 13.86%, 90% 14.95%, 92.5% 15.79%, 95% 16.34%, 97.5% 16.59%, 100% 16.51%, 100% 100%);
-    will-change: clip-path;
   }
 
   .countdown {
